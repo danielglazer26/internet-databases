@@ -19,9 +19,7 @@ public class Announcement {
     private Long announcementId;
     @Column(nullable = false)
     private String title, additionalDescription;
-    @ManyToOne
-    @JoinColumn(name = "personId")
-    private Person ownerId;
+    private Long ownerId;
     //apartment address
     @Column(nullable = false)
     private Integer apartmentNumber;
@@ -33,7 +31,8 @@ public class Announcement {
     // @Size(0,10)
     @Column(nullable = false)
     private Integer roomNumber;
-    @OneToMany
-    @JoinColumn(name = "photoId")
+    @Column(nullable = false)
+    private Double area;
+    @OneToMany(mappedBy = "announcementId")
     private Set<Photo> photos;
 }

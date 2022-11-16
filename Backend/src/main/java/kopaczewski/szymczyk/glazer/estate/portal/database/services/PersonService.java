@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,7 +26,7 @@ public class PersonService {
     public Optional<Person> createNewPerson(String login, String password, String email) {
         Optional<Person> optionalPerson = personRepository.findByLogin(login);
         if (optionalPerson.isEmpty()) {
-            return Optional.of(personRepository.save(new Person(0L, new HashSet<>(), login, makeHash(password),
+            return Optional.of(personRepository.save(new Person(0L, login, makeHash(password),
                     email, null, null, null, null)));
         } else {
             return Optional.empty();
@@ -38,7 +37,7 @@ public class PersonService {
                                             String phoneNumber) {
         Optional<Person> optionalPerson = personRepository.findByLogin(login);
         if (optionalPerson.isEmpty()) {
-            return Optional.of(personRepository.save(new Person(0L, new HashSet<>(), login, makeHash(password),
+            return Optional.of(personRepository.save(new Person(0L, login, makeHash(password),
                     email, name, surname, null, phoneNumber)));
         } else {
             return Optional.empty();
@@ -49,7 +48,7 @@ public class PersonService {
                                             String nip, String phoneNumber) {
         Optional<Person> optionalPerson = personRepository.findByLogin(login);
         if (optionalPerson.isEmpty()) {
-            return Optional.of(personRepository.save(new Person(0L, new HashSet<>(), login, makeHash(password),
+            return Optional.of(personRepository.save(new Person(0L, login, makeHash(password),
                     email, name, surname, nip, phoneNumber)));
         } else {
             return Optional.empty();

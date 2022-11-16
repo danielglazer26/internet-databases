@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.Optional;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -27,11 +26,11 @@ public class PersonServiceTest {
     @Before
     public void setUp() {
         System.out.println("cos");
-        person0 = new Person(0L, new HashSet<>(), "LoginPer0", "PasswordPer0", "mailPer0@niew4art0.com", null, null, null, null);
-        person1 = new Person(0L, new HashSet<>(), "LoginPer1", "PasswordPer2", "mailPer1@niew4art0.com", null, null, null, null);
-        person2 = new Person(0L, new HashSet<>(), "LoginPer2", "PasswordPer2", "mailPer2@niew4art0.com",
+        person0 = new Person(0L, "LoginPer0", "PasswordPer0", "mailPer0@niew4art0.com", null, null, null, null);
+        person1 = new Person(0L, "LoginPer1", "PasswordPer2", "mailPer1@niew4art0.com", null, null, null, null);
+        person2 = new Person(0L, "LoginPer2", "PasswordPer2", "mailPer2@niew4art0.com",
                 "NamePer2", "SurnamePer2", null, "123456789");
-        person3 = new Person(0L, new HashSet<>(), "LoginPer3", "PasswordPer3", "mailPer3@niew4art0.com",
+        person3 = new Person(0L, "LoginPer3", "PasswordPer3", "mailPer3@niew4art0.com",
                 "NamePer3", "SurnamePer3", "nip", "901112131");
     }
 
