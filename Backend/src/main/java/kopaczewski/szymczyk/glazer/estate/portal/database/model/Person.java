@@ -20,7 +20,9 @@ public class Person {
     @OneToMany
     @JoinColumn(name = "announcementId")
     private Set<Announcement> announcements;
+    @Column(nullable = false, unique = true)
+    private String login;
     @Column(nullable = false)
-    private String login, password, email;
+    private String password, email;
     private String name, surname, nip, phoneNumber;
 }
