@@ -1,4 +1,4 @@
-package kopaczewski.szymczyk.glazer.estate.portal.version;
+package kopaczewski.szymczyk.glazer.estate.portal.connection.settings;
 
 
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.MyUserDetailsService;

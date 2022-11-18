@@ -1,4 +1,4 @@
-package kopaczewski.szymczyk.glazer.estate.portal.version;
+package kopaczewski.szymczyk.glazer.estate.portal.connection.settings;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

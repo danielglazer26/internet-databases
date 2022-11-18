@@ -1,6 +1,7 @@
-package kopaczewski.szymczyk.glazer.estate.portal.version;
+package kopaczewski.szymczyk.glazer.estate.portal.controller.authorization;
 
 
+import kopaczewski.szymczyk.glazer.estate.portal.connection.settings.CookieManager;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Person;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.AccountData;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.PersonService;
@@ -15,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +56,7 @@ public class AuthorizationControllers {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginToAccount(@Validated @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> loginToAccount(@RequestBody LoginRequest loginRequest) {
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

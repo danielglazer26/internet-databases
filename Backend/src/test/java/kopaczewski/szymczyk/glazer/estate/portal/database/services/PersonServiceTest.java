@@ -18,7 +18,7 @@ import java.util.Optional;
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @Transactional
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class PersonServiceTest {
     @Autowired
     PersonService service;

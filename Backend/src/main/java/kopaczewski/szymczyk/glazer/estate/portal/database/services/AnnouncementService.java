@@ -1,5 +1,6 @@
 package kopaczewski.szymczyk.glazer.estate.portal.database.services;
 
+import kopaczewski.szymczyk.glazer.estate.portal.controller.authenticated.AnnouncementRequest;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Photo;
 import kopaczewski.szymczyk.glazer.estate.portal.database.repositories.AnnouncementRepository;
@@ -28,7 +29,7 @@ public class AnnouncementService {
             String title, String additionalDescription, Long personId,
             String city, String street, Integer apartmentNumber,
             Integer costPerMonth, Integer rent, Integer deposit,
-            Integer numberOfRooms, Double area,
+            Integer roomNumber, Double area,
             Set<Photo> photos) {
         var person = personService.getPersonById(personId);
         return person.map(value -> announcementRepository.save(
@@ -37,8 +38,22 @@ public class AnnouncementService {
                         title, additionalDescription, value.getPersonId(),
                         apartmentNumber, street, city,
                         costPerMonth, rent, deposit,
-                        numberOfRooms, area,
+                        roomNumber, area,
                         photos
+                )
+        ));
+    }
+
+    public Optional<Announcement> createNewAnnouncement(AnnouncementRequest announcementRequest) {
+        var person = personService.getPersonByLogin(announcementRequest.getOwnerLogin());
+        return person.map(value -> announcementRepository.save(
+                new Announcement(
+                        0L,
+                        announcementRequest.getTitle(), announcementRequest.getAdditionalDescription(), value.getPersonId(),
+                        announcementRequest.getApartmentNumber(), announcementRequest.getStreet(), announcementRequest.getCity(),
+                        announcementRequest.getCostPerMonth(), announcementRequest.getRent(),
+                        announcementRequest.getDeposit(), announcementRequest.getRoomNumber(),
+                        announcementRequest.getArea(), announcementRequest.getPhotos()
                 )
         ));
     }
