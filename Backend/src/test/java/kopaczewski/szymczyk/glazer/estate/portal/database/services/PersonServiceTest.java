@@ -2,6 +2,7 @@ package kopaczewski.szymczyk.glazer.estate.portal.database.services;
 
 
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Person;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.Roles;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -26,12 +27,12 @@ public class PersonServiceTest {
     @Before
     public void setUp() {
         System.out.println("cos");
-        person0 = new Person(0L, "LoginPer0", "PasswordPer0", "mailPer0@niew4art0.com", null, null, null, null);
-        person1 = new Person(0L, "LoginPer1", "PasswordPer2", "mailPer1@niew4art0.com", null, null, null, null);
+        person0 = new Person(0L, "LoginPer0", "PasswordPer0", "mailPer0@niew4art0.com", null, null, null, null, Roles.USER);
+        person1 = new Person(0L, "LoginPer1", "PasswordPer2", "mailPer1@niew4art0.com", null, null, null, null, Roles.USER);
         person2 = new Person(0L, "LoginPer2", "PasswordPer2", "mailPer2@niew4art0.com",
-                "NamePer2", "SurnamePer2", null, "123456789");
+                "NamePer2", "SurnamePer2", null, "123456789", Roles.USER);
         person3 = new Person(0L, "LoginPer3", "PasswordPer3", "mailPer3@niew4art0.com",
-                "NamePer3", "SurnamePer3", "nip", "901112131");
+                "NamePer3", "SurnamePer3", "nip", "901112131", Roles.USER);
     }
 
     @AfterEach
@@ -85,23 +86,6 @@ public class PersonServiceTest {
         } else {
             Assertions.fail();
         }
-    }
-
-    @Test
-    public void makeAuthorization_WhenUserIsInDatabase_ShouldReturnTrue() {
-        Optional<Person> personOptional = getOptionalPerson(person0);
-        Assertions.assertTrue(service.makeAuthorization(personOptional.get().getLogin(), PersonService.makeHash(person0.getPassword())));
-    }
-
-    @Test
-    public void makeAuthorization_WhenUserIsNotInDatabase_ShouldReturnFalse() {
-        Assertions.assertFalse(service.makeAuthorization("admin", PersonService.makeHash("admin")));
-    }
-
-    @Test
-    public void makeAuthorization_WhenUserIsInDatabaseButGiveWrongPassword_ShouldReturnFalse() {
-        Optional<Person> personOptional = getOptionalPerson(person0);
-        Assertions.assertFalse(service.makeAuthorization(personOptional.get().getLogin(), PersonService.makeHash("admin")));
     }
 
     @Test
