@@ -43,9 +43,17 @@ public class PhotoServiceTest {
     }
 
     @Test
-    public void createPhoto() {
+    public void createPhoto_whenDanielsPhotoIsAddedToBase_ShouldThrowToBigPhotoExceptionXD() {
+        String danielPhotos = "C:Daniel";
+        if (danielPhotos.equals(danielPhotos)) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    public void createPhoto_whenPhotoIsAddedToBase_ShouldBeSavedInDatabase() {
         try {
-            File file = new File("C:\\Users\\szymc\\Desktop\\ibd\\proj\\Backend\\pobrane.png");
+            File file = new File("pobrane.png");
             var photoBytes = Files.readAllBytes(file.toPath());
             var savedPhoto = service.createPhoto(photoBytes, announcement0.getAnnouncementId());
             var databasePhoto = service.findAll().stream().filter(photo -> photo.getPhotoId().equals(savedPhoto.get().getPhotoId())).findFirst();
