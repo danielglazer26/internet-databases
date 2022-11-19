@@ -88,23 +88,6 @@ public class PersonServiceTest {
     }
 
     @Test
-    public void makeAuthorization_WhenUserIsInDatabase_ShouldReturnTrue() {
-        Optional<Person> personOptional = getOptionalPerson(person0);
-        Assertions.assertTrue(service.makeAuthorization(personOptional.get().getLogin(), PersonService.makeHash(person0.getPassword())));
-    }
-
-    @Test
-    public void makeAuthorization_WhenUserIsNotInDatabase_ShouldReturnFalse() {
-        Assertions.assertFalse(service.makeAuthorization("admin", PersonService.makeHash("admin")));
-    }
-
-    @Test
-    public void makeAuthorization_WhenUserIsInDatabaseButGiveWrongPassword_ShouldReturnFalse() {
-        Optional<Person> personOptional = getOptionalPerson(person0);
-        Assertions.assertFalse(service.makeAuthorization(personOptional.get().getLogin(), PersonService.makeHash("admin")));
-    }
-
-    @Test
     public void getPersonByLogin_WhenUserIsInDatabase_ShouldReturnPerson() {
         Optional<Person> personOptional = getOptionalPerson(person0);
         Assertions.assertEquals(personOptional.get(), service.getPersonByLogin(personOptional.get().getLogin()).get());

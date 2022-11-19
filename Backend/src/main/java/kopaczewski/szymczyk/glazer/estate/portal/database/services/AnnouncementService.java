@@ -1,7 +1,6 @@
 package kopaczewski.szymczyk.glazer.estate.portal.database.services;
 
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
-import kopaczewski.szymczyk.glazer.estate.portal.database.model.Photo;
 import kopaczewski.szymczyk.glazer.estate.portal.database.repositories.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -28,8 +26,7 @@ public class AnnouncementService {
             String title, String additionalDescription, Long personId,
             String city, String street, Integer apartmentNumber,
             Integer costPerMonth, Integer rent, Integer deposit,
-            Integer numberOfRooms, Double area,
-            Set<Photo> photos) {
+            Integer numberOfRooms, Double area) {
         var person = personService.getPersonById(personId);
         return person.map(value -> announcementRepository.save(
                 new Announcement(
@@ -37,8 +34,7 @@ public class AnnouncementService {
                         title, additionalDescription, value.getPersonId(),
                         apartmentNumber, street, city,
                         costPerMonth, rent, deposit,
-                        numberOfRooms, area,
-                        photos
+                        numberOfRooms, area
                 )
         ));
     }
