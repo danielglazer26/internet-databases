@@ -1,0 +1,41 @@
+<mat-sidenav-container autosize>
+  <mat-sidenav #sidenav class=" flex-column flex-shrink-2 p-3 text-white bg-dark" mode="side" opened=true>
+    <mat-nav-list>
+      <mat-list-item (click)="isExpanded = !isExpanded">
+        <mat-icon [ngClass]="{ rotated: isExpanded }" class="chevron-button" mat-list-icon>chevron_right
+        </mat-icon>
+      </mat-list-item>
+
+      <mat-list-item (click)="onMenuChange(0)" [routerLink]="''" [style]="menuItemStyleClassResolver(0)">
+        <mat-icon mat-list-icon>home</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Home</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onMenuChange(1)" [routerLink]="'offers'" [style]="menuItemStyleClassResolver(1)">
+        <mat-icon mat-list-icon>list</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Offer</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onMenuChange(2)" [routerLink]="'add-offer'" [style]="menuItemStyleClassResolver(2)">
+        <mat-icon mat-list-icon>add</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Add offer</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onMenuChange(3)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(3)">
+        <mat-icon mat-list-icon>supervisor_account</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Login</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onMenuChange(4)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(4)">
+        <mat-icon mat-list-icon style="color: #087275">logout</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Log out</span>
+      </mat-list-item>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
