@@ -1,8 +1,6 @@
 package kopaczewski.szymczyk.glazer.estate.portal.database.services;
 
-import kopaczewski.szymczyk.glazer.estate.portal.controller.authenticated.AnnouncementRequest;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
-import kopaczewski.szymczyk.glazer.estate.portal.database.model.Photo;
 import kopaczewski.szymczyk.glazer.estate.portal.database.repositories.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -29,8 +26,7 @@ public class AnnouncementService {
             String title, String additionalDescription, Long personId,
             String city, String street, Integer apartmentNumber,
             Integer costPerMonth, Integer rent, Integer deposit,
-            Integer roomNumber, Double area,
-            Set<Photo> photos) {
+            Integer roomNumber, Double area) {
         var person = personService.getPersonById(personId);
         return person.map(value -> announcementRepository.save(
                 new Announcement(
@@ -38,22 +34,7 @@ public class AnnouncementService {
                         title, additionalDescription, value.getPersonId(),
                         apartmentNumber, street, city,
                         costPerMonth, rent, deposit,
-                        roomNumber, area,
-                        photos
-                )
-        ));
-    }
-
-    public Optional<Announcement> createNewAnnouncement(AnnouncementRequest announcementRequest) {
-        var person = personService.getPersonByLogin(announcementRequest.getOwnerLogin());
-        return person.map(value -> announcementRepository.save(
-                new Announcement(
-                        0L,
-                        announcementRequest.getTitle(), announcementRequest.getAdditionalDescription(), value.getPersonId(),
-                        announcementRequest.getApartmentNumber(), announcementRequest.getStreet(), announcementRequest.getCity(),
-                        announcementRequest.getCostPerMonth(), announcementRequest.getRent(),
-                        announcementRequest.getDeposit(), announcementRequest.getRoomNumber(),
-                        announcementRequest.getArea(), announcementRequest.getPhotos()
+                        roomNumber, area
                 )
         ));
     }
