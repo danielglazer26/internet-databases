@@ -11,22 +11,17 @@
         <span *ngIf="isExpanded" class="menu-item">Home</span>
       </mat-list-item>
 
-      <mat-list-item (click)="onMenuChange(1)" [routerLink]="'offers'" [style]="menuItemStyleClassResolver(1)">
-        <mat-icon mat-list-icon>list</mat-icon>
-        <span *ngIf="isExpanded" class="menu-item">Offer</span>
-      </mat-list-item>
-
-      <mat-list-item (click)="onMenuChange(2)" [routerLink]="'add-offer'" [style]="menuItemStyleClassResolver(2)">
+      <mat-list-item (click)="onMenuChange(1)" [routerLink]="'add-offer'" [style]="menuItemStyleClassResolver(1)">
         <mat-icon mat-list-icon>add</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Add offer</span>
       </mat-list-item>
 
-      <mat-list-item (click)="onMenuChange(3)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(3)">
+      <mat-list-item (click)="onMenuChange(2)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(2)">
         <mat-icon mat-list-icon>supervisor_account</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Login</span>
       </mat-list-item>
 
-      <mat-list-item (click)="onMenuChange(4)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(4)">
+      <mat-list-item (click)="onMenuChange(3)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(3)">
         <mat-icon mat-list-icon style="color: #087275">logout</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Log out</span>
       </mat-list-item>

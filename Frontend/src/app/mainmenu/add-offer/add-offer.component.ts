@@ -8,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 export class AddOfferComponent implements OnInit {
 
   rent: boolean = true
+  isAddEnable: boolean = true
 
   constructor() {
   }
@@ -23,7 +24,8 @@ export class AddOfferComponent implements OnInit {
     console.log(fileInputEvent.target.files[0]);
   }
 
-  isAddEnable(){
-    return true
+  getIsAddEnable(){
+    return this.isAddEnable
   }
+
 }

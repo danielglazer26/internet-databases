@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AddOfferComponent} from "./add-offer/add-offer.component";
 import {LoginComponent} from "./login/login.component";
-import {OffersComponent} from "./offers/offers.component";
 import {SidenavWrapperComponent} from "./sidenav-wrapper/sidenav-wrapper.component";
-import {HomeComponent} from "./home/home.component";
+import {OfferComponent} from "./offers/offer.component";
+import {OfferDetailComponent} from "./offers/offer-detail/offer-detail.component";
 
 const routes: Routes = [
   {
@@ -13,11 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomeComponent
-      },
-      {
-        path: 'offers',
-        component: OffersComponent
+        component: OfferComponent
       },
       {
         path: 'add-offer',
@@ -26,6 +22,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path: 'offer-detail',
+        component: OfferDetailComponent
       }
     ]
   },

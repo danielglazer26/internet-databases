@@ -16,6 +16,9 @@
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [

@@ -1,0 +1,26 @@
+<mat-toolbar class="app-toolbar">
+  <mat-paginator
+    (page)="currentPageChng($event)"
+    [length]="recipes.length"
+    [pageSize]="numberOfCol*4"
+    [pageIndex]="0"
+    aria-label="Select page"
+    class="text-white pad"
+    style="object-position: right; background: #212529;">
+  </mat-paginator>
+</mat-toolbar>
+
+<body class="box">
+
+<mat-grid-list [cols]="numberOfCol" rowHeight="2:1">
+
+  <mat-grid-tile *ngFor="let recipeEl of recipes.slice(currentPageIndex*numberOfCol*4,(currentPageIndex+1)*numberOfCol*4); let i = index">
+    <app-recipe-item
+      [recipe]="recipeEl"
+      [index]="i"></app-recipe-item>
+  </mat-grid-tile>
+
+</mat-grid-list>
+
+
+</body>
