@@ -18,7 +18,7 @@ public class Announcement {
     private Long announcementId;
     @Column(nullable = false)
     private String title, additionalDescription;
-    private Long ownerId;
+    private String ownerLogin;
     //apartment address
     @Column(nullable = false)
     private Integer apartmentNumber;

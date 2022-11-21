@@ -28,9 +28,9 @@ public class AnnouncementServiceTest {
     @Before
     public void setUp() {
         person1 = personService.createNewPerson("announcementTest1", "pas", "mailAnno1@niew4art0.com").get();
-        announcement0 = new Announcement(0L, "test2", "des2", person1.getPersonId(), 0,
+        announcement0 = new Announcement(0L, "test2", "des2", person1.getLogin(), 0,
                 "staro miejska", "Wroclaw", 100000, 12, 12, 1000, 100.0);
-        announcement1 = new Announcement(0L, "test1", "des1", person1.getPersonId(), 10,
+        announcement1 = new Announcement(0L, "test1", "des1", person1.getLogin(), 10,
                 "staro miejska", "Wroclaw", 10000, 1, 1, 100, 10.0);
     }
 
@@ -46,7 +46,7 @@ public class AnnouncementServiceTest {
         var optionalAnnouncement = service.createNewAnnouncement(
                 announcement1.getTitle(),
                 announcement1.getAdditionalDescription(),
-                announcement1.getOwnerId(),
+                announcement1.getOwnerLogin(),
                 announcement1.getCity(),
                 announcement1.getStreet(),
                 announcement1.getApartmentNumber(),
@@ -74,7 +74,7 @@ public class AnnouncementServiceTest {
     public void getFiltered_WhenAllRequirementsAreNull_ShouldReturnAnnouncement() {
         //noinspection unused
         var announcementOptional = service.createNewAnnouncement(
-                announcement0.getTitle(), announcement0.getAdditionalDescription(), announcement0.getOwnerId(),
+                announcement0.getTitle(), announcement0.getAdditionalDescription(), announcement0.getOwnerLogin(),
                 announcement0.getCity(), announcement0.getStreet(), announcement0.getApartmentNumber(),
                 announcement0.getCostPerMonth(), announcement0.getRent(), announcement0.getDeposit(), announcement0.getRoomNumber(),
                 announcement0.getArea());
@@ -87,7 +87,7 @@ public class AnnouncementServiceTest {
     public void getFiltered_WhenIsAnnouncementSatisfyingRequirements_ShouldReturnAnnouncement() {
         //noinspection unused
         var announcementOptional = service.createNewAnnouncement(
-                announcement0.getTitle(), announcement0.getAdditionalDescription(), announcement0.getOwnerId(),
+                announcement0.getTitle(), announcement0.getAdditionalDescription(), announcement0.getOwnerLogin(),
                 announcement0.getCity(), announcement0.getStreet(), announcement0.getApartmentNumber(),
                 announcement0.getCostPerMonth(), announcement0.getRent(), announcement0.getDeposit(), announcement0.getRoomNumber(),
                 announcement0.getArea());

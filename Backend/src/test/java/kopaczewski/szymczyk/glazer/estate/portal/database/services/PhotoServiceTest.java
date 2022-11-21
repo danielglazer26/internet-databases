@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class PhotoServiceTest {
     @Autowired
     PhotoService service;
@@ -32,7 +32,7 @@ public class PhotoServiceTest {
     public void setUp() {
         person1 = personService.createNewPerson("announcementTest1", "pas", "mailAnno1@niew4art0.com").get();
         announcement0 = announcementService.createNewAnnouncement(
-                "test2", "des2", person1.getPersonId(), "Wroclaw",
+                "test2", "des2", person1.getLogin(), "Wroclaw",
                 "staro miejska", 0, 100000, 12, 12, 1000, 100.0).get();
     }
 
@@ -40,14 +40,6 @@ public class PhotoServiceTest {
     public void tearDown() {
         personService.removePerson(person1);
         announcementService.removeAnnouncement(announcement0);
-    }
-
-    @Test
-    public void createPhoto_whenDanielsPhotoIsAddedToBase_ShouldThrowToBigPhotoExceptionXD() {
-        String danielPhotos = "C:Daniel";
-        if (danielPhotos.equals(danielPhotos)) {
-            Assertions.fail();
-        }
     }
 
     @Test

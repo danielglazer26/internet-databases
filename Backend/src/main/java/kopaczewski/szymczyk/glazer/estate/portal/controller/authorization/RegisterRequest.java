@@ -1,13 +1,6 @@
 package kopaczewski.szymczyk.glazer.estate.portal.controller.authorization;
 
-import lombok.Getter;
-import lombok.Setter;
+public record RegisterRequest(String login, String password, String email){}
 
-@Getter
-@Setter
-public class RegisterRequest {
 
-    private String login;
-    private String password;
-    private String email;
-}
+

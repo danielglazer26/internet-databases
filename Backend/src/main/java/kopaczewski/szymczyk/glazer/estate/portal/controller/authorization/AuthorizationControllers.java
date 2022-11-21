@@ -16,14 +16,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/auth")
 public class AuthorizationControllers {
 
@@ -40,12 +38,12 @@ public class AuthorizationControllers {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerNewUser(@RequestBody RegisterRequest registerRequest) {
-        String login = registerRequest.getLogin();
+        String login = registerRequest.login();
 
         if (personService.getPersonByLogin(login).isEmpty()) {
             Optional<Person> newUser = personService.createNewPerson(login,
-                    BCrypt.hashpw(registerRequest.getPassword(), BCrypt.gensalt()),
-                    registerRequest.getEmail());
+                    BCrypt.hashpw(registerRequest.password(), BCrypt.gensalt()),
+                    registerRequest.email());
             return newUser.isPresent() ?
                     ResponseEntity.ok("Create user " + login) :
                     ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurs when add new user to database");
@@ -60,8 +58,8 @@ public class AuthorizationControllers {
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginRequest.getLogin(),
-                    loginRequest.getPassword()));
+                    loginRequest.login(),
+                    loginRequest.password()));
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().body("Incorrect credentials");
         }
