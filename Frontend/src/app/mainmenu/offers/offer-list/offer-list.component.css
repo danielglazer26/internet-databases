@@ -1,0 +1,21 @@
+.box {
+  background: #2c3034;
+  padding-bottom: 5vh;
+  padding-left: -35vw;
+  padding-right: 5vw;
+  padding-top: 2vh;
+  width: 100vw;
+  height: 100vh;
+}
+
+.pad{
+}
+
+.app-toolbar {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  width: 100vw;
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+  background: #212529;
+}
