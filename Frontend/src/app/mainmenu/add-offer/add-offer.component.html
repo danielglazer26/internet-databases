@@ -5,65 +5,69 @@
     <img alt="" class="d-block mx-auto mb-4" height="57" src="../assets/logo.svg" width="72">
     <h2 class="text-white">Dodaj swoją ofertę</h2>
   </div>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-white">Zdjęcia</span>
+          <span class="badge rounded-pill" style="background: #00b6bd; border-color: #00b6bd">0</span>
+        </h4>
 
-  <div class="row g-5">
-    <div class="col-md-5 col-lg-4 order-md-last">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-white">Zdjęcia</span>
-        <span class="badge rounded-pill" style="background: #00b6bd; border-color: #00b6bd">0</span>
-      </h4>
-
-      <div >
-        <app-carousel></app-carousel>
-        <input #imageInput (change)="fileInputChange($event)" accept=".png" hidden="true" onclick="this.value=null"
-               type="file"/>
-        <button (click)="imageInput.click()" class="btn btn-primary btn-lg" mat-flat-button
-                style="background: #00b6bd; border-color: #00b6bd; margin-top: 20px">Dodaj zdjęcia
-        </button>
+        <div>
+          <app-carousel></app-carousel>
+          <input #imageInput (change)="fileInputChange($event)" accept=".png" hidden="true" onclick="this.value=null"
+                 type="file"/>
+          <button (click)="imageInput.click()" class="btn btn-primary btn-lg" mat-flat-button
+                  style="background: #00b6bd; border-color: #00b6bd; margin-top: 20px">Dodaj zdjęcia
+          </button>
 
 
-        <div class="col-md-12" style="margin-top: 20px" >
-          <label class="text-white form-label" for="cc-cvv">Opis ogłoszenia</label>
-          <div>
-            <textarea class="form-label" placeholder="Opis" formControlName="message" style="max-height: 20vh; height: 20vh; width: 100%"></textarea>
+          <div class="col-md-12" style="margin-top: 20px">
+            <label class="text-white form-label" for="cc-cvv">Opis ogłoszenia</label>
+            <div>
+            <textarea class="form-label" placeholder="Opis" formControlName="description"
+                      style="max-height: 20vh; height: 20vh; width: 100%"></textarea>
+            </div>
           </div>
         </div>
+
+
       </div>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="text-white mb-3">Dane ogłoszenia</h4>
 
-
-    </div>
-    <div class="col-md-7 col-lg-8">
-      <h4 class="text-white mb-3">Dane ogłoszenia</h4>
-      <form class="needs-validation" novalidate>
         <div class="row g-3">
           <div class="col-sm-6">
-            <label class="text-white form-label" for="firstName">Imie</label>
+            <label class="text-white form-label" for="name">Imie</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="firstName" placeholder="Imie" type="text">
+            <input class="form-control" id="name" placeholder="Imie" type="text" required formControlName="name">
           </div>
 
           <div class="col-sm-6">
             <label class="text-white form-label" for="lastName">Nazwisko</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="lastName" placeholder="Nazwisko" required type="text" value="">
+            <input class="form-control" id="lastName" placeholder="Nazwisko" required type="text"
+                   formControlName="surname">
           </div>
 
           <div class="col-12">
             <label class="text-white form-label" for="username">Login</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="username" placeholder="Login" required type="text">
+            <input class="form-control" id="username" placeholder="Login" type="text" required formControlName="login">
           </div>
 
           <div class="col-12">
             <label class="text-white form-label" for="email">Email</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="email" placeholder="twoj@mail.com" required type="email">
+            <input class="form-control" id="email" placeholder="twoj@mail.com" type="email" required
+                   formControlName="email">
           </div>
 
           <div class="col-md-6">
             <label class="text-white form-label" for="address">Adres</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="address" placeholder="ul.Nowowiejska" required type="text">
+            <input class="form-control" id="address" placeholder="ul.Nowowiejska" type="text" required
+                   formControlName="street">
             <div class="invalid-feedback">
               Please enter your shipping address.
             </div>
@@ -71,7 +75,8 @@
 
           <div class="col-md-6">
             <label class="text-white form-label" for="address">Numer domu</label>
-            <input class="form-control" id="addressNumber" placeholder="32a/4" required type="text">
+            <input class="form-control" id="addressNumber" placeholder="32a/4" type="text"
+                   formControlName="apartmentNumber">
             <div class="invalid-feedback">
               Please enter your shipping address.
             </div>
@@ -80,7 +85,7 @@
           <div class="col-md-6">
             <label class="text-white form-label" for="state">Województwo</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <select class="form-select" id="state" required>
+            <select class="form-select" id="state" formControlName="province">
               <option value="">Wybierz...</option>
               <option>Dolnośląskie</option>
               <option>Małopolskie</option>
@@ -92,7 +97,7 @@
           <div class="col-md-6">
             <label class="text-white form-label" for="city">Miejscowość</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="city" placeholder="Wrocław" required type="text">
+            <input class="form-control" id="city" placeholder="Wrocław" type="text" required formControlName="city">
           </div>
 
         </div>
@@ -103,7 +108,7 @@
 
         <div class="my-3">
           <div class=" text-white form-check">
-            <mat-radio-button checked (click)="onTypeChange(0)" ></mat-radio-button>
+            <mat-radio-button checked (click)="onTypeChange(0)"></mat-radio-button>
             <label class="form-check-label">Wynajem</label>
           </div>
           <div class="text-white form-check">
@@ -118,38 +123,38 @@
           <div class="text-white col-md-6">
             <label class="form-label" for="cc-name">Cena</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="cc-name" placeholder="400 000" required type="text">
+            <input class="form-control" id="cc-name" placeholder="400 000" type="text" required formControlName="cost">
             <small class="text-white text-muted">Cena w PLN</small>
           </div>
 
           <div class="col-md-6">
             <label class="text-white form-label" for="cc-number">Kaucja</label>
-            <input [disabled]="!rent" class="form-control" id="cc-number" placeholder="2000" required type="text">
+            <input [disabled]="!type" class="form-control" id="cc-number" placeholder="2000" type="text"
+                   formControlName="rent">
           </div>
 
           <div class="col-md-3">
             <label class="text-white form-label" for="cc-expiration">Powierzchnia</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="cc-expiration" placeholder="32" required type="text">
+            <input class="form-control" id="cc-expiration" placeholder="32" type="text" required formControlName="area">
             <small class="text-muted">Powierzchnia w m2</small>
           </div>
 
           <div class="col-md-3">
             <label class="text-white form-label" for="cc-cvv">Liczba pokoi</label>
-            <input class="form-control" id="cc-cvv" placeholder="2" required type="text">
+            <input class="form-control" id="cc-cvv" placeholder="2" type="number" required formControlName="roomNumber">
           </div>
 
         </div>
 
         <hr class="my-4">
-        <button  class="btn btn-primary btn-lg"
-                style="margin-bottom: 5vh; background: #00b6bd; border-color: #00b6bd" type="submit"
-                 (click)="test()">Dodaj
+        <button class="btn btn-primary btn-lg" [disabled]="!profileForm.valid"
+                style="margin-bottom: 5vh; background: #00b6bd; border-color: #00b6bd" type="submit">Dodaj
           ogłoszenie
         </button>
-      </form>
+      </div>
     </div>
-  </div>
+  </form>
 </main>
 </body>
 </html>
