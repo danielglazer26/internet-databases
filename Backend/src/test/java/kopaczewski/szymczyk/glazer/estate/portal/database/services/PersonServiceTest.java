@@ -2,6 +2,7 @@ package kopaczewski.szymczyk.glazer.estate.portal.database.services;
 
 
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Person;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.Roles;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @Transactional
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class PersonServiceTest {
     @Autowired
     PersonService service;
@@ -26,12 +27,12 @@ public class PersonServiceTest {
     @Before
     public void setUp() {
         System.out.println("cos");
-        person0 = new Person(0L, "LoginPer0", "PasswordPer0", "mailPer0@niew4art0.com", null, null, null, null);
-        person1 = new Person(0L, "LoginPer1", "PasswordPer2", "mailPer1@niew4art0.com", null, null, null, null);
+        person0 = new Person(0L, "LoginPer0", "PasswordPer0", "mailPer0@niew4art0.com", null, null, null, null, Roles.USER);
+        person1 = new Person(0L, "LoginPer1", "PasswordPer2", "mailPer1@niew4art0.com", null, null, null, null, Roles.USER);
         person2 = new Person(0L, "LoginPer2", "PasswordPer2", "mailPer2@niew4art0.com",
-                "NamePer2", "SurnamePer2", null, "123456789");
+                "NamePer2", "SurnamePer2", null, "123456789", Roles.USER);
         person3 = new Person(0L, "LoginPer3", "PasswordPer3", "mailPer3@niew4art0.com",
-                "NamePer3", "SurnamePer3", "nip", "901112131");
+                "NamePer3", "SurnamePer3", "nip", "901112131", Roles.USER);
     }
 
     @AfterEach

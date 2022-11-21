@@ -23,20 +23,25 @@ public class AnnouncementService {
     }
 
     public Optional<Announcement> createNewAnnouncement(
-            String title, String additionalDescription, Long personId,
+            String title, String additionalDescription, String personLogin,
             String city, String street, Integer apartmentNumber,
             Integer costPerMonth, Integer rent, Integer deposit,
-            Integer numberOfRooms, Double area) {
-        var person = personService.getPersonById(personId);
+            Integer roomNumber, Double area) {
+        var person = personService.getPersonByLogin(personLogin);
         return person.map(value -> announcementRepository.save(
                 new Announcement(
                         0L,
-                        title, additionalDescription, value.getPersonId(),
+                        title, additionalDescription, value.getLogin(),
                         apartmentNumber, street, city,
                         costPerMonth, rent, deposit,
-                        numberOfRooms, area
+                        roomNumber, area
                 )
         ));
+    }
+
+    public Optional<Announcement> createNewAnnouncement(Announcement announcement) {
+        var person = personService.getPersonByLogin(announcement.getOwnerLogin());
+        return person.map(value -> announcementRepository.save(announcement));
     }
 
     public List<Announcement> getAll(Integer limit, Integer offset) {

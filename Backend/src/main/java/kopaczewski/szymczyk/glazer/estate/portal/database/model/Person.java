@@ -21,5 +21,6 @@ public class Person {
     @Column(nullable = false)
     private String password, email;
     private String name, surname, nip, phoneNumber;
+    private Roles role;
 
 }
