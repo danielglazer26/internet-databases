@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Offer } from '../offer.model';
-import { OfferService } from '../offer.service';
+import { OfferService } from '../../../shared/offer.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -10,8 +10,8 @@ import { OfferService } from '../offer.service';
   styleUrls: ['./offer-detail.component.css']
 })
 export class OfferDetailComponent implements OnInit {
-  recipe!: Offer;
-  id!: number;
+  offer!: Offer;
+  index!: number;
 
   constructor(private recipeService: OfferService,
               private route: ActivatedRoute,
@@ -22,20 +22,10 @@ export class OfferDetailComponent implements OnInit {
     this.route.params
       .subscribe(
         (params: Params) => {
-          this.id = +params['id'];
-          this.recipe = this.recipeService.getRecipe(this.id);
+          this.index = +params['index'];
+          this.offer = this.recipeService.getRecipe(this.index);
         }
       );
-  }
-
-  onEditRecipe() {
-    this.router.navigate(['edit'], {relativeTo: this.route});
-    // this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
-  }
-
-  onDeleteRecipe() {
-    this.recipeService.deleteRecipe(this.id);
-    this.router.navigate(['/recipes']);
   }
 
 }
