@@ -10,9 +10,13 @@ import java.util.List;
 
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
+    @SuppressWarnings("NullableProblems")
     @Override
     <S extends Photo> S save(S entity);
 
     @Query("select p from Photo p where p.announcementId = :announcementId")
     List<Photo> getPhotosByAnnouncementId(@Param("announcementId") Long announcementId);
+
+    @Query("select p from Photo p where p.photoId = :photoId")
+    Photo getPhotoByPhotoId(@Param("photoId") Long photoId);
 }

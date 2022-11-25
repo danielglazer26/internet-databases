@@ -5,10 +5,14 @@ import kopaczewski.szymczyk.glazer.estate.portal.database.repositories.PhotoRepo
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class PhotoService {
     private final PhotoRepository repository;
 
@@ -19,6 +23,10 @@ public class PhotoService {
 
     public Optional<Photo> createPhoto(byte[] photo, Long announcementId) {
         return Optional.of(repository.save(new Photo(0L, announcementId, photo)));
+    }
+
+    public InputStream getPhoto(Long photoId){
+        return new ByteArrayInputStream(repository.getPhotoByPhotoId(photoId).getPictureBytes());
     }
 
     public List<Photo> findAll() {
