@@ -5,6 +5,7 @@ import {LoginComponent} from "./login/login.component";
 import {SidenavWrapperComponent} from "./sidenav-wrapper/sidenav-wrapper.component";
 import {OfferComponent} from "./offers/offer.component";
 import {OfferDetailComponent} from "./offers/offer-detail/offer-detail.component";
+import {RegisterComponent} from "./register/register.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'offer-detail',
         component: OfferDetailComponent
+      },
+      {
+        path: 'register',
+        component: RegisterComponent
       }
     ]
   },

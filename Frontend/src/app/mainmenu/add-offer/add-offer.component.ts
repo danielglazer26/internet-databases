@@ -28,4 +28,34 @@ export class AddOfferComponent implements OnInit {
     return this.isAddEnable
   }
 
+  test() {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      "title": "tyhtul;",
+      "additionalDescription": "3213",
+      "ownerLogin": "Daniel",
+      "apartmentNumber": 74,
+      "street": "Nowowiejska",
+      "city": "Wroclaw",
+      "costPerMonth": 1,
+      "rent": 2,
+      "deposit": 3,
+      "roomNumber": 34,
+      "area": 15,
+      "photos": null
+    });
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+    };
+
+    fetch("http://localhost:8080/authenticated/addAnnouncement", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
 }

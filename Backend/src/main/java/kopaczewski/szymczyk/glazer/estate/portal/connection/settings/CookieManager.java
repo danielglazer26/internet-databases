@@ -24,6 +24,7 @@ import static kopaczewski.szymczyk.glazer.estate.portal.ConstStorage.AUTHENTICAT
 @Component
 public class CookieManager {
 
+    private static final String EMPTY_VALUE = "";
     @Value("${security.app.cookie.expired.time.ms}")
     private long expirationTime;
 
@@ -57,6 +58,13 @@ public class CookieManager {
                 .path(AUTHENTICATED_ENDPOINT)
                 .maxAge(expirationTime / 1000)
                 .httpOnly(true)
+                .build();
+    }
+
+    public ResponseCookie generateEmptyCookie() {
+        return ResponseCookie
+                .from(cookieName, EMPTY_VALUE)
+                .path(AUTHENTICATED_ENDPOINT)
                 .build();
     }
 

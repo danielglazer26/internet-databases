@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
+import {RequestManagerService} from "../connection/http/request-manager.service";
 
 @Component({
   selector: 'app-sidenav-wrapper',
@@ -11,20 +13,28 @@ export class SidenavWrapperComponent {
 
   currentMenu: number = 0
 
-  constructor() { }
+  constructor(private cookieStorage: CookieSessionStorageService, private requestManager: RequestManagerService) {
+  }
 
   ngOnInit(): void {
   }
 
-  onMenuChange(menuId: number){
+  onMenuChange(menuId: number) {
     this.currentMenu = menuId
   }
 
-  menuItemStyleClassResolver(menuId: number){
-    if(menuId == this.currentMenu)
+  menuItemStyleClassResolver(menuId: number) {
+    if (menuId == this.currentMenu)
       return "background: #00b6bd;"
     else
       return ""
   }
 
+  logout() {
+    this.requestManager.logoutAccount().subscribe({
+      next: () => this.cookieStorage.clean()
+    });
+
+    window.location.reload();
+  }
 }
