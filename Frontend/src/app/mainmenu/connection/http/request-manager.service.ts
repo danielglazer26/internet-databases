@@ -32,4 +32,8 @@ export class RequestManagerService {
     return this.http.post(ADDRESS + "/authenticated/addAnnouncement", json, httpOptions)
   }
 
+  uploadPhoto(file: FormData){
+    return this.http.post(ADDRESS+"/authenticated/upload/,",file)
+  }
+
 }

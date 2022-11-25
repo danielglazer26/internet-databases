@@ -16,7 +16,9 @@ export class LoginComponent implements OnInit {
   private isLogged!: boolean;
   private role!: string;
 
-  constructor(private fb: FormBuilder, private router: Router, private requestManager: RequestManagerService, private cookieStorage: CookieSessionStorageService) {
+  constructor(private fb: FormBuilder, private router: Router,
+              private requestManager: RequestManagerService,
+              private cookieStorage: CookieSessionStorageService) {
     this.accountForm = new FormGroup<any>({
       login: fb.control('', Validators.required),
       password: fb.control('', Validators.required)

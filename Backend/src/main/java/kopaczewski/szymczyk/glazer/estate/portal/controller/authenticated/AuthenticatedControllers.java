@@ -3,10 +3,14 @@ package kopaczewski.szymczyk.glazer.estate.portal.controller.authenticated;
 
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.AnnouncementService;
+import kopaczewski.szymczyk.glazer.estate.portal.database.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static kopaczewski.szymczyk.glazer.estate.portal.ConstStorage.AUTHENTICATED_ENDPOINT;
@@ -17,10 +21,12 @@ import static kopaczewski.szymczyk.glazer.estate.portal.ConstStorage.AUTHENTICAT
 public class AuthenticatedControllers {
 
     private final AnnouncementService announcementService;
+    private final PhotoService photoService;
 
     @Autowired
-    public AuthenticatedControllers(AnnouncementService announcementService) {
+    public AuthenticatedControllers(AnnouncementService announcementService, PhotoService photoService) {
         this.announcementService = announcementService;
+        this.photoService = photoService;
     }
 
     @PostMapping("/addAnnouncement")
@@ -32,4 +38,15 @@ public class AuthenticatedControllers {
                 .orElseGet(() -> ResponseEntity.badRequest().body("No announcement created"));
     }
 
+    @PostMapping("/upload/")
+    public ResponseEntity<?> fileUpload(@RequestParam("image") MultipartFile image, @RequestParam("announcementId") Long announcementId) {
+        try {
+            var id = photoService.createPhoto(image.getBytes(), announcementId);
+            return id.map(photo -> ResponseEntity.ok("Image " + photo.getPhotoId() + "loaded"))
+                    .orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .body("Error occurs when add new picture to database"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

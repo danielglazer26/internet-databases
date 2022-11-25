@@ -29,6 +29,10 @@ export class AddOfferComponent {
   }
 
   fileInputChange(fileInputEvent: any) {
+    let formData = new FormData();
+    formData.append("image", fileInputEvent.target.files[0]);
+    formData.append("announcementId", "0");
+    this.requestManager.uploadPhoto(formData)
     console.log(fileInputEvent.target.files[0]);
   }
 
