@@ -1,21 +1,15 @@
 <mat-toolbar class="app-toolbar">
 
-  <div class="col-12" style="width: auto; margin-left: 50px ">
+  <div class="col-12" style="width: auto; margin-left: 50px">
 
     <div class="input-group has-validation">
-      <input class="form-control" id="minimal_price" placeholder="Cena minimalna" >
-      <span class="input-group-text">zł</span>
-      <div class="invalid-feedback">
-        Your username is required.
-      </div>
+      <input type="number" [(ngModel)]="minPrice" placeholder="Cena minimalna" style="height: 40px" >
+      <span class="input-group-text" style="height: 40px">zł</span>
     </div>
 
     <div class="input-group has-validation">
-      <input class="form-control" id="maximum_price" placeholder="Cena maksymalna" style="margin-top: 10px" >
-      <span class="input-group-text" style="margin-top: 10px" >zł</span>
-      <div class="invalid-feedback">
-        Your username is required.
-      </div>
+      <input type="number" [(ngModel)]="maxPrice" placeholder="Cena maksymalna"  style="margin-top: 10px; height: 40px"  >
+      <span class="input-group-text" style="margin-top: 10px; height: 40px" >zł</span>
     </div>
 
   </div>
@@ -23,26 +17,20 @@
   <div class="col-12" style="width: auto; margin-left: 50px ">
 
     <div class="input-group has-validation">
-      <input class="form-control" id="minimal_area" placeholder="Minimalna powierzchnia" >
-      <span class="input-group-text">m2</span>
-      <div class="invalid-feedback">
-        Your username is required.
-      </div>
+      <input type="number" [(ngModel)]="minArea"  placeholder="Minimalna powierzchnia" style="height: 40px" >
+      <span class="input-group-text" style=" height: 40px">m2</span>
     </div>
 
     <div class="input-group has-validation">
-      <input class="form-control" id="maximum_area" placeholder="Maksymalna powierzchnia" style="margin-top: 10px" >
-      <span class="input-group-text" style="margin-top: 10px">m2</span>
-      <div class="invalid-feedback">
-        Your username is required.
-      </div>
+      <input type="number" [(ngModel)]="maxArea"  placeholder="Maksymalna powierzchnia" style="margin-top: 10px; height: 40px" >
+      <span class="input-group-text" style="margin-top: 10px; height: 40px">m2</span>
     </div>
 
   </div>
 
   <div class="col-12" style="width: auto; margin-left: 50px ">
-    <input class="form-control" id="room_number" placeholder="Ilość pokoi" >
-    <select class="form-select" id="state" style="margin-top: 10px">
+    <input type="text" [(ngModel)]="roomNumber" placeholder="Ilość pokoi" style="height: 40px" >
+    <select class="form-select" id="state" style="margin-top: 10px; height: 40px">
       <option value="">Rodzaj ogłoszenia</option>
       <option>Wynajem</option>
       <option>Sprzedaż</option>
@@ -50,15 +38,22 @@
   </div>
 
   <div class="col-12" style="width: auto; margin-left: 50px ">
-    <input class="form-control" id="city" placeholder="Miasto" >
-    <input class="form-control" id="street" placeholder="Ulica" style="margin-top: 10px" >
+
+    <div class="input-group has-validation">
+      <input type="text" [(ngModel)]="city" id="city" placeholder="Miasto" style="height: 40px" >
+    </div>
+
+    <div class="input-group has-validation">
+      <input type="text" [(ngModel)]="street" placeholder="Ulica" style="margin-top: 10px; height: 40px" >
+    </div>
+
   </div>
 
   <mat-paginator
     (page)="currentPageChng($event)"
     [length]="offers.length"
     [pageIndex]="currentPageIndex"
-    [pageSize]="limit"
+    [pageSize]="20"
     aria-label="Select page"
     class="text-white pad"
     hidePageSize="true"

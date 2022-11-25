@@ -1,8 +1,8 @@
-import {Component, OnInit, OnDestroy, HostListener, Injectable, Inject} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { Offer } from '../offer.model';
-import { OfferService } from '../../../shared/offer.service';
+import {Offer} from '../offer.model';
+import {OfferService} from '../../../shared/offer.service';
 import {Subscription} from "rxjs";
 import {PageEvent} from "@angular/material/paginator";
 import {DataStorageService} from "../../../shared/data-storage.service";
@@ -17,7 +17,14 @@ export class OfferListComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   currentPageIndex: number = 0
   numberOfCol: number = 3
-  limit: number = 20
+  limit: number = 10000 // ???????
+  minPrice?: number = undefined
+  maxPrice?: number = undefined
+  minArea?: number = undefined
+  maxArea?: number = undefined
+  roomNumber?: number = undefined
+  city?: string = undefined
+  street?: string = undefined
   public innerWidth: any;
 
   constructor(private dataStorageService: DataStorageService,
@@ -26,8 +33,15 @@ export class OfferListComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) {
   }
 
-  runRequest(){
-    this.dataStorageService.fetchOffers(this.limit, this.currentPageIndex*this.limit)
+  runRequest() {
+    console.log(this.minPrice)
+    console.log(this.maxPrice)
+    console.log(this.minArea)
+    console.log(this.maxArea)
+    console.log(this.roomNumber)
+    console.log(this.city)
+    console.log(this.street)
+    this.dataStorageService.fetchOffers(this.limit, this.currentPageIndex * this.limit, this.minPrice, this.maxPrice, this.minArea, this.maxArea, this.roomNumber, this.city, this.street)
   }
 
   ngOnInit() {
@@ -36,15 +50,15 @@ export class OfferListComponent implements OnInit, OnDestroy {
       .subscribe(
         (recipes: Offer[]) => {
           console.log("recieve")
-          this.currentPageIndex = 0
           this.offers = recipes;
+          this.currentPageIndex = 0
         }
       );
     this.offers = this.dataStorageService.getOffers()
     console.log(this.offers.length)
   }
 
-  updateOffers(){
+  updateOffers() {
     console.log("update")
     this.offers = this.recipeService.getRecipes()
     console.log(this.offers.length)

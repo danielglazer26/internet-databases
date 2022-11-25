@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Offer } from '../offer.model';
 import { OfferService } from '../../../shared/offer.service';
+import {DataStorageService} from "../../../shared/data-storage.service";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -13,7 +14,7 @@ export class OfferDetailComponent implements OnInit {
   offer!: Offer;
   index!: number;
 
-  constructor(private recipeService: OfferService,
+  constructor(private dataStorageService: DataStorageService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -23,7 +24,7 @@ export class OfferDetailComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.index = +params['index'];
-          this.offer = this.recipeService.getRecipe(this.index);
+          this.offer = this.dataStorageService.getOffer(this.index);
         }
       );
   }
