@@ -18,11 +18,11 @@
 
       <mat-list-item (click)="onMenuChange(2)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(2)">
         <mat-icon mat-list-icon>supervisor_account</mat-icon>
-        <span *ngIf="isExpanded" class="menu-item">Login</span>
+        <span *ngIf="isExpanded" class="menu-item">{{account}}</span>
       </mat-list-item>
 
-      <mat-list-item (click)="onMenuChange(3)" [style]="menuItemStyleClassResolver(3)">
-        <mat-icon mat-list-icon style="color: #087275" (click)="logout()">logout</mat-icon>
+      <mat-list-item (click)="onMenuChange(3)" [style]="menuItemStyleClassResolver(3)" [disabled]=block>
+        <mat-icon mat-list-icon style="color: #087275">logout</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Log out</span>
       </mat-list-item>
 

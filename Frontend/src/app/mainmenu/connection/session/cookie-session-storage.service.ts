@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 
 const USER_KEY = 'auth-user';
@@ -9,28 +9,26 @@ const USER_KEY = 'auth-user';
 })
 export class CookieSessionStorageService {
 
-  constructor() { }
+  constructor() {
+  }
 
   clean(): void {
-    window.sessionStorage.clear();
+    window.sessionStorage.removeItem(USER_KEY)
+    window.sessionStorage.clear()
   }
 
   public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.sessionStorage.removeItem(USER_KEY)
+    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user))
   }
 
   public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
-    }
-
-    return {};
+    const user = window.sessionStorage.getItem(USER_KEY)
+    return user != null ? JSON.parse(user) : {}
   }
 
   public isLoggedIn(): boolean {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    return !!user;
+    const user = window.sessionStorage.getItem(USER_KEY)
+    return !!user
   }
 }
