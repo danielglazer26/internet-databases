@@ -32,8 +32,8 @@ export class RequestManagerService {
     return this.http.post(ADDRESS + "/authenticated/addAnnouncement", json, httpOptions)
   }
 
-  uploadPhoto(file: FormData){
-    return this.http.post(ADDRESS+"/authenticated/upload/,",file)
+  uploadPhoto(file: FormData): Observable<any>{
+    return this.http.post(ADDRESS+"/authenticated/upload/",file)
   }
 
 }

@@ -25,8 +25,12 @@ public class PhotoService {
         return Optional.of(repository.save(new Photo(0L, announcementId, photo)));
     }
 
-    public InputStream getPhoto(Long photoId){
-        return new ByteArrayInputStream(repository.getPhotoByPhotoId(photoId).getPictureBytes());
+    public InputStream getPhoto(Long photoId) throws Exception {
+        var photo = repository.getPhotoByPhotoId(photoId);
+        if(photo.isPresent())
+            return new ByteArrayInputStream(photo.get().getPictureBytes());
+        else
+            throw new Exception("There is no picture with such id in database");
     }
 
     public List<Photo> findAll() {

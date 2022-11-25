@@ -1,5 +1,6 @@
 package kopaczewski.szymczyk.glazer.estate.portal.controller.unauthenticated;
 
+import kopaczewski.szymczyk.glazer.estate.portal.controller.ResponseJsonBody;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.AnnouncementService;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.PhotoService;
 import org.hibernate.engine.jdbc.StreamUtils;
@@ -39,9 +40,14 @@ public class AnnouncementController {
     @GetMapping("/photo/")
     public HttpEntity<?> fileDownload(HttpServletResponse response, @RequestParam("photoId") Long photoId) throws IOException {
 
-        StreamUtils.copy(photoService.getPhoto(photoId), response.getOutputStream());
-        response.setContentType(MediaType.IMAGE_PNG_VALUE);
+        try {
+            StreamUtils.copy(photoService.getPhoto(photoId), response.getOutputStream());
+            response.setContentType(MediaType.IMAGE_PNG_VALUE);
 
-        return ResponseEntity.ok().build();
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ResponseJsonBody(e.getMessage()));
+        }
+
     }
 }
