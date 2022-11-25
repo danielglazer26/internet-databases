@@ -25,7 +25,7 @@ export class RequestManagerService {
   }
 
   logoutAccount() : Observable<any>{
-    return this.http.post(ADDRESS + "/api/auth/logout", {}, httpOptions)
+    return this.http.post(ADDRESS + "/api/auth/logout", null)
   }
 
   createAnnouncement(json: string): Observable<any> {
