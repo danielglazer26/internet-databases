@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AnnouncementFormGroup} from "./announcement-form";
+import {RequestManagerService} from "../connection/http/request-manager.service";
 
 @Component({
   selector: 'app-add-offer',
@@ -14,7 +15,7 @@ export class AddOfferComponent {
   type: boolean = true
   isAddEnable: boolean = true
 
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, private requestManager: RequestManagerService) {
     this.profileForm = new AnnouncementFormGroup(fb)
   }
 
@@ -36,11 +37,6 @@ export class AddOfferComponent {
   }
 
   onSubmit() {
-   /* let json = JSON.stringify(this.profileForm?.value, undefined, 4);
-    console.log(json)*/
-
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
       "title": "tyhtul;",
@@ -57,15 +53,27 @@ export class AddOfferComponent {
       "photos": null
     });
 
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-    };
+    this.requestManager.createAnnouncement(raw).subscribe({
+      next: value => console.log(value),
+      error: err => console.log(err)
+    })
+    /* let json = JSON.stringify(this.profileForm?.value, undefined, 4);
+     console.log(json)*/
 
-    fetch("http://localhost:8080/authenticated/addAnnouncement", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    /* const myHeaders = new Headers();
+     myHeaders.append("Content-Type", "application/json");
+
+
+     const requestOptions = {
+       method: 'POST',
+       headers: myHeaders,
+       body: raw,
+     };
+
+     fetch("http://localhost:8080/authenticated/addAnnouncement", requestOptions)
+       .then(response => response.text())
+       .then(result => console.log(result))
+       .catch(error => console.log('error', error));
+   }*/
   }
 }

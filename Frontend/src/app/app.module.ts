@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AppRoutingModule} from "./app-routing.module";
 import {OfferService} from "./mainmenu/offers/offer.service";
 import {HttpClientModule} from "@angular/common/http";
+import {HTTP_PROVIDER} from "./mainmenu/connection/http/http-request.interceptor";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [OfferService],
+  providers: [OfferService, HTTP_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule {

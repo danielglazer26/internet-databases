@@ -1,10 +1,11 @@
 <html>
 
 <body class="text-center">
-<h2 class="text-white" *ngIf=!showForm>Utworzono poprawnie użytkownika, nastąpi przekierowanie do strony logowania</h2>
 
-<main class="form-signin" *ngIf=showForm>
-  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+
+<main class="form-signin">
+  <h2 class="text-white" *ngIf=!showForm>Utworzono poprawnie użytkownika, nastąpi przekierowanie do strony logowania</h2>
+  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()"  *ngIf=showForm>
     <img class="mb-4" src="../assets/logo.svg" alt="" width="72" height="57">
     <h3 class="text-white" *ngIf=showLoginBusy [textContent]=errorMessage></h3>
     <div class="form-floating">

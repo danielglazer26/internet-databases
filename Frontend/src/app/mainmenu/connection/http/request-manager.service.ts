@@ -8,11 +8,6 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
-const saveHttpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'}),
-  withCredentials: true
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +29,7 @@ export class RequestManagerService {
   }
 
   createAnnouncement(json: string): Observable<any> {
-    return this.http.post(ADDRESS + "/authenticated/addAnnouncement", json, saveHttpOptions)
+    return this.http.post(ADDRESS + "/authenticated/addAnnouncement", json, httpOptions)
   }
 
 }
