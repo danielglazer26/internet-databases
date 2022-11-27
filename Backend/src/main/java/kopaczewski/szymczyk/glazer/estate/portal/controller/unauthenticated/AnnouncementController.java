@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @RestController
 @CrossOrigin
@@ -38,8 +37,7 @@ public class AnnouncementController {
     }
 
     @GetMapping("/photo/")
-    public HttpEntity<?> fileDownload(HttpServletResponse response, @RequestParam("photoId") Long photoId) throws IOException {
-
+    public HttpEntity<?> fileDownload(HttpServletResponse response, @RequestParam("photoId") Long photoId){
         try {
             StreamUtils.copy(photoService.getPhoto(photoId), response.getOutputStream());
             response.setContentType(MediaType.IMAGE_PNG_VALUE);
@@ -48,6 +46,5 @@ public class AnnouncementController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseJsonBody(e.getMessage()));
         }
-
     }
 }

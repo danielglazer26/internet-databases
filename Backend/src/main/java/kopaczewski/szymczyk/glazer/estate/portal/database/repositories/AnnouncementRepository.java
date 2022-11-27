@@ -3,6 +3,7 @@ package kopaczewski.szymczyk.glazer.estate.portal.database.repositories;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -40,4 +41,30 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
 
     @Query(nativeQuery = true, value = "select *  from Announcement  LIMIT :limit OFFSET :offset")
     List<Announcement> findAll(@Param("limit") Integer limit, @Param("offset") Integer offset);
+
+    @Modifying
+    @Query("update Announcement set" +
+            " title = :nTitle," +
+            " additionalDescription = :nDescription," +
+            " apartmentNumber = :nApartmentNumber," +
+            " street =: nStreet," +
+            " city =: nCity," +
+            " costPerMonth =: nCostPerMonth," +
+            " rent =: nRent," +
+            " deposit =: nDeposit," +
+            " roomNumber =: nRoomNumber," +
+            " area =:nArea " +
+            " where announcementId = :id")
+    void updateAnnouncement(
+            @Param("id") Long announcementId,
+            @Param("nTitle") String title,
+            @Param("nDescription") String additionalDescription,
+            @Param("nApartmentNumber") Integer apartmentNumber,
+            @Param("nStreet") String street,
+            @Param("nCity") String city,
+            @Param("nCostPerMonth") Integer costPerMonth,
+            @Param("nRent") Integer rent,
+            @Param("nDeposit") Integer deposit,
+            @Param("nRoomNumber") Integer roomNumber,
+            @Param("nArea") Double area);
 }

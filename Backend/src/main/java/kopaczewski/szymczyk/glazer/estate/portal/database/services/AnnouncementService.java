@@ -67,8 +67,34 @@ public class AnnouncementService {
 
     }
 
-    public void removeAnnouncement(Announcement announcement) {
-        announcementRepository.delete(announcement);
+    public void updateAnnouncement(Announcement announcement) throws Exception {
+        var annId = announcementRepository.findById(announcement.getAnnouncementId());
+        if (annId.isEmpty()) {
+            throw new Exception("There is no such announcement in database");
+        }
+        if (checkIfCorrectLoginUpdateAnnouncement(announcement, annId.get())) {
+            throw new Exception("You cant change owner of announcement");
+        }
+        announcementRepository.updateAnnouncement(
+                announcement.getAnnouncementId(),
+                announcement.getTitle(),
+                announcement.getAdditionalDescription(),
+                announcement.getApartmentNumber(),
+                announcement.getStreet(),
+                announcement.getCity(),
+                announcement.getCostPerMonth(),
+                announcement.getRent(),
+                announcement.getDeposit(),
+                announcement.getRoomNumber(),
+                announcement.getArea());
+    }
+
+    private static boolean checkIfCorrectLoginUpdateAnnouncement(Announcement announcement, Announcement annId) {
+        return !annId.getOwnerLogin().equals(announcement.getOwnerLogin());
+    }
+
+    public void removeAnnouncement(Long announcementId) {
+        announcementRepository.delete(announcementRepository.getReferenceById(announcementId));
     }
 
     public void removeAnnouncements(List<Announcement> announcementList) {

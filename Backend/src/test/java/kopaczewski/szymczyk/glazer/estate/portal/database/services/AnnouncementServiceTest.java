@@ -36,8 +36,8 @@ public class AnnouncementServiceTest {
 
     @After
     public void tearDown() {
-        service.removeAnnouncement(announcement0);
-        service.removeAnnouncement(announcement1);
+        service.removeAnnouncement(announcement0.getAnnouncementId());
+        service.removeAnnouncement(announcement1.getAnnouncementId());
         personService.removePerson(person1);
     }
 

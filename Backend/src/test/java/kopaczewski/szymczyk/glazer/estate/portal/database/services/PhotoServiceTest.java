@@ -39,7 +39,7 @@ public class PhotoServiceTest {
     @After
     public void tearDown() {
         personService.removePerson(person1);
-        announcementService.removeAnnouncement(announcement0);
+        announcementService.removeAnnouncement(announcement0.getAnnouncementId());
     }
 
     @Test

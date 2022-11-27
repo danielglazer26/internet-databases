@@ -38,11 +38,27 @@ public class AuthenticatedControllers {
                 .orElseGet(() -> ResponseEntity.badRequest().body(new ResponseJsonBody("No announcement created")));
     }
 
-    @PostMapping("/upload/")
+    @PutMapping("/updateAnnouncement")
+    public ResponseEntity<?> updateAnnouncement(@RequestBody Announcement announcement){
+        try {
+            announcementService.updateAnnouncement(announcement);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ResponseJsonBody(e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/destroyAnnouncement")
+    public void deleteAnnouncement(@RequestParam Long announcementId) {
+        announcementService.removeAnnouncement(announcementId);
+    }
+
+    @PostMapping("/upload")
     public ResponseEntity<?> fileUpload(@RequestParam("image") MultipartFile image, @RequestParam("announcementId") Long announcementId) {
         try {
             var id = photoService.createPhoto(image.getBytes(), announcementId);
-            return id.map(photo -> ResponseEntity.ok(new ResponseJsonBody("Image " + photo.getPhotoId() + "loaded")))
+
+            return id.map(photo -> ResponseEntity.ok(new ResponseJsonBody( photo.getPhotoId().toString())))
                     .orElseGet(() -> ResponseEntity.badRequest().body(new ResponseJsonBody("Error occurs when add new picture to database")));
         } catch (IOException e) {
             throw new RuntimeException(e);
