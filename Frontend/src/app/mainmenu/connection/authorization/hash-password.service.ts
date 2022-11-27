@@ -6,12 +6,10 @@ import * as bcrypt from 'bcryptjs';
 })
 export class HashPasswordService {
 
-  private salt = bcrypt.genSaltSync(10);
-
   constructor() {
   }
 
   makeHash(message: string): string {
-    return bcrypt.hashSync(message, this.salt);
+    return bcrypt.hashSync(message, "$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2");
   }
 }
