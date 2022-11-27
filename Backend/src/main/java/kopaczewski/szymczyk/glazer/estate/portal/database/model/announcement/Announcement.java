@@ -1,4 +1,4 @@
-package kopaczewski.szymczyk.glazer.estate.portal.database.model;
+package kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,17 +18,18 @@ public class Announcement {
     private Long announcementId;
     @Column(nullable = false)
     private String title, additionalDescription;
+    private AnnouncementType announcementType;
     private String ownerLogin;
     //apartment address
-    @Column(nullable = false)
-    private Integer apartmentNumber;
+    private String apartmentNumber;
     @Column(nullable = false)
     private String street, city;
+    @Column(nullable = false)
+    private ProvinceNameEnum province;
     //apartment data
     @Column(nullable = false)
-    private Integer costPerMonth, rent, deposit;
-    // @Size(0,10)
-    @Column(nullable = false)
+    private Integer costPerMonth, rent;
+    private Integer deposit;
     private Integer roomNumber;
     @Column(nullable = false)
     private Double area;

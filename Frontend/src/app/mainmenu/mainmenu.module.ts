@@ -22,11 +22,13 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {TextFieldModule} from "@angular/cdk/text-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {RegisterComponent} from './register/register.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [AddOfferComponent, LoginComponent, HomeComponent, SidenavWrapperComponent,
     CarouselComponent, OfferComponent, OfferListComponent,
-    OfferItemComponent, OfferDetailComponent],
+    OfferItemComponent, OfferDetailComponent, RegisterComponent],
   imports: [
     CommonModule,
     MainMenuRoutingModule,
@@ -42,8 +44,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatFormFieldModule,
     TextFieldModule,
     MatInputModule,
-    MatPaginatorModule
-  ]
+    MatPaginatorModule,
+    MatDialogModule
 })
 
 export class MainMenuModule {
