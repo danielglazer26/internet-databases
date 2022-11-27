@@ -45,7 +45,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     TextFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule]
 })
 
 export class MainMenuModule {

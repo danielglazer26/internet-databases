@@ -1,6 +1,6 @@
 package kopaczewski.szymczyk.glazer.estate.portal.database;
 
-import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement.Announcement;
 import kopaczewski.szymczyk.glazer.estate.portal.database.repositories.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
