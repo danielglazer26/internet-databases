@@ -71,6 +71,5 @@ export class DataStorageService {
       ).subscribe(e => {
       console.log("PIWO")
     })
-    console.log("fetch2")
   }
 }

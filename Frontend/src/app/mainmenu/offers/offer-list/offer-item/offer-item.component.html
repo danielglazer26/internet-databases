@@ -2,22 +2,24 @@
   <div
     [routerLink]="['/offer-detail', index ]"
     routerLinkActive="active"
-    style="cursor: pointer; background: #212529; width: 600px; height: 280px; border-radius: 50px ">
+    style="cursor: pointer; background: #212529; width: 800px; height: 280px; border-radius: 50px ">
 
     <mat-grid-list [cols]=2 rowHeight=280px>
 
       <mat-grid-tile>
         <img
           [src]="'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'"
-          alt="{{ recipe.title }}"
+          alt="{{ offer.title }}"
           style="height: inherit;">
       </mat-grid-tile>
 
       <mat-grid-tile>
-        <div style="background: #212529;  width: 480px; height: 200px;">
-          <div [textContent]="recipe.title" class="text-white text-title"></div>
-          <div [textContent]="recipe.city" class="text-white text-next"></div>
-          <div [textContent]="recipe.costPerMonth" class="text-white text-next"></div>
+        <div style="background: #212529;  width: 400px; height: 280px;">
+          <div [textContent]="offer.title" class="text-white text-title" style="font-size: 18px; margin-top: 15px"></div>
+          <div [textContent]="getAddress()" class="text-next" style="font-size: 15px; color: #cecece;"></div>
+          <div [textContent]="getCostText()" class="text-white text-next" style="font-size: 22px; margin-top: 15px"></div>
+          <div [textContent]="getRoomNumber()" class="text-next child" style="font-size: 15px; color: #cecece;"></div>
+          <div [textContent]="getArea()" class="text-next child" style="font-size: 15px; color: #cecece;"></div>
         </div>
       </mat-grid-tile>
 

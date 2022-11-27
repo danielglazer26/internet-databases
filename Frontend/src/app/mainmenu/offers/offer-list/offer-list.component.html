@@ -74,7 +74,7 @@
       *ngFor="let recipeEl of offers.slice(currentPageIndex*20,(currentPageIndex+1)*20); let i = index">
       <app-recipe-item
         [index]="currentPageIndex*20 + i"
-        [recipe]="recipeEl"></app-recipe-item>
+        [offer]="recipeEl"></app-recipe-item>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

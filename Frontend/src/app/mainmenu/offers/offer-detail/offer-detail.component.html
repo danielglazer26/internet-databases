@@ -1,44 +1,36 @@
 <div class="box">
 
-  <mat-grid-list [cols]=2 rowHeight=550px>
-
+  <mat-grid-list [cols]=1 rowHeight=550px>
     <mat-grid-tile>
-      <img
-        [src]="'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'"
-        alt="{{ offer.title }}"
-        style="width: auto; height: 550px" >
+      <app-carousel style="width: 800px"></app-carousel>
+<!--      <img-->
+<!--        [src]="'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'"-->
+<!--        alt="{{ offer.title }}"-->
+<!--        style="width: auto; height: 550px" >-->
     </mat-grid-tile>
-
   </mat-grid-list>
 
-  <div class="text-white">
-    {{offer.title}}
+  <div class="box2">
+    <div class="row">
+        <div class="col-md-6" style="margin-top: 20px" >
+          <div class="text-white" style="font-size: 25px; margin-left: 20px; margin-top: 40px">
+            {{offer.title}}
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 20px;" >
+          <div class="text-white" style="font-size: 25px; margin-left: 20px; margin-top: 40px;">
+            {{getCostText()}}
+          </div>
+      </div>
+    </div>
+    <div class="text-white " style="font-size: 15px; margin-left: 20px; margin-top: 5px; color: #cecece;">
+      {{getAddress()}}
+    </div>
+
+    <div class="text-white" style="font-size: 18px; margin-left: 20px; margin-top: 40px">
+      {{offer.additionalDescription}}
+    </div>
+
   </div>
-  <div class="text-white">
-    {{offer.additionalDescription}}
-  </div>
-  <div class="text-white">
-    {{offer.apartmentNumber}}
-  </div>
-  <div class="text-white">
-    {{offer.street}}
-  </div>
-  <div class="text-white">
-    {{offer.city}}
-  </div>
-  <div class="text-white">
-    {{offer.costPerMonth}}
-  </div>
-  <div class="text-white">
-    {{offer.rent}}
-  </div>
-  <div class="text-white">
-    {{offer.deposit}}
-  </div>
-  <div class="text-white">
-    {{offer.roomNumber}}
-  </div>
-  <div class="text-white">
-    {{offer.area}}
-  </div>
+
 </div>

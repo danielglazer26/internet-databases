@@ -12,3 +12,9 @@
   width:auto;
   height: 100%;
 }
+
+.child {
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+}
