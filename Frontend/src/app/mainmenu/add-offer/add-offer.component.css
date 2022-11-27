@@ -3,5 +3,8 @@
   padding-bottom: 5vh;
   padding-left: 5vw;
   padding-right: 5vw;
+  height: auto;
+  min-height: 100vh;
+  width: 100vw;
 }
 
