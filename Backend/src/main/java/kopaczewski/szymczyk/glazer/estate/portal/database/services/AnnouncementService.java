@@ -64,7 +64,7 @@ public class AnnouncementService {
             Integer minCost, Integer maxCost,
             Double minArea, Double maxArea,
             Integer roomNumber,
-            String city, String street, Integer apartmentNumber,
+            String city, String street, String apartmentNumber,
             Integer announcementType,
             Integer limit, Integer offset) {
 
@@ -73,7 +73,7 @@ public class AnnouncementService {
                 minArea, maxArea,
                 roomNumber,
                 city, street, apartmentNumber,
-                announcementType == null ? null : AnnouncementType.values()[announcementType],
+                announcementType,
                 limit, offset);
 
     }
