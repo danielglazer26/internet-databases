@@ -33,7 +33,7 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
                 (:city is null OR a.city = :city) AND
                 (:street is null OR a.street = :street) AND
                 (:apartmentNumber is null OR a.apartment_number = :apartmentNumber) AND
-                (:announcementType is null OR a.announcementType = :announcementType)
+                (:announcementType is null OR a.announcement_type = :announcementType)
             LIMIT :limit OFFSET :offset""")
     List<Announcement> findFiltered(
             @Param("minCost") Integer minCost, @Param("maxCost") Integer maxCost,
@@ -41,8 +41,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
             @Param("roomNumber") Integer roomNumber,
             @Param("city") String city,
             @Param("street") String street,
-            @Param("apartmentNumber") Integer apartmentNumber,
-            @Param("announcementType") AnnouncementType announcementType,
+            @Param("apartmentNumber") String apartmentNumber,
+            @Param("announcementType") Integer announcementType,
             @Param("limit") Integer limit,
             @Param("offset") Integer offset);
 

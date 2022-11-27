@@ -30,7 +30,7 @@ public class AnnouncementController {
             @RequestParam(required = false) Integer minCost, @RequestParam(required = false) Integer maxCost,
             @RequestParam(required = false) Double minArea, @RequestParam(required = false) Double maxArea,
             @RequestParam(required = false) Integer roomNumber, @RequestParam(required = false) String city,
-            @RequestParam(required = false) String street, @RequestParam(required = false) Integer apartmentNumber,
+            @RequestParam(required = false) String street, @RequestParam(required = false) String apartmentNumber,
             @RequestParam(required = false) Integer announcementType,
             @RequestParam Integer limit, @RequestParam Integer offset) {
         var list = service.getFiltered(
