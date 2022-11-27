@@ -10,7 +10,7 @@
       <div class="col-md-5 col-lg-4 order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-white">Zdjęcia</span>
-          <span class="badge rounded-pill" style="background: #00b6bd; border-color: #00b6bd">0</span>
+          <span class="badge rounded-pill" style="background: #00b6bd; border-color: #00b6bd">{{gallery.length}}</span>
         </h4>
 
         <div>
@@ -20,17 +20,29 @@
           <button (click)="imageInput.click()" class="btn btn-primary btn-lg" mat-flat-button
                   style="background: #00b6bd; border-color: #00b6bd; margin-top: 20px">Dodaj zdjęcia
           </button>
+
+            <div *ngIf="gallery.length < 1" class="text-white"> Wymagane jest min. jedno zdjęcie </div>
+
           <div class="col-md-12">
-            <label class="text-white form-label" for="address" style="padding: 10px">Tytuł</label>
+            <label class="text-white form-label" for="address" style="padding-top: 20px">Tytuł</label>
+            <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
             <input class="form-control" id="title" placeholder="Tytuł ogłoszenia" type="text"
-                   formControlName="title">
+                   formControlName="title" [ngClass]="{ 'is-invalid':announcementSubmitted && f.title.errors}">
+            <div *ngIf="announcementSubmitted && f.title.errors" class="invalid-feedback">
+              <div *ngIf="f.title.errors.required">Tytuł jest wymagany</div>
+            </div>
           </div>
 
           <div class="col-md-12" style="margin-top: 20px">
             <label class="text-white form-label" for="cc-cvv">Opis ogłoszenia</label>
+            <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
             <div>
-            <textarea class="form-label" placeholder="Opis" formControlName="additionalDescription"
-                      style="max-height: 20vh; height: 20vh; width: 100%"></textarea>
+              <textarea class="form-label" placeholder="Opis" formControlName="additionalDescription"
+                      style="max-height: 20vh; height: 20vh; width: 100%"
+                        [ngClass]="{ 'is-invalid':announcementSubmitted && f.additionalDescription.errors}"></textarea>
+              <div *ngIf="announcementSubmitted && f.additionalDescription.errors" class="invalid-feedback">
+                <div *ngIf="f.additionalDescription.errors.required">Opis jest wymagany</div>
+              </div>
             </div>
           </div>
         </div>
@@ -46,25 +58,23 @@
             <label class="text-white form-label" for="address">Adres</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
             <input class="form-control" id="address" placeholder="Nazwa ulicy" type="text" required
-                   formControlName="street">
-            <div class="invalid-feedback">
-              Please enter your shipping address.
+                   formControlName="street" [ngClass]="{ 'is-invalid':announcementSubmitted && f.street.errors}">
+            <div *ngIf="announcementSubmitted && f.street.errors" class="invalid-feedback">
+              <div *ngIf="f.street.errors.required">Nazwa ulicy jest wymagana</div>
             </div>
           </div>
 
           <div class="col-md-6">
             <label class="text-white form-label" for="address">Numer domu</label>
             <input class="form-control" id="addressNumber" placeholder="32a/4" type="text"
-                   formControlName="apartmentNumber">
-            <div class="invalid-feedback">
-              Please enter your shipping address.
-            </div>
+                   formControlName="apartmentNumber" >
           </div>
 
           <div class="col-md-6">
             <label class="text-white form-label" for="state">Województwo</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <select class="form-select" id="state" formControlName="province">
+            <select class="form-select" id="state" formControlName="province"
+                    [ngClass]="{ 'is-invalid':announcementSubmitted && f.province.errors}">
               <option value=-1>Wybierz...</option>
               <option value=0>dolnośląskie</option>
               <option value=1>kujawsko-pomorskie</option>
@@ -83,12 +93,19 @@
               <option value=14>wielkopolskie</option>
               <option value=15>zachodniopomorskie</option>
             </select>
+            <div *ngIf="announcementSubmitted && f.province.errors" class="invalid-feedback">
+              <div *ngIf="f.province.errors.pattern">Wybór nazwy województwa jest wymagany</div>
+            </div>
           </div>
 
           <div class="col-md-6">
             <label class="text-white form-label" for="city">Miejscowość</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="city" placeholder="Miasto" type="text" required formControlName="city">
+            <input class="form-control" id="city" placeholder="Miasto" type="text" required formControlName="city"
+                   [ngClass]="{ 'is-invalid':announcementSubmitted && f.city.errors}">
+            <div *ngIf="announcementSubmitted && f.city.errors" class="invalid-feedback">
+              <div *ngIf="f.city.errors.required">Miejscowość jest wymagana</div>
+            </div>
           </div>
 
         </div>
@@ -114,26 +131,45 @@
           <div class="text-white col-md-6">
             <label class="form-label" for="cc-name">Cena</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="cc-name" placeholder="400 000" type="number" required formControlName="costPerMonth">
+            <input class="form-control" id="cc-name" placeholder="400 000" type="number" required formControlName="costPerMonth"
+                   [ngClass]="{ 'is-invalid':announcementSubmitted && f.costPerMonth.errors}">
+            <div *ngIf="announcementSubmitted && f.costPerMonth.errors" class="invalid-feedback">
+              <div *ngIf="f.costPerMonth.errors.required">Cena jest wymagana</div>
+              <div *ngIf="f.costPerMonth.errors.pattern">Wprowadzone dane nie są liczą naturalną</div>
+            </div>
             <small class="text-white text-muted">Cena w PLN</small>
           </div>
 
           <div class="col-md-6">
             <label class="text-white form-label" for="cc-number">Czynsz</label>
+            <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
             <input [disabled]="!type" class="form-control" id="cc-number" placeholder="2000" type="number"
-                   formControlName="rent">
+                   formControlName="rent" [ngClass]="{ 'is-invalid':announcementSubmitted && f.rent.errors}">
+            <div *ngIf="announcementSubmitted && f.rent.errors" class="invalid-feedback">
+              <div *ngIf="f.rent.errors.required">Czynsz jest wymagany</div>
+              <div *ngIf="f.rent.errors.pattern">Wprowadzone dane nie są liczą naturalną</div>
+            </div>
           </div>
 
           <div class="col-md-3">
             <label class="text-white form-label" for="cc-expiration">Powierzchnia</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="cc-expiration" placeholder="32" type="number" required formControlName="area">
+            <input class="form-control" id="cc-expiration" placeholder="32" type="number" required formControlName="area"
+                   [ngClass]="{ 'is-invalid':announcementSubmitted && f.area.errors}">
+            <div *ngIf="announcementSubmitted && f.area.errors" class="invalid-feedback">
+              <div *ngIf="f.area.errors.required">Czynsz jest wymagany</div>
+              <div *ngIf="f.area.errors.pattern">Wprowadzone dane nie są dodatnią liczą wymierną</div>
+            </div>
             <small class="text-muted">Powierzchnia w m2</small>
           </div>
 
           <div class="col-md-3">
             <label class="text-white form-label" for="cc-cvv">Liczba pokoi</label>
-            <input class="form-control" id="cc-cvv" placeholder="2" type="number" required formControlName="roomNumber">
+            <input class="form-control" id="cc-cvv" placeholder="2" type="number"  formControlName="roomNumber"
+                   [ngClass]="{ 'is-invalid':announcementSubmitted && f.roomNumber.errors}">
+            <div *ngIf="announcementSubmitted && f.roomNumber.errors" class="invalid-feedback">
+              <div *ngIf="f.roomNumber.errors.pattern">Wprowadzone dane nie są liczą naturalną</div>
+            </div>
           </div>
 
         </div>

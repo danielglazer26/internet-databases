@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup} from "@angular/forms";
 import {AnnouncementFormGroup} from "./announcement-form";
 import {RequestManagerService} from "../connection/http/request-manager.service";
 import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
@@ -50,6 +50,10 @@ export class AddOfferComponent {
     })
   }
 
+  get f(): { [key: string]: AbstractControl } {
+    return this.profileForm.controls;
+  }
+
   ngOnDestroy(): void {
     if (!this.announcementSubmitted) {
       this.requestManager.destroyAnnouncement(this.announcementId).subscribe({
@@ -89,6 +93,15 @@ export class AddOfferComponent {
 
   onSubmit() {
     this.announcementSubmitted = true
+    console.log(this.gallery.length)
+    if(this.gallery.length === 0){
+      return;
+    }
+    if (this.profileForm.invalid) {
+      return;
+    }
+
+
     const jsonObject = JSON.parse(JSON.stringify(this.profileForm.value, null, 4))
     jsonObject.announcementId=this.announcementId
     jsonObject.ownerLogin=this.cookieStorage.getUser().login
