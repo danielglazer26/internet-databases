@@ -24,7 +24,7 @@ export class RequestManagerService {
     return this.http.post(ADDRESS + "/api/auth/login", json, httpOptions)
   }
 
-  logoutAccount() : Observable<any>{
+  logoutAccount(): Observable<any> {
     return this.http.post(ADDRESS + "/api/auth/logout", null)
   }
 
@@ -32,8 +32,17 @@ export class RequestManagerService {
     return this.http.post(ADDRESS + "/authenticated/addAnnouncement", json, httpOptions)
   }
 
-  uploadPhoto(file: FormData): Observable<any>{
-    return this.http.post(ADDRESS+"/authenticated/upload/",file)
+  //todo test this to
+  updateAnnouncement(json: string): Observable<any> {
+    return this.http.put(ADDRESS + "/authenticated/updateAnnouncement", json, httpOptions)
   }
 
+  //todo test it
+  destroyAnnouncement(announcementId: number): Observable<any> {
+    return this.http.delete(ADDRESS + "/authenticated/destroyAnnouncement" + "?announcementId=" + announcementId)
+  }
+
+  uploadPhoto(file: FormData): Observable<any> {
+    return this.http.post(ADDRESS + "/authenticated/upload", file)
+  }
 }

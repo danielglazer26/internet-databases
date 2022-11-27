@@ -5,7 +5,7 @@
     <img alt="" class="d-block mx-auto mb-4" height="57" src="../assets/logo.svg" width="72">
     <h2 class="text-white">Dodaj swoją ofertę</h2>
   </div>
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="profileForm">
     <div class="row g-5">
       <div class="col-md-5 col-lg-4 order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -14,18 +14,22 @@
         </h4>
 
         <div>
-          <app-carousel></app-carousel>
+          <app-carousel [gallery] = "gallery"> </app-carousel>
           <input #imageInput (change)="fileInputChange($event)" accept=".png" hidden="true" onclick="this.value=null"
                  type="file"/>
           <button (click)="imageInput.click()" class="btn btn-primary btn-lg" mat-flat-button
                   style="background: #00b6bd; border-color: #00b6bd; margin-top: 20px">Dodaj zdjęcia
           </button>
-
+          <div class="col-md-12">
+            <label class="text-white form-label" for="address" style="padding: 10px">Tytuł</label>
+            <input class="form-control" id="title" placeholder="Tytuł ogłoszenia" type="text"
+                   formControlName="title">
+          </div>
 
           <div class="col-md-12" style="margin-top: 20px">
             <label class="text-white form-label" for="cc-cvv">Opis ogłoszenia</label>
             <div>
-            <textarea class="form-label" placeholder="Opis" formControlName="description"
+            <textarea class="form-label" placeholder="Opis" formControlName="additionalDescription"
                       style="max-height: 20vh; height: 20vh; width: 100%"></textarea>
             </div>
           </div>
@@ -37,36 +41,11 @@
         <h4 class="text-white mb-3">Dane ogłoszenia</h4>
 
         <div class="row g-3">
-          <div class="col-sm-6">
-            <label class="text-white form-label" for="name">Imie</label>
-            <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="name" placeholder="Imie" type="text" required formControlName="name">
-          </div>
-
-          <div class="col-sm-6">
-            <label class="text-white form-label" for="lastName">Nazwisko</label>
-            <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="lastName" placeholder="Nazwisko" required type="text"
-                   formControlName="surname">
-          </div>
-
-          <div class="col-12">
-            <label class="text-white form-label" for="username">Login</label>
-            <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="username" placeholder="Login" type="text" required formControlName="login">
-          </div>
-
-          <div class="col-12">
-            <label class="text-white form-label" for="email">Email</label>
-            <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="email" placeholder="twoj@mail.com" type="email" required
-                   formControlName="email">
-          </div>
 
           <div class="col-md-6">
             <label class="text-white form-label" for="address">Adres</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="address" placeholder="ul.Nowowiejska" type="text" required
+            <input class="form-control" id="address" placeholder="Nazwa ulicy" type="text" required
                    formControlName="street">
             <div class="invalid-feedback">
               Please enter your shipping address.
@@ -86,18 +65,30 @@
             <label class="text-white form-label" for="state">Województwo</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
             <select class="form-select" id="state" formControlName="province">
-              <option value="">Wybierz...</option>
-              <option>Dolnośląskie</option>
-              <option>Małopolskie</option>
-              <option>Pomorskie</option>
-              <option>Lubuskie</option>
+              <option value=-1>Wybierz...</option>
+              <option value=0>dolnośląskie</option>
+              <option value=1>kujawsko-pomorskie</option>
+              <option value=2>lubelskie</option>
+              <option value=3>lubuskie</option>
+              <option value=4>łódzkie</option>
+              <option value=5>małopolskie</option>
+              <option value=6>mazowieckie</option>
+              <option value=7>opolskie</option>
+              <option value=8>podkarpackie</option>
+              <option value=9>podlaskie</option>
+              <option value=10>pomorskie</option>
+              <option value=11>śląskie</option>
+              <option value=12>świętokrzyskie</option>
+              <option value=13>warmińsko-mazurskie</option>
+              <option value=14>wielkopolskie</option>
+              <option value=15>zachodniopomorskie</option>
             </select>
           </div>
 
           <div class="col-md-6">
             <label class="text-white form-label" for="city">Miejscowość</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="city" placeholder="Wrocław" type="text" required formControlName="city">
+            <input class="form-control" id="city" placeholder="Miasto" type="text" required formControlName="city">
           </div>
 
         </div>
@@ -123,20 +114,20 @@
           <div class="text-white col-md-6">
             <label class="form-label" for="cc-name">Cena</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="cc-name" placeholder="400 000" type="text" required formControlName="cost">
+            <input class="form-control" id="cc-name" placeholder="400 000" type="number" required formControlName="costPerMonth">
             <small class="text-white text-muted">Cena w PLN</small>
           </div>
 
           <div class="col-md-6">
-            <label class="text-white form-label" for="cc-number">Kaucja</label>
-            <input [disabled]="!type" class="form-control" id="cc-number" placeholder="2000" type="text"
+            <label class="text-white form-label" for="cc-number">Czynsz</label>
+            <input [disabled]="!type" class="form-control" id="cc-number" placeholder="2000" type="number"
                    formControlName="rent">
           </div>
 
           <div class="col-md-3">
             <label class="text-white form-label" for="cc-expiration">Powierzchnia</label>
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
-            <input class="form-control" id="cc-expiration" placeholder="32" type="text" required formControlName="area">
+            <input class="form-control" id="cc-expiration" placeholder="32" type="number" required formControlName="area">
             <small class="text-muted">Powierzchnia w m2</small>
           </div>
 
@@ -148,7 +139,7 @@
         </div>
 
         <hr class="my-4">
-        <button class="btn btn-primary btn-lg"
+        <button class="btn btn-primary btn-lg" (click)="onSubmit()"
                 style="margin-bottom: 5vh; background: #00b6bd; border-color: #00b6bd" type="submit">Dodaj
           ogłoszenie
         </button>

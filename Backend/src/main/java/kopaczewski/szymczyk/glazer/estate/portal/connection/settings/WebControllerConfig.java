@@ -70,7 +70,7 @@ public class WebControllerConfig {
             @Override
             public void addCorsMappings(@NotNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(frontendAddress)
+                        .allowedOrigins(frontendAddress).allowedMethods("GET","POST","PUT","DELETE")
                         .allowCredentials(true);
             }
         };

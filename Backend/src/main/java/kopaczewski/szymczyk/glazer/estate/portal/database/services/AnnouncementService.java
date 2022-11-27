@@ -1,6 +1,8 @@
 package kopaczewski.szymczyk.glazer.estate.portal.database.services;
 
-import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement.Announcement;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement.AnnouncementType;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement.ProvinceNameEnum;
 import kopaczewski.szymczyk.glazer.estate.portal.database.repositories.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,24 +24,30 @@ public class AnnouncementService {
         this.personService = personService;
     }
 
+    private static boolean checkIfCorrectLoginUpdateAnnouncement(Announcement announcement, Announcement annId) {
+        return !annId.getOwnerLogin().equals(announcement.getOwnerLogin());
+    }
+
     public Optional<Announcement> createNewAnnouncement(
-            String title, String additionalDescription, String personLogin,
-            String city, String street, Integer apartmentNumber,
+            String title, String additionalDescription, Integer announcementType, String personLogin,
+            String city, String street, String apartmentNumber,
             Integer costPerMonth, Integer rent, Integer deposit,
             Integer roomNumber, Double area) {
         var person = personService.getPersonByLogin(personLogin);
         return person.map(value -> announcementRepository.save(
                 new Announcement(
                         0L,
-                        title, additionalDescription, value.getLogin(),
-                        apartmentNumber, street, city,
+                        title, additionalDescription, AnnouncementType.values()[announcementType], value.getLogin(),
+                        apartmentNumber, street, city, ProvinceNameEnum.POMERANIAN,
                         costPerMonth, rent, deposit,
                         roomNumber, area
                 )
         ));
     }
 
-    public Optional<Announcement> createNewAnnouncement(Announcement announcement) {
+    public Optional<Announcement> createNewAnnouncement(Announcement announcement) throws Exception {
+        if (announcement.getOwnerLogin() == null)
+            throw new Exception("This announcement owner isn't assign");
         var person = personService.getPersonByLogin(announcement.getOwnerLogin());
         return person.map(value -> announcementRepository.save(announcement));
     }
@@ -57,17 +65,22 @@ public class AnnouncementService {
             Double minArea, Double maxArea,
             Integer roomNumber,
             String city, String street, Integer apartmentNumber,
+            Integer announcementType,
             Integer limit, Integer offset) {
+
         return announcementRepository.findFiltered(
                 minCost, maxCost,
                 minArea, maxArea,
                 roomNumber,
                 city, street, apartmentNumber,
+                announcementType == null ? null : AnnouncementType.values()[announcementType],
                 limit, offset);
 
     }
 
     public void updateAnnouncement(Announcement announcement) throws Exception {
+        if (announcement.getAnnouncementId().equals(-1L))
+            throw new Exception("Wrong id");
         var annId = announcementRepository.findById(announcement.getAnnouncementId());
         if (annId.isEmpty()) {
             throw new Exception("There is no such announcement in database");
@@ -79,9 +92,11 @@ public class AnnouncementService {
                 announcement.getAnnouncementId(),
                 announcement.getTitle(),
                 announcement.getAdditionalDescription(),
+                announcement.getAnnouncementType(),
                 announcement.getApartmentNumber(),
                 announcement.getStreet(),
                 announcement.getCity(),
+                announcement.getProvince(),
                 announcement.getCostPerMonth(),
                 announcement.getRent(),
                 announcement.getDeposit(),
@@ -89,12 +104,13 @@ public class AnnouncementService {
                 announcement.getArea());
     }
 
-    private static boolean checkIfCorrectLoginUpdateAnnouncement(Announcement announcement, Announcement annId) {
-        return !annId.getOwnerLogin().equals(announcement.getOwnerLogin());
-    }
-
-    public void removeAnnouncement(Long announcementId) {
-        announcementRepository.delete(announcementRepository.getReferenceById(announcementId));
+    public void removeAnnouncement(Long announcementId) throws Exception {
+        var annInDb = announcementRepository.findAnnouncementByAnnouncementId(announcementId);
+        if (annInDb.isPresent()) {
+            announcementRepository.delete(annInDb.get());
+        }else {
+            throw new Exception("there is no such announcement in database");
+        }
     }
 
     public void removeAnnouncements(List<Announcement> announcementList) {

@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AnnouncementFormGroup} from "./announcement-form";
 import {RequestManagerService} from "../connection/http/request-manager.service";
+import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
 
 @Component({
   selector: 'app-add-offer',
@@ -14,30 +15,72 @@ export class AddOfferComponent {
 
   type: boolean = true
   isAddEnable: boolean = true
+  announcementSubmitted: boolean = false
+  announcementId: number = -1
+  gallery: Array<number> = new Array<number>()
 
-  constructor(fb: FormBuilder, private requestManager: RequestManagerService) {
+
+  constructor(fb: FormBuilder, private requestManager: RequestManagerService,
+              private cookieStorage: CookieSessionStorageService) {
     this.profileForm = new AnnouncementFormGroup(fb)
+  }
+
+  ngOnInit(): void {
+    const raw = JSON.stringify({
+      "title": "announcementInProduction;",
+      "additionalDescription": "test1",
+      "announcementType": 0,
+      "ownerLogin": this.cookieStorage.getUser().login,
+      "apartmentNumber": -1,
+      "street": "test2",
+      "city": "test3",
+      "province": 0,
+      "costPerMonth": -2,
+      "rent": -3,
+      "deposit": -4,
+      "roomNumber": -5,
+      "area": -6,
+    });
+    this.requestManager.createAnnouncement(raw).subscribe({
+      next: value => {
+        this.announcementId = parseInt(value.message.split(": ")[1])
+        console.log(this.announcementId)
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (!this.announcementSubmitted) {
+      this.requestManager.destroyAnnouncement(this.announcementId).subscribe({
+        next: value => console.log(value),
+        error:err => console.log(err)
+      })
+    }
   }
 
 
   onTypeChange(type: number) {
     this.type = (type == 0)
     let jsonObject = JSON.parse(JSON.stringify(this.profileForm?.value, undefined, 4));
-    jsonObject.announcementType = this.type
+    jsonObject.announcementType = this.type ? 0 :1
     // @ts-ignore
-    this.profileForm.patchValue(JSON.stringify(jsonObject))
+    this.profileForm.patchValue(jsonObject)
   }
 
   fileInputChange(fileInputEvent: any) {
     let formData = new FormData();
     formData.append("image", fileInputEvent.target.files[0]);
-    formData.append("announcementId", "0");
+    formData.append("announcementId", "1");
     this.requestManager.uploadPhoto(formData).subscribe({
-      next: value =>
-        console.log(value),
+      next: value => {
+        let photoId = parseInt(value.message)
+        this.gallery.push(photoId)
+        console.log(photoId)
+      },
       error: err => console.log(err)
     })
-    console.log(fileInputEvent.target.files[0]);
+    // console.log(fileInputEvent.target.files[0]);
   }
 
   getIsAddEnable() {
@@ -45,25 +88,13 @@ export class AddOfferComponent {
   }
 
   onSubmit() {
-
-    const raw = JSON.stringify({
-      "title": "tyhtul;",
-      "additionalDescription": "3213",
-      "ownerLogin": "Daniel",
-      "apartmentNumber": 74,
-      "street": "Nowowiejska",
-      "city": "Wroclaw",
-      "costPerMonth": 1,
-      "rent": 2,
-      "deposit": 3,
-      "roomNumber": 34,
-      "area": 15,
-      "photos": null
-    });
-
-    this.requestManager.createAnnouncement(raw).subscribe({
+    this.announcementSubmitted = true
+    const jsonObject = JSON.parse(JSON.stringify(this.profileForm.value, null, 4))
+    jsonObject.announcementId=this.announcementId
+    jsonObject.ownerLogin=this.cookieStorage.getUser().login
+    this.requestManager.updateAnnouncement(jsonObject).subscribe({
       next: value => console.log(value),
-      error: err => console.log(err)
+      error: err => console.  log(err)
     })
     /* let json = JSON.stringify(this.profileForm?.value, undefined, 4);
      console.log(json)*/

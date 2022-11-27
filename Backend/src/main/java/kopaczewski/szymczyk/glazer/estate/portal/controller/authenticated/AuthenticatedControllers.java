@@ -2,7 +2,7 @@ package kopaczewski.szymczyk.glazer.estate.portal.controller.authenticated;
 
 
 import kopaczewski.szymczyk.glazer.estate.portal.controller.ResponseJsonBody;
-import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement.Announcement;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.AnnouncementService;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +32,15 @@ public class AuthenticatedControllers {
     @PostMapping("/addAnnouncement")
     /* @PreAuthorize("hasAnyAuthority('USER')")*/
     public ResponseEntity<?> createAnnouncement(@RequestBody Announcement announcementRequest) {
-        Optional<Announcement> announcement = announcementService.createNewAnnouncement(announcementRequest);
-        return announcement
-                .<ResponseEntity<?>>map(value -> ResponseEntity.ok(new ResponseJsonBody("Create announcement number: " + value.getAnnouncementId())))
-                .orElseGet(() -> ResponseEntity.badRequest().body(new ResponseJsonBody("No announcement created")));
+        try {
+            Optional<Announcement> announcement = announcementService.createNewAnnouncement(announcementRequest);
+            return announcement
+                    .<ResponseEntity<?>>map(value -> ResponseEntity.ok(new ResponseJsonBody("Create announcement number: " + value.getAnnouncementId())))
+                    .orElseGet(() -> ResponseEntity.badRequest().body(new ResponseJsonBody("No announcement created")));
+        } catch (Exception e) {
+            return ResponseEntity.accepted().body(new ResponseJsonBody(e.getMessage()));
+        }
+
     }
 
     @PutMapping("/updateAnnouncement")
@@ -49,15 +54,19 @@ public class AuthenticatedControllers {
     }
 
     @DeleteMapping("/destroyAnnouncement")
-    public void deleteAnnouncement(@RequestParam Long announcementId) {
-        announcementService.removeAnnouncement(announcementId);
+    public ResponseEntity<?> deleteAnnouncement(@RequestParam Long announcementId) {
+        try {
+            announcementService.removeAnnouncement(announcementId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping("/upload")
     public ResponseEntity<?> fileUpload(@RequestParam("image") MultipartFile image, @RequestParam("announcementId") Long announcementId) {
         try {
             var id = photoService.createPhoto(image.getBytes(), announcementId);
-
             return id.map(photo -> ResponseEntity.ok(new ResponseJsonBody( photo.getPhotoId().toString())))
                     .orElseGet(() -> ResponseEntity.badRequest().body(new ResponseJsonBody("Error occurs when add new picture to database")));
         } catch (IOException e) {

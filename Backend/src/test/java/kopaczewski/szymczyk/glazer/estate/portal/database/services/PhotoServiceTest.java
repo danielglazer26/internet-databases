@@ -1,7 +1,8 @@
 package kopaczewski.szymczyk.glazer.estate.portal.database.services;
 
-import kopaczewski.szymczyk.glazer.estate.portal.database.model.Announcement;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Person;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement.Announcement;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement.AnnouncementType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +33,8 @@ public class PhotoServiceTest {
     public void setUp() {
         person1 = personService.createNewPerson("announcementTest1", "pas", "mailAnno1@niew4art0.com").get();
         announcement0 = announcementService.createNewAnnouncement(
-                "test2", "des2", person1.getLogin(), "Wroclaw",
-                "staro miejska", 0, 100000, 12, 12, 1000, 100.0).get();
+                "test2", "des2", AnnouncementType.RENTAL.ordinal(), person1.getLogin(), "Wroclaw",
+                "staro miejska", "0", 100000, 12, 12, 1000, 100.0).get();
     }
 
     @After
