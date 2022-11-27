@@ -2,6 +2,9 @@ package kopaczewski.szymczyk.glazer.estate.portal.controller.authorization;
 
 
 import kopaczewski.szymczyk.glazer.estate.portal.connection.settings.CookieManager;
+import kopaczewski.szymczyk.glazer.estate.portal.controller.authorization.requests.LoginRequest;
+import kopaczewski.szymczyk.glazer.estate.portal.controller.authorization.requests.RegisterRequest;
+import kopaczewski.szymczyk.glazer.estate.portal.controller.ResponseJsonBody;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Person;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.AccountData;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.PersonService;
@@ -45,11 +48,12 @@ public class AuthorizationControllers {
                     BCrypt.hashpw(registerRequest.password(), BCrypt.gensalt()),
                     registerRequest.email());
             return newUser.isPresent() ?
-                    ResponseEntity.ok("Create user " + login) :
-                    ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurs when add new user to database");
+                    ResponseEntity.ok(new ResponseJsonBody("Create user " + login)) :
+                    ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseJsonBody("Error occurs " +
+                            "when add new user to database"));
         }
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("This login exist: " + login);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseJsonBody("This login exist: " + login));
     }
 
 
@@ -61,16 +65,24 @@ public class AuthorizationControllers {
                     loginRequest.login(),
                     loginRequest.password()));
         } catch (AuthenticationException e) {
-            return ResponseEntity.badRequest().body("Incorrect credentials");
+            return ResponseEntity.badRequest().body(new ResponseJsonBody("Incorrect credentials"));
         }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         AccountData accountData = (AccountData) authentication.getPrincipal();
 
         ResponseCookie responseCookie = cookieManager.generateCookieWithJwt(accountData.getUsername());
-
+        
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                .body("You have successfully logged in");
+                .body(personService.getPersonByLogin(loginRequest.login()));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutFromAccount() {
+        ResponseCookie responseCookie = cookieManager.generateEmptyCookie();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(new ResponseJsonBody("You have successfully logout out"));
     }
 }
