@@ -1,10 +1,10 @@
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { Offer } from '../offer.model';
-import { OfferService } from '../offer.service';
+import {Offer} from '../offer.model';
 import {Subscription} from "rxjs";
 import {PageEvent} from "@angular/material/paginator";
+import {DataStorageService} from "../../../shared/data-storage.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -12,46 +12,48 @@ import {PageEvent} from "@angular/material/paginator";
   styleUrls: ['./offer-list.component.css']
 })
 export class OfferListComponent implements OnInit, OnDestroy {
-  recipes!: Offer[];
+  offers: Offer[] = [];
   subscription!: Subscription;
   currentPageIndex: number = 0
   numberOfCol: number = 3
+  limit: number = 10000 // ???????
+  minPrice?: number = undefined
+  maxPrice?: number = undefined
+  minArea?: number = undefined
+  maxArea?: number = undefined
+  roomNumber?: number = undefined
+  city?: string = undefined
+  street?: string = undefined
   public innerWidth: any;
 
-  constructor(private recipeService: OfferService,
+  constructor(private dataStorageService: DataStorageService,
               private router: Router,
               private route: ActivatedRoute) {
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    console.log(window.innerWidth)
-    this.innerWidth = window.innerWidth;
-    this.numberOfCol= Math.floor(this.innerWidth/500)
-    if(this.numberOfCol<1)
-      this.numberOfCol = 1
+  runRequest() {
+    this.dataStorageService.fetchOffers(this.limit, this.currentPageIndex * this.limit, this.minPrice, this.maxPrice, this.minArea, this.maxArea, this.roomNumber, this.city, this.street)
   }
 
   ngOnInit() {
     this.innerWidth = window.innerWidth;
-    this.subscription = this.recipeService.recipesChanged
+    this.subscription = this.dataStorageService.offersChanged
       .subscribe(
         (recipes: Offer[]) => {
-          this.recipes = recipes;
+          console.log("recieve")
+          this.offers = recipes;
+          this.currentPageIndex = 0
         }
       );
-    this.recipes = this.recipeService.getRecipes();
-  }
-
-  onNewRecipe() {
-    this.router.navigate(['new'], {relativeTo: this.route});
+    this.offers = this.dataStorageService.getOffers()
+    console.log(this.offers.length)
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  currentPageChng(event: PageEvent){
+  currentPageChng(event: PageEvent) {
     console.log(this.currentPageIndex)
     this.currentPageIndex = event.pageIndex
   }

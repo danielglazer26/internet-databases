@@ -1,5 +1,3 @@
-<html>
-<body>
 <main class="box">
   <div class="py-5 text-center">
     <img alt="" class="d-block mx-auto mb-4" height="57" src="../assets/logo.svg" width="72">
@@ -21,7 +19,7 @@
                   style="background: #00b6bd; border-color: #00b6bd; margin-top: 20px">Dodaj zdjęcia
           </button>
 
-            <div *ngIf="gallery.length < 1" class="text-white"> Wymagane jest min. jedno zdjęcie </div>
+          <div *ngIf="gallery.length < 1" class="text-white"> Wymagane jest min. jedno zdjęcie </div>
 
           <div class="col-md-12">
             <label class="text-white form-label" for="address" style="padding-top: 20px">Tytuł</label>
@@ -38,7 +36,7 @@
             <img alt="" class="bi me-1" height="10" src="../assets/asterisk.svg" style="margin-top: -10px" width="16">
             <div>
               <textarea class="form-label" placeholder="Opis" formControlName="additionalDescription"
-                      style="max-height: 20vh; height: 20vh; width: 100%"
+                        style="max-height: 20vh; height: 20vh; width: 100%"
                         [ngClass]="{ 'is-invalid':announcementSubmitted && f.additionalDescription.errors}"></textarea>
               <div *ngIf="announcementSubmitted && f.additionalDescription.errors" class="invalid-feedback">
                 <div *ngIf="f.additionalDescription.errors.required">Opis jest wymagany</div>
@@ -183,5 +181,3 @@
     </div>
   </form>
 </main>
-</body>
-</html>

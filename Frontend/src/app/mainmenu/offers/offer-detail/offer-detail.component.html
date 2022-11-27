@@ -1,7 +1,36 @@
-<html>
-<body>
 <div class="box">
 
+  <mat-grid-list [cols]=1 rowHeight=550px>
+    <mat-grid-tile>
+      <app-carousel style="width: 800px"></app-carousel>
+<!--      <img-->
+<!--        [src]="'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'"-->
+<!--        alt="{{ offer.title }}"-->
+<!--        style="width: auto; height: 550px" >-->
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="box2">
+    <div class="row">
+        <div class="col-md-6" style="margin-top: 20px" >
+          <div class="text-white" style="font-size: 25px; margin-left: 20px; margin-top: 40px">
+            {{offer.title}}
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 20px;" >
+          <div class="text-white" style="font-size: 25px; margin-left: 20px; margin-top: 40px;">
+            {{getCostText()}}
+          </div>
+      </div>
+    </div>
+    <div class="text-white " style="font-size: 15px; margin-left: 20px; margin-top: 5px; color: #cecece;">
+      {{getAddress()}}
+    </div>
+
+    <div class="text-white" style="font-size: 18px; margin-left: 20px; margin-top: 40px">
+      {{offer.additionalDescription}}
+    </div>
+
+  </div>
+
 </div>
-</body>
-</html>

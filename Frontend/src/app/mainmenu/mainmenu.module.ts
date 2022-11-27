@@ -17,7 +17,6 @@ import {OfferComponent} from "./offers/offer.component";
 import {OfferListComponent} from "./offers/offer-list/offer-list.component";
 import {OfferItemComponent} from "./offers/offer-list/offer-item/offer-item.component";
 import {OfferDetailComponent} from "./offers/offer-detail/offer-detail.component";
-import {OfferService} from "./offers/offer.service";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {TextFieldModule} from "@angular/cdk/text-field";
@@ -33,8 +32,6 @@ import {MatDialogModule} from "@angular/material/dialog";
   imports: [
     CommonModule,
     MainMenuRoutingModule,
-
-    // NG Material Modules
     MatSidenavModule,
     MatIconModule,
     MatListModule,
@@ -48,9 +45,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     TextFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatDialogModule
-  ],
-  providers: [OfferService],
+    MatDialogModule]
 })
+
 export class MainMenuModule {
 }

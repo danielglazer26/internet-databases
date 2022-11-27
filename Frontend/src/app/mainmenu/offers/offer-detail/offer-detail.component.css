@@ -5,6 +5,16 @@
   padding-right: 5vw;
   padding-top: 2vh;
   width: 100vw;
-  height: 100vh;
+  height: auto;
+}
+
+.box2{
+  background: #212529;
+  height: auto;
+  min-height: 500px;
+  border-radius: 20px;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-bottom: 200px;
 }
 

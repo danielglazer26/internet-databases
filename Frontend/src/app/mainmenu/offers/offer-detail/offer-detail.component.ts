@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Offer } from '../offer.model';
-import { OfferService } from '../offer.service';
+import {DataStorageService} from "../../../shared/data-storage.service";
 
 @Component({
-  selector: 'app-recipe-detail',
+  selector: 'app-offer-detail',
   templateUrl: './offer-detail.component.html',
   styleUrls: ['./offer-detail.component.css']
 })
 export class OfferDetailComponent implements OnInit {
-  recipe!: Offer;
-  id!: number;
+  offer!: Offer;
+  index!: number;
 
-  constructor(private recipeService: OfferService,
+  constructor(private dataStorageService: DataStorageService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -22,20 +22,33 @@ export class OfferDetailComponent implements OnInit {
     this.route.params
       .subscribe(
         (params: Params) => {
-          this.id = +params['id'];
-          this.recipe = this.recipeService.getRecipe(this.id);
+          this.index = +params['index'];
+          this.offer = this.dataStorageService.getOffer(this.index);
         }
       );
   }
 
-  onEditRecipe() {
-    this.router.navigate(['edit'], {relativeTo: this.route});
-    // this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
+  getCostText(){
+    return this.offer.costPerMonth + " zł"
   }
 
-  onDeleteRecipe() {
-    this.recipeService.deleteRecipe(this.id);
-    this.router.navigate(['/recipes']);
+  getAddress(){
+    return this.offer.city + ", " + this.offer.street
+  }
+
+  getRoomNumber(){
+    let nr = this.offer.roomNumber
+    if(nr == 1){
+      return nr + " pokój"
+    }else if(nr%10 >= 2 && nr%10 <= 4 && nr > 20){
+      return nr + " pokoje"
+    }else{
+      return nr + " pokoi"
+    }
+  }
+
+  getArea(){
+    return this.offer.area + " m2"
   }
 
 }

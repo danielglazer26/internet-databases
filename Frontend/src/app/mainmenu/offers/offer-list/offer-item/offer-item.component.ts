@@ -8,9 +8,33 @@ import { Offer } from '../../offer.model';
   styleUrls: ['./offer-item.component.css']
 })
 export class OfferItemComponent implements OnInit {
-  @Input() recipe!: Offer;
+  @Input() offer!: Offer;
   @Input() index!: number;
 
   ngOnInit() {
   }
+
+  getCostText(){
+    return this.offer.costPerMonth + " zł"
+  }
+
+  getAddress(){
+    return this.offer.city + ", " + this.offer.street
+  }
+
+  getRoomNumber(){
+    let nr = this.offer.roomNumber
+    if(nr == 1){
+      return nr + " pokój"
+    }else if(nr%10 >= 2 && nr%10 <= 4 && nr > 20){
+      return nr + " pokoje"
+    }else{
+      return nr + " pokoi"
+    }
+  }
+
+  getArea(){
+    return this.offer.area + " m2"
+  }
 }
+
