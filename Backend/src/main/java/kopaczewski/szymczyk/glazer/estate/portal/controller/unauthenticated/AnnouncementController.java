@@ -5,12 +5,16 @@ import kopaczewski.szymczyk.glazer.estate.portal.database.services.AnnouncementS
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.PhotoService;
 import org.hibernate.engine.jdbc.StreamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @RestController
 @CrossOrigin
@@ -37,12 +41,12 @@ public class AnnouncementController {
                 minCost, maxCost,
                 minArea, maxArea,
                 roomNumber, city, street,
-                apartmentNumber,announcementType, limit, offset);
+                apartmentNumber, announcementType, limit, offset);
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/photo/")
-    public HttpEntity<?> fileDownload(HttpServletResponse response, @RequestParam("photoId") Long photoId){
+    public HttpEntity<?> fileDownload(HttpServletResponse response, @RequestParam("photoId") Long photoId) {
         try {
             StreamUtils.copy(photoService.getPhoto(photoId), response.getOutputStream());
             response.setContentType(MediaType.IMAGE_PNG_VALUE);
@@ -51,5 +55,12 @@ public class AnnouncementController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseJsonBody(e.getMessage()));
         }
+    }
+
+    @GetMapping(value = "/getPrivacyPolicy")
+    public ResponseEntity<?> getPDF() throws IOException {
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(Files.newInputStream(Path.of("polityka_prywatnosci.pdf"))));
     }
 }
