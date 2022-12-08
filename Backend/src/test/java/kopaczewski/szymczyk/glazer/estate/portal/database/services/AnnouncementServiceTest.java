@@ -95,6 +95,6 @@ public class AnnouncementServiceTest {
                 announcement0.getCostPerMonth(), announcement0.getRent(), announcement0.getDeposit(), announcement0.getRoomNumber(),
                 announcement0.getArea());
         Assertions.assertEquals(1, service.getFiltered(1000, 200000, 10.0, 200.0, 1000,
-                "Wroclaw", "staro miejska", 0,AnnouncementType.RENTAL.ordinal() ,10, 0).size());
+                "Wroclaw", "staro miejska", String.valueOf(0),AnnouncementType.RENTAL.ordinal() ,10, 0).size());
     }
 }

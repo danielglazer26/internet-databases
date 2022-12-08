@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {RequestManagerService} from "../connection/http/request-manager.service";
+import {HashPasswordService} from "../connection/authorization/hash-password.service";
+
 
 @Component({
   selector: 'app-register',
@@ -15,7 +17,7 @@ export class RegisterComponent {
   showLoginBusy: boolean = false;
   errorMessage !: string
 
-  constructor(fb: FormBuilder, private router: Router, private requestManager: RequestManagerService) {
+  constructor(fb: FormBuilder, private router: Router, private requestManager: RequestManagerService, private bcrypt : HashPasswordService) {
     this.accountForm = new FormGroup<any>({
         login: fb.control('', Validators.required),
         password: fb.control('', [Validators.minLength(8), Validators.required]),
@@ -41,6 +43,8 @@ export class RegisterComponent {
     }
     const jsonObject = JSON.parse(JSON.stringify(this.accountForm.value, null, 4))
     delete jsonObject.confirmPassword
+
+    jsonObject.password = this.bcrypt.makeHash(jsonObject.password)
 
     this.requestManager.registerAccount(JSON.stringify(jsonObject, undefined, 4)).subscribe({
       error: err => {
