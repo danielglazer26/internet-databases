@@ -3,9 +3,9 @@
     <mat-grid-list [cols]=1 rowHeight="300px">
       <mat-grid-tile
         *ngFor="let recipeEl of offers; let i = index">
-        <app-recipe-item
+        <app-offer-with-delete
           [index]="i"
-          [offer]="recipeEl"></app-recipe-item>
+          [offer]="recipeEl"></app-offer-with-delete>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

@@ -14,6 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class OfferItemComponent implements OnInit {
   @Input() offer!: Offer;
   @Input() index!: number;
+  source = 0
   coverId = 1
 
   constructor(private dataStorageService: DataStorageService) {

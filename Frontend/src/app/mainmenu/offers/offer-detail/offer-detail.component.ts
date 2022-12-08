@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 
 import {Offer} from '../offer.model';
@@ -13,6 +13,7 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrls: ['./offer-detail.component.css']
 })
 export class OfferDetailComponent implements OnInit {
+  source!: number
   offer!: Offer;
   index!: number;
   dataSource: Pair[] = []
@@ -32,7 +33,11 @@ export class OfferDetailComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.index = +params['index'];
-          this.offer = this.dataStorageService.getOffer(this.index);
+          this.source = +params['source'];
+          if(this.source == 0)
+            this.offer = this.dataStorageService.getOffer(this.index);
+          else
+            this.offer = this.dataStorageService.getUserOffer(this.index);
           this.dataSource = [
             new Pair("Konto", this.offer.ownerLogin),
             new Pair("Numer mieszkania", this.offer.apartmentNumber.toString()),

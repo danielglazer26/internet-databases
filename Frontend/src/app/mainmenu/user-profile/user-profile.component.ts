@@ -18,11 +18,11 @@ export class UserProfileComponent implements OnInit {
               private cookieSessionStorageService: CookieSessionStorageService,
               private router: Router,
               private route: ActivatedRoute) {
-    this.dataStorageService.fetchUserOffers(cookieSessionStorageService.getUser().personId)
+    this.dataStorageService.fetchUserOffers(cookieSessionStorageService.getUser().login)
   }
 
   ngOnInit() {
-    this.subscription = this.dataStorageService.offersChanged
+    this.subscription = this.dataStorageService.userOffersChanged
       .subscribe(
         (offers: Offer[]) => {
           this.offers = offers;

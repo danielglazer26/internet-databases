@@ -27,11 +27,12 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {DragScrollModule} from "ngx-drag-scroll";
 import {MatTableModule} from "@angular/material/table";
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { OfferWithDeleteComponent } from './user-profile/offer-with-delete/offer-with-delete.component';
 
 @NgModule({
   declarations: [AddOfferComponent, LoginComponent, HomeComponent, SidenavWrapperComponent,
     CarouselComponent, OfferComponent, OfferListComponent,
-    OfferItemComponent, OfferDetailComponent, RegisterComponent, UserProfileComponent],
+    OfferItemComponent, OfferDetailComponent, RegisterComponent, UserProfileComponent, OfferWithDeleteComponent],
   imports: [
     CommonModule,
     MainMenuRoutingModule,

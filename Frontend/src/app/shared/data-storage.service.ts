@@ -30,11 +30,15 @@ export class DataStorageService {
     return this.offers[id];
   }
 
-  getCurrentPhotos(){
+  getUserOffer(id: number) {
+    return this.userOffers[id];
+  }
+
+  getCurrentPhotos() {
     return this.currentPhotos
   }
 
-  fetchPhotos(announcementId: number){
+  fetchPhotos(announcementId: number) {
 
     let params = new HttpParams().append('announcementId', announcementId);
     this.http
@@ -44,25 +48,40 @@ export class DataStorageService {
           params: params
         }
       )
-      .pipe(map(ids => {return ids}),
+      .pipe(map(ids => {
+          return ids
+        }),
         tap(ids => {
           console.log(ids.length)
           this.currentPhotos = ids
           this.photosChanged.next(ids.slice());
         })
       ).subscribe(e => {
-        console.log("OWIP2")
-      })
+      console.log("OWIP2")
+    })
   }
 
-  fetchUserOffers(personId: number){
-    let params = new HttpParams().append('limit', 1000).append('offset', 0)
-   // params.append('personId', personId)
+  destroyOffer(announcementId: number, ownerLogin: string) {
+    let params = new HttpParams().append('announcementId', announcementId)
+    this.http
+      .delete<Offer[]>(
+        'http://localhost:8080/authenticated/destroyAnnouncement/',
+        {
+          params: params
+        }
+      ).subscribe(e => {
+      console.log("333")
+      this.fetchUserOffers(ownerLogin)
+    })
+  }
+
+  fetchUserOffers(ownerLogin: string) {
+    let params = new HttpParams().append('ownerLogin', ownerLogin)
     this.http
       .get<Offer[]>(
-        'http://localhost:8080/public/announcements/',
+        'http://localhost:8080/authenticated/getPersonalAnnouncement/',
         {
-           params: params
+          params: params
         }
       )
       .pipe(
@@ -87,7 +106,7 @@ export class DataStorageService {
 
     let params = new HttpParams().append('limit', limit).append('offset', offset)
     let typeAn = 0
-    if(type == "Sprzedaż"){
+    if (type == "Sprzedaż") {
       typeAn = 1
     }
 

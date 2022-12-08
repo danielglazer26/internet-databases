@@ -26,7 +26,7 @@ const routes: Routes = [
         component: LoginComponent
       },
       {
-        path: 'offer-detail/:index',
+        path: 'offer-detail/:index/:source',
         component: OfferDetailComponent
       },
       {
