@@ -8,18 +8,9 @@
 <!--      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>-->
 <!--      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>-->
 <!--    </div>-->
-<!--    <div class="carousel-inner">-->
-<!--      <div class="carousel-item active">-->
-<!--&lt;!&ndash;        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>&ndash;&gt;-->
-<!--        <img src="http://localhost:8080/public/photo/?photoId=1" alt="keel-billed-toucan" style="height:100%;width:100%;" />-->
-<!--      </div>-->
-<!--&lt;!&ndash;      <div class="carousel-item">&ndash;&gt;-->
-<!--&lt;!&ndash;        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--    </div>-->
 
     <div class="carousel-inner">
-      <div *ngFor="let data of gallery; let i=index" [ngClass]="(i === 0) ? 'active' : ''">
+      <div *ngFor="let data of gallery; let i=index" [ngClass]="(i === 0) ? 'inactive' : ''">
         <img src="http://localhost:8080/public/photo/?photoId={{ data }}" alt="nameOfPictureId{{data}}">
         <div class="container">
           <div class="carousel-caption">
@@ -30,14 +21,14 @@
     </div>
 
 
-<!--    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">-->
-<!--      <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--      <span class="visually-hidden">Previous</span>-->
-<!--    </button>-->
-<!--    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">-->
-<!--      <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--      <span class="visually-hidden">Next</span>-->
-<!--    </button>-->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
 </main>
 </body>
