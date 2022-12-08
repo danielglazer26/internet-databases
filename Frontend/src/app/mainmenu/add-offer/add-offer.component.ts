@@ -46,9 +46,9 @@ export class AddOfferComponent {
     this.requestManager.createAnnouncement(raw).subscribe({
       next: value => {
         this.announcementId = parseInt(value.message.split(": ")[1])
-        console.log(this.announcementId)
+        console.log("On Init activity, init successful, given announcement id: " + this.announcementId)
       },
-      error: err => console.log(err)
+      error: err => console.log("On Init activity, init fail: " + err)
     })
   }
 
@@ -59,8 +59,8 @@ export class AddOfferComponent {
   ngOnDestroy(): void {
     if (!this.announcementSubmitted) {
       this.requestManager.destroyAnnouncement(this.announcementId).subscribe({
-        next: value => console.log(value),
-        error: err => console.log(err)
+        next: value => console.log("On destroy activity, destroy successfully: " + value),
+        error: err => console.log("On destroy activity, destroy fail: " + err)
       })
     }
   }
@@ -77,16 +77,15 @@ export class AddOfferComponent {
   fileInputChange(fileInputEvent: any) {
     let formData = new FormData();
     formData.append("image", fileInputEvent.target.files[0]);
-    formData.append("announcementId", "1");
+    formData.append("announcementId", this.announcementId.toString());
     this.requestManager.uploadPhoto(formData).subscribe({
       next: value => {
         let photoId = parseInt(value.message)
         this.gallery.push(photoId)
-        console.log(photoId)
+        console.log("Add photo activity successful, added photo id: " + photoId)
       },
-      error: err => console.log(err)
+      error: err => console.log("Add photo activity fail: " + err)
     })
-    // console.log(fileInputEvent.target.files[0]);
   }
 
   getIsAddEnable() {
@@ -107,8 +106,9 @@ export class AddOfferComponent {
     const jsonObject = JSON.parse(JSON.stringify(this.profileForm.value, null, 4))
     jsonObject.announcementId = this.announcementId
     jsonObject.ownerLogin = this.cookieStorage.getUser().login
+    jsonObject.coverPhotoId = this.gallery[0]
     this.requestManager.updateAnnouncement(jsonObject).subscribe({
-      error: err => console.log(err),
+      error: err => console.log("Add announcement activity fail: " + err),
       complete: () => {
         this.showSuccess = false
         setTimeout(() => {

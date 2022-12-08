@@ -30,8 +30,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
                 (:minArea is null OR a.area > :minArea ) AND
                 (:maxArea is null OR a.area < :maxArea ) AND
                 (:roomNumber is null OR a.room_number = :roomNumber) AND
-                (:city is null OR a.city = :city) AND
-                (:street is null OR a.street = :street) AND
+                (:city is null OR a.city LIKE CONCAT('%',:city,'%')) AND
+                (:street is null OR a.street LIKE CONCAT('%',:street,'%')) AND
                 (:apartmentNumber is null OR a.apartment_number = :apartmentNumber) AND
                 (:announcementType is null OR a.announcement_type = :announcementType)
             LIMIT :limit OFFSET :offset""")
@@ -56,6 +56,7 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
             " title = :nTitle," +
             " additionalDescription = :nDescription," +
             " announcementType = :nAnnouncementType," +
+            " coverPhotoId = :nCoverPhotoId,"+
             " apartmentNumber = :nApartmentNumber," +
             " street = :nStreet," +
             " city = :nCity," +
@@ -71,6 +72,7 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
             @Param("nTitle") String title,
             @Param("nDescription") String additionalDescription,
             @Param("nAnnouncementType") AnnouncementType announcementType,
+            @Param("nCoverPhotoId") Long coverPhotoId,
             @Param("nApartmentNumber") String apartmentNumber,
             @Param("nStreet") String street,
             @Param("nCity") String city,
@@ -80,4 +82,7 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
             @Param("nDeposit") Integer deposit,
             @Param("nRoomNumber") Integer roomNumber,
             @Param("nArea") Double area);
+
+    @Query("select a.coverPhotoId from Announcement a where a.announcementId = :id")
+    Optional<Long> getCoverPhotoIdByAnnouncementId(@Param("id") Long announcementId);
 }
