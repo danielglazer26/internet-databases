@@ -6,6 +6,7 @@ export class AnnouncementFormGroup extends FormGroup {
       announcementId: fb.control(''),
       title: fb.control('',Validators.required),
       additionalDescription: fb.control('',Validators.required),
+      coverPhotoId:fb.control(''),
       street: fb.control('', Validators.required),
       apartmentNumber: fb.control(''),
       province: fb.control(-1, Validators.pattern("[0-9+]")),

@@ -17,7 +17,8 @@ export class RegisterComponent {
   showLoginBusy: boolean = false;
   errorMessage !: string
 
-  constructor(fb: FormBuilder, private router: Router, private requestManager: RequestManagerService, private bcrypt : HashPasswordService) {
+  constructor(fb: FormBuilder, private router: Router, private requestManager: RequestManagerService,
+              private bcrypt : HashPasswordService) {
     this.accountForm = new FormGroup<any>({
         login: fb.control('', Validators.required),
         password: fb.control('', [Validators.minLength(8), Validators.required]),
