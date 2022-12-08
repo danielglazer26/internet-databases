@@ -24,6 +24,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {RegisterComponent} from './register/register.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {DragScrollModule} from "ngx-drag-scroll";
 
 @NgModule({
   declarations: [AddOfferComponent, LoginComponent, HomeComponent, SidenavWrapperComponent,
@@ -45,7 +46,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     TextFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatDialogModule]
+    MatDialogModule,
+    DragScrollModule]
 })
 
 export class MainMenuModule {

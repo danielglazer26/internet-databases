@@ -2,15 +2,16 @@
   <div
     [routerLink]="['/offer-detail', index ]"
     routerLinkActive="active"
+    (click)="fetchPhotos()"
     style="cursor: pointer; background: #212529; width: 800px; height: 280px; border-radius: 50px ">
 
     <mat-grid-list [cols]=2 rowHeight=280px>
 
       <mat-grid-tile>
         <img
-          [src]="'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'"
+          src="http://localhost:8080/public/photo/?photoId={{offer.coverPhotoId}}"
           alt="{{ offer.title }}"
-          style="height: inherit;">
+          style="height: inherit; min-width: 450px; width: 450px">
       </mat-grid-tile>
 
       <mat-grid-tile>
@@ -22,7 +23,6 @@
           <div [textContent]="getArea()" class="text-next child" style="font-size: 15px; color: #cecece;"></div>
         </div>
       </mat-grid-tile>
-
     </mat-grid-list>
   </div>
 </a>

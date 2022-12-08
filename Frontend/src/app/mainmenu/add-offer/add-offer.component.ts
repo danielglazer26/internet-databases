@@ -86,6 +86,7 @@ export class AddOfferComponent {
       },
       error: err => console.log("Add photo activity fail: " + err)
     })
+    console.log(fileInputEvent.target.files[0]);
   }
 
   getIsAddEnable() {

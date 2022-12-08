@@ -3,9 +3,16 @@
   padding-bottom: 5vh;
   padding-left: -35vw;
   padding-right: 5vw;
-  padding-top: 2vh;
   width: 100vw;
   height: auto;
+}
+
+.mat_list{
+
+  padding-bottom: 5vh;
+  padding-left: -35vw;
+  padding-right: 5vw;
+  width: 100vw;
 }
 
 .box2{
@@ -16,5 +23,24 @@
   margin-left: 200px;
   margin-right: 200px;
   margin-bottom: 200px;
+  margin-top: 30px;
+}
+
+.main_image{
+  width: 960px;
+  height: 540px;
+}
+
+.scroller{
+  background: #2c3034;
+  height: 300px;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+.img_item {
+  height: 300px;
+  width: 420px;
+  padding: 14px;
 }
 

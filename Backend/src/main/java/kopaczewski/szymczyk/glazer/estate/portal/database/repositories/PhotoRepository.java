@@ -17,6 +17,8 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
     @Query("select p from Photo p where p.announcementId = :announcementId")
     List<Photo> getPhotosByAnnouncementId(@Param("announcementId") Long announcementId);
+    @Query("select p.photoId from Photo p where p.announcementId = :announcementId")
+    List<Long> getPhotosIdsByAnnouncementId(@Param("announcementId") Long announcementId);
 
     @Query("select p from Photo p where p.photoId = :photoId")
     Optional<Photo> getPhotoByPhotoId(@Param("photoId") Long photoId);

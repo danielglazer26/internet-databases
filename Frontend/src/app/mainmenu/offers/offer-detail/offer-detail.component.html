@@ -1,12 +1,18 @@
 <div class="box">
 
-  <mat-grid-list [cols]=1 rowHeight=550px>
-    <mat-grid-tile>
-      <app-carousel style="width: 800px"></app-carousel>
-<!--      <img-->
-<!--        [src]="'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'"-->
-<!--        alt="{{ offer.title }}"-->
-<!--        style="width: auto; height: 550px" >-->
+
+  <mat-grid-list [cols]=1 rowHeight="4rem" [gutterSize]="'10px'">
+
+    <mat-grid-tile [rowspan]="8">
+      <img class="main_image" drag-scroll-item src="http://localhost:8080/public/photo/?photoId=1"  alt=""/>
+    </mat-grid-tile>
+
+    <mat-grid-tile [rowspan]="3">
+      <drag-scroll class="scroller">
+        <span *ngFor="let i of imagesId;">
+          <img class="img_item"  drag-scroll-item src="http://localhost:8080/public/photo/?photoId={{i}}"  alt=""/>
+        </span>
+      </drag-scroll>
     </mat-grid-tile>
   </mat-grid-list>
 

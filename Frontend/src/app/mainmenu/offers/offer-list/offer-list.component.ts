@@ -32,6 +32,13 @@ export class OfferListComponent implements OnInit, OnDestroy {
   }
 
   runRequest() {
+    console.log(this.minPrice)
+    console.log(this.maxPrice)
+    console.log(this.minArea)
+    console.log(this.maxArea)
+    console.log(this.roomNumber)
+    console.log(this.city)
+    console.log(this.street)
     this.dataStorageService.fetchOffers(this.limit, this.currentPageIndex * this.limit, this.minPrice, this.maxPrice, this.minArea, this.maxArea, this.roomNumber, this.city, this.street)
   }
 

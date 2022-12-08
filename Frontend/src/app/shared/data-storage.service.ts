@@ -12,7 +12,9 @@ export class DataStorageService {
   }
 
   offersChanged = new Subject<Offer[]>();
+  photosChanged = new Subject<number[]>();
   offers: Offer[] = [];
+  currentPhotos: number[] = []
 
   getOffers() {
     return this.offers;
@@ -20,6 +22,31 @@ export class DataStorageService {
 
   getOffer(id: number) {
     return this.offers[id];
+  }
+
+  getCurrentPhotos(){
+    return this.currentPhotos
+  }
+
+  fetchPhotos(announcementId: number){
+
+    let params = new HttpParams().append('announcementId', announcementId);
+    this.http
+      .get<number[]>(
+        'http://localhost:8080/public/announcementPhotos/',
+        {
+          params: params
+        }
+      )
+      .pipe(map(ids => {return ids}),
+        tap(ids => {
+          console.log(ids.length)
+          this.currentPhotos = ids
+          this.photosChanged.next(ids.slice());
+        })
+      ).subscribe(e => {
+        console.log("OWIP2")
+      })
   }
 
   fetchOffers(limit: number, offset: number, minCost?: number, maxCost?: number, minArea?: number, maxArea?: number, roomNumber?: number, city?: string, street?: string) {
@@ -41,10 +68,10 @@ export class DataStorageService {
     if (roomNumber != null) {
       params = params.append('roomNumber', roomNumber)
     }
-    if (city != null) {
+    if (city != null && city !== "") {
       params = params.append('city', city)
     }
-    if (street != null) {
+    if (street != null && street !== "") {
       params = params.append('street', street)
     }
 
@@ -69,7 +96,7 @@ export class DataStorageService {
           this.offersChanged.next(recipes.slice());
         })
       ).subscribe(e => {
-      console.log("PIWO")
+      console.log("OWIP")
     })
   }
 }

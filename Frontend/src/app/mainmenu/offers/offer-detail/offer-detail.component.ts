@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Offer } from '../offer.model';
 import {DataStorageService} from "../../../shared/data-storage.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-offer-detail',
@@ -12,6 +13,8 @@ import {DataStorageService} from "../../../shared/data-storage.service";
 export class OfferDetailComponent implements OnInit {
   offer!: Offer;
   index!: number;
+  imagesId: number[] = [];
+  subscription!: Subscription;
 
   constructor(private dataStorageService: DataStorageService,
               private route: ActivatedRoute,
@@ -26,7 +29,16 @@ export class OfferDetailComponent implements OnInit {
           this.offer = this.dataStorageService.getOffer(this.index);
         }
       );
+    this.subscription = this.dataStorageService.photosChanged
+      .subscribe(
+        (ids: number[]) => {
+          console.log("recieve")
+          this.imagesId = ids;
+        }
+      );
+    this.imagesId = this.dataStorageService.getCurrentPhotos();
   }
+
 
   getCostText(){
     return this.offer.costPerMonth + " zł"
