@@ -26,11 +26,12 @@ import {RegisterComponent} from './register/register.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {DragScrollModule} from "ngx-drag-scroll";
 import {MatTableModule} from "@angular/material/table";
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [AddOfferComponent, LoginComponent, HomeComponent, SidenavWrapperComponent,
     CarouselComponent, OfferComponent, OfferListComponent,
-    OfferItemComponent, OfferDetailComponent, RegisterComponent],
+    OfferItemComponent, OfferDetailComponent, RegisterComponent, UserProfileComponent],
   imports: [
     CommonModule,
     MainMenuRoutingModule,
