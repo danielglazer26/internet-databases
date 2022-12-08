@@ -10,7 +10,7 @@
 <!--    </div>-->
 
     <div class="carousel-inner">
-      <div *ngFor="let data of gallery; let i=index" [ngClass]="(i === 0) ? 'inactive' : ''">
+      <div *ngFor="let data of gallery; let i=index" [class]="(i === 0) ? 'inactive' : 'active'">
         <img src="http://localhost:8080/public/photo/?photoId={{ data }}" alt="nameOfPictureId{{data}}">
         <div class="container">
           <div class="carousel-caption">
@@ -21,14 +21,14 @@
     </div>
 
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+<!--    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">-->
+<!--      <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--      <span class="visually-hidden">Previous</span>-->
+<!--    </button>-->
+<!--    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">-->
+<!--      <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--      <span class="visually-hidden">Next</span>-->
+<!--    </button>-->
   </div>
 </main>
 </body>

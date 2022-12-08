@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -44,6 +45,16 @@ public class AnnouncementController {
                 roomNumber, city, street,
                 apartmentNumber, announcementType, limit, offset);
         return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping("/announcementCoverPhotoId")
+    public ResponseEntity<?> getAnnouncementCoverPhotoId(@RequestParam("announcementId") Long announcementId){
+        Optional<Long> announcementCoverPhotoId = service.getAnnouncementCoverPhotoId(announcementId);
+        if (announcementCoverPhotoId.isPresent()) {
+            return ResponseEntity.ok(announcementCoverPhotoId.get());
+        }else{
+            return ResponseEntity.badRequest().body(new ResponseJsonBody("Announcement don't have cover photo"));
+        }
     }
 
     @GetMapping("/announcementPhotos")

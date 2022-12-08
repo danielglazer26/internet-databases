@@ -20,6 +20,7 @@ public class Announcement {
     private String title, additionalDescription;
     private AnnouncementType announcementType;
     private String ownerLogin;
+    private Long coverPhotoId;
     //apartment address
     private String apartmentNumber;
     @Column(nullable = false)

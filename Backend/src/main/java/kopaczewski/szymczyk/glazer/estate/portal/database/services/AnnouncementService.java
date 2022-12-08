@@ -38,7 +38,7 @@ public class AnnouncementService {
                 new Announcement(
                         0L,
                         title, additionalDescription, AnnouncementType.values()[announcementType], value.getLogin(),
-                        apartmentNumber, street, city, ProvinceNameEnum.POMERANIAN,
+                        0L, apartmentNumber, street, city, ProvinceNameEnum.POMERANIAN,
                         costPerMonth, rent, deposit,
                         roomNumber, area
                 )
@@ -72,7 +72,9 @@ public class AnnouncementService {
                 minCost, maxCost,
                 minArea, maxArea,
                 roomNumber,
-                city, street, apartmentNumber,
+                city,
+                street,
+                apartmentNumber,
                 announcementType,
                 limit, offset);
 
@@ -93,6 +95,7 @@ public class AnnouncementService {
                 announcement.getTitle(),
                 announcement.getAdditionalDescription(),
                 announcement.getAnnouncementType(),
+                announcement.getCoverPhotoId(),
                 announcement.getApartmentNumber(),
                 announcement.getStreet(),
                 announcement.getCity(),
@@ -108,12 +111,16 @@ public class AnnouncementService {
         var annInDb = announcementRepository.findAnnouncementByAnnouncementId(announcementId);
         if (annInDb.isPresent()) {
             announcementRepository.delete(annInDb.get());
-        }else {
+        } else {
             throw new Exception("there is no such announcement in database");
         }
     }
 
     public void removeAnnouncements(List<Announcement> announcementList) {
         announcementRepository.deleteAll(announcementList);
+    }
+
+    public Optional<Long> getAnnouncementCoverPhotoId(Long announcementId) {
+        return announcementRepository.getCoverPhotoIdByAnnouncementId(announcementId);
     }
 }
