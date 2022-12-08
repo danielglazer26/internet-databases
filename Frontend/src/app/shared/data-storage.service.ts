@@ -49,9 +49,13 @@ export class DataStorageService {
       })
   }
 
-  fetchOffers(limit: number, offset: number, minCost?: number, maxCost?: number, minArea?: number, maxArea?: number, roomNumber?: number, city?: string, street?: string) {
+  fetchOffers(limit: number, offset: number, minCost?: number, maxCost?: number, minArea?: number, maxArea?: number, roomNumber?: number, city?: string, street?: string, type?: string) {
 
     let params = new HttpParams().append('limit', limit).append('offset', offset)
+    let typeAn = 0
+    if(type == "Sprzedaż"){
+      typeAn = 1
+    }
 
     if (minCost != null) {
       params = params.append('minCost', minCost)
@@ -74,6 +78,9 @@ export class DataStorageService {
     if (street != null && street !== "") {
       params = params.append('street', street)
     }
+
+    params = params.append('announcementType', typeAn)
+    console.log(typeAn)
 
     this.http
       .get<Offer[]>(

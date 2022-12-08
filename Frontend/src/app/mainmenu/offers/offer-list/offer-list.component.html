@@ -30,8 +30,7 @@
 
   <div class="col-12" style="width: auto; margin-left: 50px ">
     <input type="number" [(ngModel)]="roomNumber" placeholder="Liczba pokoi" style="height: 40px" >
-    <select class="form-select" id="state" style="margin-top: 10px; height: 40px">
-      <option value="">Rodzaj ogłoszenia</option>
+    <select class="form-select" [(ngModel)]="type" id="state" style="margin-top: 10px; height: 40px" >
       <option>Wynajem</option>
       <option>Sprzedaż</option>
     </select>
