@@ -3,6 +3,7 @@ import {AbstractControl, FormBuilder, FormGroup} from "@angular/forms";
 import {AnnouncementFormGroup} from "./announcement-form";
 import {RequestManagerService} from "../connection/http/request-manager.service";
 import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-offer',
@@ -14,6 +15,7 @@ export class AddOfferComponent {
   profileForm!: FormGroup;
 
   type: boolean = true
+  showSuccess: boolean = true
   isAddEnable: boolean = true
   announcementSubmitted: boolean = false
   announcementId: number = -1
@@ -21,7 +23,7 @@ export class AddOfferComponent {
 
 
   constructor(fb: FormBuilder, private requestManager: RequestManagerService,
-              private cookieStorage: CookieSessionStorageService) {
+              private cookieStorage: CookieSessionStorageService, private router: Router) {
     this.profileForm = new AnnouncementFormGroup(fb)
   }
 
@@ -58,7 +60,7 @@ export class AddOfferComponent {
     if (!this.announcementSubmitted) {
       this.requestManager.destroyAnnouncement(this.announcementId).subscribe({
         next: value => console.log(value),
-        error:err => console.log(err)
+        error: err => console.log(err)
       })
     }
   }
@@ -67,7 +69,7 @@ export class AddOfferComponent {
   onTypeChange(type: number) {
     this.type = (type == 0)
     let jsonObject = JSON.parse(JSON.stringify(this.profileForm?.value, undefined, 4));
-    jsonObject.announcementType = this.type ? 0 :1
+    jsonObject.announcementType = this.type ? 0 : 1
     // @ts-ignore
     this.profileForm.patchValue(jsonObject)
   }
@@ -94,7 +96,7 @@ export class AddOfferComponent {
   onSubmit() {
     this.announcementSubmitted = true
     console.log(this.gallery.length)
-    if(this.gallery.length === 0){
+    if (this.gallery.length === 0) {
       return;
     }
     if (this.profileForm.invalid) {
@@ -103,11 +105,16 @@ export class AddOfferComponent {
 
 
     const jsonObject = JSON.parse(JSON.stringify(this.profileForm.value, null, 4))
-    jsonObject.announcementId=this.announcementId
-    jsonObject.ownerLogin=this.cookieStorage.getUser().login
+    jsonObject.announcementId = this.announcementId
+    jsonObject.ownerLogin = this.cookieStorage.getUser().login
     this.requestManager.updateAnnouncement(jsonObject).subscribe({
-      next: value => console.log(value),
-      error: err => console.  log(err)
+      error: err => console.log(err),
+      complete: () => {
+        this.showSuccess = false
+        setTimeout(() => {
+          this.router.navigateByUrl('/announcements/')
+        }, 1500)
+      }
     })
     /* let json = JSON.stringify(this.profileForm?.value, undefined, 4);
      console.log(json)*/

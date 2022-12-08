@@ -1,6 +1,7 @@
 package kopaczewski.szymczyk.glazer.estate.portal.controller.unauthenticated;
 
 import kopaczewski.szymczyk.glazer.estate.portal.controller.ResponseJsonBody;
+import kopaczewski.szymczyk.glazer.estate.portal.database.model.Photo;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.AnnouncementService;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.PhotoService;
 import org.hibernate.engine.jdbc.StreamUtils;
@@ -43,6 +44,11 @@ public class AnnouncementController {
                 roomNumber, city, street,
                 apartmentNumber, announcementType, limit, offset);
         return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping("/announcementPhotos")
+    public ResponseEntity<?> getAnnouncementPhotos(@RequestParam("announcementId") Long announcementId){
+        return ResponseEntity.ok(photoService.getPhotosByAnnouncementId(announcementId).stream().map(Photo::getPhotoId));
     }
 
     @GetMapping("/photo/")
