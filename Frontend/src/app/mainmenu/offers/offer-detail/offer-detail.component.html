@@ -1,16 +1,15 @@
 <div class="box">
 
-
-  <mat-grid-list [cols]=1 rowHeight="4rem" [gutterSize]="'10px'">
+  <mat-grid-list class="mat_list" [cols]=1 rowHeight="4rem" [gutterSize]="'10px'">
 
     <mat-grid-tile [rowspan]="8">
-      <img class="main_image" drag-scroll-item src="http://localhost:8080/public/photo/?photoId=1"  alt=""/>
+      <img class="main_image" drag-scroll-item src="http://localhost:8080/public/photo/?photoId={{selectedPhoto}}"  alt=""/>
     </mat-grid-tile>
 
     <mat-grid-tile [rowspan]="3">
       <drag-scroll class="scroller">
         <span *ngFor="let i of imagesId;">
-          <img class="img_item"  drag-scroll-item src="http://localhost:8080/public/photo/?photoId={{i}}"  alt=""/>
+          <img class="img_item"  drag-scroll-item src="http://localhost:8080/public/photo/?photoId={{i}}"  alt="" (click)="changePhoto(i)"/>
         </span>
       </drag-scroll>
     </mat-grid-tile>

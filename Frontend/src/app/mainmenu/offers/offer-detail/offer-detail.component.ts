@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
-import { Offer } from '../offer.model';
+import {Offer} from '../offer.model';
 import {DataStorageService} from "../../../shared/data-storage.service";
 import {Subscription} from "rxjs";
 
@@ -15,6 +15,7 @@ export class OfferDetailComponent implements OnInit {
   index!: number;
   imagesId: number[] = [];
   subscription!: Subscription;
+  selectedPhoto?: number = undefined
 
   constructor(private dataStorageService: DataStorageService,
               private route: ActivatedRoute,
@@ -37,29 +38,35 @@ export class OfferDetailComponent implements OnInit {
         }
       );
     this.imagesId = this.dataStorageService.getCurrentPhotos();
+    this.selectedPhoto = this.offer.coverPhotoId
   }
 
+  changePhoto(id: number) {
+    if (this.selectedPhoto != undefined) {
+      this.selectedPhoto = id
+    }
+  }
 
-  getCostText(){
+  getCostText() {
     return this.offer.costPerMonth + " zł"
   }
 
-  getAddress(){
+  getAddress() {
     return this.offer.city + ", " + this.offer.street
   }
 
-  getRoomNumber(){
+  getRoomNumber() {
     let nr = this.offer.roomNumber
-    if(nr == 1){
+    if (nr == 1) {
       return nr + " pokój"
-    }else if(nr%10 >= 2 && nr%10 <= 4 && nr > 20){
+    } else if (nr % 10 >= 2 && nr % 10 <= 4 && nr > 20) {
       return nr + " pokoje"
-    }else{
+    } else {
       return nr + " pokoi"
     }
   }
 
-  getArea(){
+  getArea() {
     return this.offer.area + " m2"
   }
 

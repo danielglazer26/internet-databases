@@ -14,3 +14,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color:rgb(255, 37, 37,.26);
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+  background: #2c3034;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #212529;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555b64;
+}
+

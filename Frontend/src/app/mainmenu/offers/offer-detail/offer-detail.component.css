@@ -3,16 +3,12 @@
   padding-bottom: 5vh;
   padding-left: -35vw;
   padding-right: 5vw;
-  width: 100vw;
+  width: inherit;
   height: auto;
 }
 
 .mat_list{
-
-  padding-bottom: 5vh;
-  padding-left: -35vw;
-  padding-right: 5vw;
-  width: 100vw;
+  width: inherit;
 }
 
 .box2{
