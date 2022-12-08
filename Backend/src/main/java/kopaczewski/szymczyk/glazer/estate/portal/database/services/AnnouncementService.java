@@ -123,4 +123,8 @@ public class AnnouncementService {
     public Optional<Long> getAnnouncementCoverPhotoId(Long announcementId) {
         return announcementRepository.getCoverPhotoIdByAnnouncementId(announcementId);
     }
+
+    public List<Announcement> getAnnouncementsByOwnerLogin(String ownerLogin) {
+        return announcementRepository.getAnnouncementsByOwnerLogin(ownerLogin);
+    }
 }
