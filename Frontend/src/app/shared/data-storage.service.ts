@@ -12,12 +12,18 @@ export class DataStorageService {
   }
 
   offersChanged = new Subject<Offer[]>();
+  userOffersChanged = new Subject<Offer[]>();
   photosChanged = new Subject<number[]>();
   offers: Offer[] = [];
+  userOffers: Offer[] = [];
   currentPhotos: number[] = []
 
   getOffers() {
     return this.offers;
+  }
+
+  getUserOffers() {
+    return this.userOffers;
   }
 
   getOffer(id: number) {
@@ -47,6 +53,34 @@ export class DataStorageService {
       ).subscribe(e => {
         console.log("OWIP2")
       })
+  }
+
+  fetchUserOffers(personId: number){
+    let params = new HttpParams().append('limit', 1000).append('offset', 0)
+   // params.append('personId', personId)
+    this.http
+      .get<Offer[]>(
+        'http://localhost:8080/public/announcements/',
+        {
+           params: params
+        }
+      )
+      .pipe(
+        map(offers => {
+          return offers.map(offer => {
+            return {
+              ...offer,
+            };
+          });
+        }),
+        tap(offers => {
+          console.log(offers.length)
+          this.userOffers = offers
+          this.userOffersChanged.next(offers.slice());
+        })
+      ).subscribe(e => {
+      console.log("OWIP222")
+    })
   }
 
   fetchOffers(limit: number, offset: number, minCost?: number, maxCost?: number, minArea?: number, maxArea?: number, roomNumber?: number, city?: string, street?: string, type?: string) {

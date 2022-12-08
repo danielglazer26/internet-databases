@@ -1,1 +1,12 @@
-<p>user-profile works!</p>
+<div class="box">
+  <div>
+    <mat-grid-list [cols]=1 rowHeight="300px">
+      <mat-grid-tile
+        *ngFor="let recipeEl of offers; let i = index">
+        <app-recipe-item
+          [index]="i"
+          [offer]="recipeEl"></app-recipe-item>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
