@@ -40,11 +40,16 @@ public class AuthenticatedControllers {
         } catch (Exception e) {
             return ResponseEntity.accepted().body(new ResponseJsonBody(e.getMessage()));
         }
+    }
 
+    @GetMapping("/getPersonalAnnouncement")
+    public ResponseEntity<?> getPersonalAnnouncements(@RequestParam String ownerLogin) {
+        var personalAnnouncements = announcementService.getAnnouncementsByOwnerLogin(ownerLogin);
+        return ResponseEntity.ok(personalAnnouncements);
     }
 
     @PutMapping("/updateAnnouncement")
-    public ResponseEntity<?> updateAnnouncement(@RequestBody Announcement announcement){
+    public ResponseEntity<?> updateAnnouncement(@RequestBody Announcement announcement) {
         try {
             announcementService.updateAnnouncement(announcement);
             return ResponseEntity.ok().build();
@@ -67,7 +72,7 @@ public class AuthenticatedControllers {
     public ResponseEntity<?> fileUpload(@RequestParam("image") MultipartFile image, @RequestParam("announcementId") Long announcementId) {
         try {
             var id = photoService.createPhoto(image.getBytes(), announcementId);
-            return id.map(photo -> ResponseEntity.ok(new ResponseJsonBody( photo.getPhotoId().toString())))
+            return id.map(photo -> ResponseEntity.ok(new ResponseJsonBody(photo.getPhotoId().toString())))
                     .orElseGet(() -> ResponseEntity.badRequest().body(new ResponseJsonBody("Error occurs when add new picture to database")));
         } catch (IOException e) {
             throw new RuntimeException(e);
