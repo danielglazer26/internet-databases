@@ -1,6 +1,7 @@
 import {AfterContentChecked, Component, OnInit, ViewChild} from '@angular/core';
 import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
 import {RequestManagerService} from "../connection/http/request-manager.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sidenav-wrapper',
@@ -17,7 +18,7 @@ export class SidenavWrapperComponent implements OnInit, AfterContentChecked {
 
   currentMenu: number = 0
 
-  constructor(private cookieStorage: CookieSessionStorageService, private requestManager: RequestManagerService) {}
+  constructor(private router: Router, private cookieStorage: CookieSessionStorageService, private requestManager: RequestManagerService) {}
 
   ngOnInit(): void {
     this.changeAccountName();
@@ -30,8 +31,9 @@ export class SidenavWrapperComponent implements OnInit, AfterContentChecked {
   onMenuChange(menuId: number) {
     this.currentMenu = menuId
 
-    if (menuId == 3) {
+    if (menuId == 4) {
       this.logout()
+      this.router.navigateByUrl('')
     }
     this.changeAccountName()
   }
@@ -55,6 +57,10 @@ export class SidenavWrapperComponent implements OnInit, AfterContentChecked {
         this.block = false
       }
     });
+  }
+
+  isUserLogged(){
+    return this.cookieStorage.isLoggedIn()
   }
 
   ngAfterContentChecked(): void {

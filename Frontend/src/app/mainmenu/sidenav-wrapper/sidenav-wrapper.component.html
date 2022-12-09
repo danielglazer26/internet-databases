@@ -11,20 +11,26 @@
         <span *ngIf="isExpanded" class="menu-item">Home</span>
       </mat-list-item>
 
-      <mat-list-item (click)="onMenuChange(1)" [routerLink]="'add-offer'" [style]="menuItemStyleClassResolver(1)">
+      <mat-list-item (click)="onMenuChange(1)" [routerLink]="'add-offer'" [style]="menuItemStyleClassResolver(1)" [hidden]="!isUserLogged()" [disabled]="!isUserLogged()">
         <mat-icon mat-list-icon>add</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Add offer</span>
       </mat-list-item>
 
-      <mat-list-item (click)="onMenuChange(2)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(2)">
-        <mat-icon mat-list-icon>supervisor_account</mat-icon>
+      <mat-list-item (click)="onMenuChange(2)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(2)" [hidden]="isUserLogged()" [disabled]="isUserLogged()">
+        <mat-icon mat-list-icon>person</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">{{account}}</span>
       </mat-list-item>
 
-      <mat-list-item (click)="onMenuChange(3)" [style]="menuItemStyleClassResolver(3)" [disabled]=block>
+      <mat-list-item (click)="onMenuChange(3)" [routerLink]="'user-profile'" [style]="menuItemStyleClassResolver(3)" [hidden]="!isUserLogged()" [disabled]="!isUserLogged()">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">My account</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onMenuChange(4)" [style]="menuItemStyleClassResolver(4)" [hidden]="!isUserLogged()" [disabled]="!isUserLogged()">
         <mat-icon mat-list-icon style="color: #087275">logout</mat-icon>
         <span *ngIf="isExpanded" class="menu-item">Log out</span>
       </mat-list-item>
+
 
     </mat-nav-list>
   </mat-sidenav>

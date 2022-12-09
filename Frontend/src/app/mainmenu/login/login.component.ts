@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         this.cookieStorage.saveUser(value)
         this.isLogged = true
         this.role = this.role = this.cookieStorage.getUser().role
-        this.router.navigateByUrl('/')
+        this.router.navigateByUrl('')
 
       },
       error: () => {
@@ -63,6 +63,5 @@ export class LoginComponent implements OnInit {
   register() {
     this.router.navigateByUrl('/register')
   }
-
 
 }

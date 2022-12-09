@@ -24,11 +24,15 @@ import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {RegisterComponent} from './register/register.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {DragScrollModule} from "ngx-drag-scroll";
+import {MatTableModule} from "@angular/material/table";
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { OfferWithDeleteComponent } from './user-profile/offer-with-delete/offer-with-delete.component';
 
 @NgModule({
   declarations: [AddOfferComponent, LoginComponent, HomeComponent, SidenavWrapperComponent,
     CarouselComponent, OfferComponent, OfferListComponent,
-    OfferItemComponent, OfferDetailComponent, RegisterComponent],
+    OfferItemComponent, OfferDetailComponent, RegisterComponent, UserProfileComponent, OfferWithDeleteComponent],
   imports: [
     CommonModule,
     MainMenuRoutingModule,
@@ -45,7 +49,10 @@ import {MatDialogModule} from "@angular/material/dialog";
     TextFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatDialogModule]
+    MatDialogModule,
+    DragScrollModule,
+    MatTableModule
+  ]
 })
 
 export class MainMenuModule {

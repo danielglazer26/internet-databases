@@ -6,6 +6,7 @@ import {SidenavWrapperComponent} from "./sidenav-wrapper/sidenav-wrapper.compone
 import {OfferComponent} from "./offers/offer.component";
 import {OfferDetailComponent} from "./offers/offer-detail/offer-detail.component";
 import {RegisterComponent} from "./register/register.component";
+import {UserProfileComponent} from "./user-profile/user-profile.component";
 
 const routes: Routes = [
   {
@@ -25,12 +26,16 @@ const routes: Routes = [
         component: LoginComponent
       },
       {
-        path: 'offer-detail/:index',
+        path: 'offer-detail/:index/:source',
         component: OfferDetailComponent
       },
       {
         path: 'register',
         component: RegisterComponent
+      },
+      {
+        path: 'user-profile',
+        component: UserProfileComponent
       }
     ]
   },

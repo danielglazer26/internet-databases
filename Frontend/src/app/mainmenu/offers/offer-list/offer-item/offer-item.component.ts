@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Offer } from '../../offer.model';
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {map, tap} from "rxjs/operators";
+import {DataStorageService} from "../../../../shared/data-storage.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-recipe-item',
@@ -10,8 +14,17 @@ import { Offer } from '../../offer.model';
 export class OfferItemComponent implements OnInit {
   @Input() offer!: Offer;
   @Input() index!: number;
+  source = 0
+  coverId = 1
+
+  constructor(private dataStorageService: DataStorageService) {
+  }
 
   ngOnInit() {
+  }
+
+  fetchPhotos(){
+    this.dataStorageService.fetchPhotos(this.offer.announcementId)
   }
 
   getCostText(){

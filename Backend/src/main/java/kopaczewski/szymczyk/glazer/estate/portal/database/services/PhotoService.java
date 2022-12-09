@@ -40,6 +40,9 @@ public class PhotoService {
     public List<Photo> getPhotosByAnnouncementId(Long announcementId) {
         return repository.getPhotosByAnnouncementId(announcementId);
     }
+    public List<Long> getPhotosIdsByAnnouncementId(Long announcementId) {
+        return repository.getPhotosIdsByAnnouncementId(announcementId);
+    }
 
     public void removePhoto(Photo photo) {
         repository.delete(photo);

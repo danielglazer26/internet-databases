@@ -12,19 +12,103 @@ export class DataStorageService {
   }
 
   offersChanged = new Subject<Offer[]>();
+  userOffersChanged = new Subject<Offer[]>();
+  photosChanged = new Subject<number[]>();
   offers: Offer[] = [];
+  userOffers: Offer[] = [];
+  currentPhotos: number[] = []
 
   getOffers() {
     return this.offers;
+  }
+
+  getUserOffers() {
+    return this.userOffers;
   }
 
   getOffer(id: number) {
     return this.offers[id];
   }
 
-  fetchOffers(limit: number, offset: number, minCost?: number, maxCost?: number, minArea?: number, maxArea?: number, roomNumber?: number, city?: string, street?: string) {
+  getUserOffer(id: number) {
+    return this.userOffers[id];
+  }
+
+  getCurrentPhotos() {
+    return this.currentPhotos
+  }
+
+  fetchPhotos(announcementId: number) {
+
+    let params = new HttpParams().append('announcementId', announcementId);
+    this.http
+      .get<number[]>(
+        'http://localhost:8080/public/announcementPhotos/',
+        {
+          params: params
+        }
+      )
+      .pipe(map(ids => {
+          return ids
+        }),
+        tap(ids => {
+          console.log(ids.length)
+          this.currentPhotos = ids
+          this.photosChanged.next(ids.slice());
+        })
+      ).subscribe(e => {
+      console.log("OWIP2")
+    })
+  }
+
+  destroyOffer(announcementId: number, ownerLogin: string) {
+    let params = new HttpParams().append('announcementId', announcementId)
+    this.http
+      .delete<Offer[]>(
+        'http://localhost:8080/authenticated/destroyAnnouncement/',
+        {
+          params: params
+        }
+      ).subscribe(e => {
+      console.log("333")
+      this.fetchUserOffers(ownerLogin)
+    })
+  }
+
+  fetchUserOffers(ownerLogin: string) {
+    let params = new HttpParams().append('ownerLogin', ownerLogin)
+    this.http
+      .get<Offer[]>(
+        'http://localhost:8080/authenticated/getPersonalAnnouncement/',
+        {
+          params: params
+        }
+      )
+      .pipe(
+        map(offers => {
+          return offers.map(offer => {
+            return {
+              ...offer,
+            };
+          });
+        }),
+        tap(offers => {
+          console.log(offers.length)
+          this.userOffers = offers
+          this.userOffersChanged.next(offers.slice());
+        })
+      ).subscribe(e => {
+      console.log("OWIP222")
+    })
+  }
+
+  fetchOffers(limit: number, offset: number, minCost?: number, maxCost?: number, minArea?: number, maxArea?: number, roomNumber?: number, city?: string, street?: string, type?: string) {
 
     let params = new HttpParams().append('limit', limit).append('offset', offset)
+    let typeAn = 0
+    if (type == "Sprzedaż") {
+      typeAn = 1
+    }
 
     if (minCost != null) {
       params = params.append('minCost', minCost)
@@ -41,12 +125,15 @@ export class DataStorageService {
     if (roomNumber != null) {
       params = params.append('roomNumber', roomNumber)
     }
-    if (city != null) {
+    if (city != null && city !== "") {
       params = params.append('city', city)
     }
-    if (street != null) {
+    if (street != null && street !== "") {
       params = params.append('street', street)
     }
+
+    params = params.append('announcementType', typeAn)
+    console.log(typeAn)
 
     this.http
       .get<Offer[]>(
@@ -69,7 +156,7 @@ export class DataStorageService {
           this.offersChanged.next(recipes.slice());
         })
       ).subscribe(e => {
-      console.log("PIWO")
+      console.log("OWIP")
     })
   }
 }
