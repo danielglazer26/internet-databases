@@ -86,5 +86,6 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
     @Query("select a.coverPhotoId from Announcement a where a.announcementId = :id")
     Optional<Long> getCoverPhotoIdByAnnouncementId(@Param("id") Long announcementId);
 
-    List<Announcement> getAnnouncementsByOwnerLogin(String ownerLogin);
+    @Query("select a from Announcement a where a.ownerLogin = :ownerLogin AND a.costPerMonth != -2")
+    List<Announcement> getAnnouncementsByOwnerLogin(@Param("ownerLogin") String ownerLogin);
 }

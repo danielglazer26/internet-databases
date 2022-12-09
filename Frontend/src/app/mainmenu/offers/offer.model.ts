@@ -5,7 +5,7 @@ export class Offer {
   public announcementType: number;
   public ownerLogin: string;
   public coverPhotoId: number;
-  public apartmentNumber: number;
+  public apartmentNumber: string;
   public street: string;
   public city: string;
   public province: number;
@@ -16,7 +16,7 @@ export class Offer {
   public area: number;
 
   constructor(announcementId: number, title: string, additionalDescription: string, announcementType: number, ownerLogin: string,
-              coverPhotoId: number, apartmentNumber: number, street: string, city: string, province: number, costPerMonth: number,
+              coverPhotoId: number, apartmentNumber: string, street: string, city: string, province: number, costPerMonth: number,
               rent: number, deposit: number, roomNumber: number, area: number) {
     this.announcementId = announcementId
     this.title = title;
