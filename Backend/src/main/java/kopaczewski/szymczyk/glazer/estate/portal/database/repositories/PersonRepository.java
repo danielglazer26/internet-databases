@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,4 +18,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query("select p from Person p where p.login = ?1")
     Optional<Person> findByLogin(@Nullable String login);
+
+    @Query(nativeQuery = true,value = "select p from Person p where p.role != 0")
+    List<Person> getAllUsers();
 }
