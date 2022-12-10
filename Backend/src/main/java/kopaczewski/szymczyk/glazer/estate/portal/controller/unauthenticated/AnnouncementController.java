@@ -40,25 +40,27 @@ public class AnnouncementController {
             @RequestParam(required = false) Integer announcementType,
             @RequestParam Integer limit, @RequestParam Integer offset) {
         var list = service.getFiltered(
-                minCost, maxCost,
-                minArea, maxArea,
-                roomNumber, city, street,
-                apartmentNumber, announcementType, limit, offset);
+                        minCost, maxCost,
+                        minArea, maxArea,
+                        roomNumber, city, street,
+                        apartmentNumber, announcementType, limit, offset).stream()
+                .map(AnnouncementRespond::new).toList();
+
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/announcementCoverPhotoId")
-    public ResponseEntity<?> getAnnouncementCoverPhotoId(@RequestParam("announcementId") Long announcementId){
+    public ResponseEntity<?> getAnnouncementCoverPhotoId(@RequestParam("announcementId") Long announcementId) {
         Optional<Long> announcementCoverPhotoId = service.getAnnouncementCoverPhotoId(announcementId);
         if (announcementCoverPhotoId.isPresent()) {
             return ResponseEntity.ok(announcementCoverPhotoId.get());
-        }else{
+        } else {
             return ResponseEntity.badRequest().body(new ResponseJsonBody("Announcement don't have cover photo"));
         }
     }
 
     @GetMapping("/announcementPhotos")
-    public ResponseEntity<?> getAnnouncementPhotos(@RequestParam("announcementId") Long announcementId){
+    public ResponseEntity<?> getAnnouncementPhotos(@RequestParam("announcementId") Long announcementId) {
         return ResponseEntity.ok(photoService.getPhotosByAnnouncementId(announcementId).stream().map(Photo::getPhotoId));
     }
 

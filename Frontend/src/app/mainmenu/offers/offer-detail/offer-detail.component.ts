@@ -40,7 +40,7 @@ export class OfferDetailComponent implements OnInit {
             this.offer = this.dataStorageService.getUserOffer(this.index);
           this.dataSource = [
             new Pair("Konto", this.offer.ownerLogin),
-            new Pair("Numer mieszkania", this.offer.apartmentNumber.toString()),
+            new Pair("Numer mieszkania", this.offer.apartmentNumber),
             new Pair("Ulica", this.offer.street),
             new Pair("Miasto", this.offer.city),
             new Pair("Województwo", this.offer.province.toString()),

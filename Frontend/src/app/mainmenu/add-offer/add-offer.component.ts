@@ -4,6 +4,8 @@ import {AnnouncementFormGroup} from "./announcement-form";
 import {RequestManagerService} from "../connection/http/request-manager.service";
 import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
 import {Router} from "@angular/router";
+import {DataStorageService} from "../../shared/data-storage.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-add-offer',
@@ -20,10 +22,13 @@ export class AddOfferComponent {
   announcementSubmitted: boolean = false
   announcementId: number = -1
   gallery: Array<number> = new Array<number>()
-
+  subscription!: Subscription;
+  imagesId: number[] = [];
+  selectedPhoto?: number = undefined;
 
   constructor(fb: FormBuilder, private requestManager: RequestManagerService,
-              private cookieStorage: CookieSessionStorageService, private router: Router) {
+              private cookieStorage: CookieSessionStorageService, private router: Router,
+              private dataStorageService: DataStorageService) {
     this.profileForm = new AnnouncementFormGroup(fb)
   }
 
@@ -50,6 +55,14 @@ export class AddOfferComponent {
       },
       error: err => console.log("On Init activity, init fail: " + err)
     })
+
+
+  }
+
+  changePhoto(id: number) {
+    if (this.selectedPhoto != undefined) {
+      this.selectedPhoto = id
+    }
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -81,6 +94,9 @@ export class AddOfferComponent {
     this.requestManager.uploadPhoto(formData).subscribe({
       next: value => {
         let photoId = parseInt(value.message)
+        if (this.selectedPhoto == undefined) {
+          this.selectedPhoto = photoId
+        }
         this.gallery.push(photoId)
         console.log("Add photo activity successful, added photo id: " + photoId)
       },

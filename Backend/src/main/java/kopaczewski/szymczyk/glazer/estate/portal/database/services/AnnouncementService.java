@@ -76,7 +76,7 @@ public class AnnouncementService {
                 street,
                 apartmentNumber,
                 announcementType,
-                limit, offset);
+                limit, offset).stream().filter(announcement -> announcement.getCostPerMonth()>=0).toList();
 
     }
 

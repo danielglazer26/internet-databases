@@ -22,4 +22,9 @@ public enum ProvinceNameEnum {
     ProvinceNameEnum(String s) {
         polishName=s;
     }
+
+    @Override
+    public String toString() {
+        return  polishName;
+    }
 }
