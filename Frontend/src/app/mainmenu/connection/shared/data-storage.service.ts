@@ -61,12 +61,10 @@ export class DataStorageService {
           return ids
         }),
         tap(ids => {
-          console.log(ids.length)
           this.currentPhotos = ids
           this.photosChanged.next(ids.slice());
         })
-      ).subscribe(e => {
-      console.log("OWIP2")
+      ).subscribe(() => {
     })
   }
 
@@ -78,8 +76,7 @@ export class DataStorageService {
         {
           params: params
         }
-      ).subscribe(e => {
-      console.log("333")
+      ).subscribe(() => {
       this.fetchUserOffers(ownerLogin)
     })
   }
@@ -115,12 +112,10 @@ export class DataStorageService {
           });
         }),
         tap(offers => {
-          console.log(offers.length)
           this.userOffers = offers
           this.userOffersChanged.next(offers.slice());
         })
-      ).subscribe(e => {
-      console.log("OWIP222")
+      ).subscribe(() => {
     })
   }
 
@@ -155,7 +150,6 @@ export class DataStorageService {
     }
 
     params = params.append('announcementType', typeAn)
-    console.log(typeAn)
 
     this.http
       .get<Offer[]>(
@@ -173,12 +167,10 @@ export class DataStorageService {
           });
         }),
         tap(recipes => {
-          console.log(recipes.length)
           this.offers = recipes
           this.offersChanged.next(recipes.slice());
         })
-      ).subscribe(e => {
-      console.log("OWIP")
+      ).subscribe(() => {
     })
   }
 

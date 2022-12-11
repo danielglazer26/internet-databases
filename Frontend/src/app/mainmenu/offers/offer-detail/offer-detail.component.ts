@@ -53,7 +53,6 @@ export class OfferDetailComponent implements OnInit {
     this.subscription = this.dataStorageService.photosChanged
       .subscribe(
         (ids: number[]) => {
-          console.log("recieve")
           this.imagesId = ids;
         }
       );
