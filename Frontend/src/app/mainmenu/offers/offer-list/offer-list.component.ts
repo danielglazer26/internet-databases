@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Offer} from '../offer.model';
 import {Subscription} from "rxjs";
 import {PageEvent} from "@angular/material/paginator";
-import {DataStorageService} from "../../../shared/data-storage.service";
+import {DataStorageService} from "../../connection/shared/data-storage.service";
 
 @Component({
   selector: 'app-recipe-list',

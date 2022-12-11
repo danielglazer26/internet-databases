@@ -7,6 +7,7 @@ import {OfferComponent} from "./offers/offer.component";
 import {OfferDetailComponent} from "./offers/offer-detail/offer-detail.component";
 import {RegisterComponent} from "./register/register.component";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
+import {AdministratorPanelComponent} from "./administrator-panel/administrator-panel.component";
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'user-profile',
         component: UserProfileComponent
+      },
+      {
+        path: 'administrator-panel',
+        component: AdministratorPanelComponent
       }
     ]
   },

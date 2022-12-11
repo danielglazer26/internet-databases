@@ -37,7 +37,6 @@ public class AuthenticatedControllers {
     }
 
     @PostMapping("/addAnnouncement")
-    /* @PreAuthorize("hasAnyAuthority('USER')")*/
     public ResponseEntity<?> createAnnouncement(@RequestBody Announcement announcementRequest) {
         try {
             Optional<Announcement> announcement = announcementService.createNewAnnouncement(announcementRequest);
@@ -92,11 +91,10 @@ public class AuthenticatedControllers {
         return ResponseEntity.ok(personService.getAllUsers());
     }
 
-    @DeleteMapping("removeUser")
+    @DeleteMapping("/removeUser")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<?> deleteUser(@RequestParam("personToDelete") Long personToDelete) {
         Optional<Person> personById = personService.getPersonById(personToDelete);
-
         if (personById.isPresent()) {
             if(personById.get().getRole().equals(Roles.ADMIN)){
                 return ResponseEntity.badRequest().body("You cant delete admin account!");

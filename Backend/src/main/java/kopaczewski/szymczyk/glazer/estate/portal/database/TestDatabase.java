@@ -27,7 +27,7 @@ public class TestDatabase {
     public void start() {
 
         personRepository.save(
-                new Person(0L, "admin", BCrypt.hashpw("admin", BCrypt.gensalt()),
+                new Person(0L, "admin", BCrypt.hashpw("12345678", BCrypt.gensalt()),
                         "a@a", "stanisław", "pan",
                         "", "112", Roles.ADMIN));
         for (int i = 0; i < 10; i -= -1)

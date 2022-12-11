@@ -8,12 +8,12 @@
 
       <mat-list-item (click)="onMenuChange(0)" [routerLink]="''" [style]="menuItemStyleClassResolver(0)">
         <mat-icon mat-list-icon>home</mat-icon>
-        <span *ngIf="isExpanded" class="menu-item">Home</span>
+        <span *ngIf="isExpanded" class="menu-item">Strona główna</span>
       </mat-list-item>
 
       <mat-list-item (click)="onMenuChange(1)" [routerLink]="'add-offer'" [style]="menuItemStyleClassResolver(1)" [hidden]="!isUserLogged()" [disabled]="!isUserLogged()">
         <mat-icon mat-list-icon>add</mat-icon>
-        <span *ngIf="isExpanded" class="menu-item">Add offer</span>
+        <span *ngIf="isExpanded" class="menu-item">Dodaj ofertę</span>
       </mat-list-item>
 
       <mat-list-item (click)="onMenuChange(2)" [routerLink]="'login'" [style]="menuItemStyleClassResolver(2)" [hidden]="isUserLogged()" [disabled]="isUserLogged()">
@@ -23,12 +23,19 @@
 
       <mat-list-item (click)="onMenuChange(3)" [routerLink]="'user-profile'" [style]="menuItemStyleClassResolver(3)" [hidden]="!isUserLogged()" [disabled]="!isUserLogged()">
         <mat-icon mat-list-icon>person</mat-icon>
-        <span *ngIf="isExpanded" class="menu-item">My account</span>
+        <span *ngIf="isExpanded" class="menu-item">Moje konto</span>
       </mat-list-item>
 
       <mat-list-item (click)="onMenuChange(4)" [style]="menuItemStyleClassResolver(4)" [hidden]="!isUserLogged()" [disabled]="!isUserLogged()">
         <mat-icon mat-list-icon style="color: #087275">logout</mat-icon>
-        <span *ngIf="isExpanded" class="menu-item">Log out</span>
+        <span *ngIf="isExpanded" class="menu-item">Wyloguj się</span>
+      </mat-list-item>
+
+      <mat-list-item (click)="onMenuChange(5)" [routerLink]="'administrator-panel'"
+                     [style]="menuItemStyleClassResolver(5)"
+                     [hidden]="!isAdministratorLogged()" [disabled]="!isAdministratorLogged()">
+        <img src="../../../assets/white-administrator-96.png" alt="Panel Administratora"  height="30" style="color: white">
+        <span *ngIf="isExpanded" class="menu-item">Panel administratora</span>
       </mat-list-item>
 
 

@@ -63,6 +63,11 @@ export class SidenavWrapperComponent implements OnInit, AfterContentChecked {
     return this.cookieStorage.isLoggedIn()
   }
 
+  isAdministratorLogged(){
+    let role = this.cookieStorage.getUser().role;
+    return role != undefined && role as string == "ADMIN"
+  }
+
   ngAfterContentChecked(): void {
     this.changeAccountName();
   }

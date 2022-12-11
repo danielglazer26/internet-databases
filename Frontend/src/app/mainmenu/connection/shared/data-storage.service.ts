@@ -1,8 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {map, tap} from 'rxjs/operators';
-import {Offer} from "../mainmenu/offers/offer.model";
+import {Offer} from "../../offers/offer.model";
 import {Subject} from "rxjs";
+import {User} from "../../administrator-panel/user.model";
+
+const httpAddress = 'http://localhost:8080';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +16,11 @@ export class DataStorageService {
 
   offersChanged = new Subject<Offer[]>();
   userOffersChanged = new Subject<Offer[]>();
+  userInfoChanged = new Subject<User[]>();
   photosChanged = new Subject<number[]>();
   offers: Offer[] = [];
   userOffers: Offer[] = [];
+  users: User[] = []
   currentPhotos: number[] = []
 
   getOffers() {
@@ -38,12 +43,16 @@ export class DataStorageService {
     return this.currentPhotos
   }
 
+  getUsers() {
+    return this.users;
+  }
+
   fetchPhotos(announcementId: number) {
 
     let params = new HttpParams().append('announcementId', announcementId);
     this.http
       .get<number[]>(
-        'http://localhost:8080/public/announcementPhotos/',
+        httpAddress + '/public/announcementPhotos/',
         {
           params: params
         }
@@ -65,7 +74,7 @@ export class DataStorageService {
     let params = new HttpParams().append('announcementId', announcementId)
     this.http
       .delete<Offer[]>(
-        'http://localhost:8080/authenticated/destroyAnnouncement/',
+        httpAddress + '/authenticated/destroyAnnouncement/',
         {
           params: params
         }
@@ -75,11 +84,24 @@ export class DataStorageService {
     })
   }
 
+  destroyUser(userId: number) {
+    let params = new HttpParams().append('personToDelete', userId)
+    this.http
+      .delete<Offer[]>(
+        httpAddress + '/authenticated/removeUser/',
+        {
+          params: params
+        }
+      ).subscribe(() => {
+      this.fetchUsers()
+    })
+  }
+
   fetchUserOffers(ownerLogin: string) {
     let params = new HttpParams().append('ownerLogin', ownerLogin)
     this.http
       .get<Offer[]>(
-        'http://localhost:8080/authenticated/getPersonalAnnouncement/',
+        httpAddress + '/authenticated/getPersonalAnnouncement/',
         {
           params: params
         }
@@ -159,4 +181,23 @@ export class DataStorageService {
       console.log("OWIP")
     })
   }
+
+  fetchUsers() {
+    this.http.get<User[]>(
+      httpAddress + '/authenticated/listUsers'
+    )
+      .pipe(
+        map(users => {
+            return users.map(user => {
+              return {...user,};
+            })
+          }
+        ),
+        tap(users => {
+          this.users = users
+          this.userInfoChanged.next(users.slice())
+        })
+      ).subscribe()
+  }
+
 }

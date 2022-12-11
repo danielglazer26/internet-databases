@@ -19,6 +19,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query("select p from Person p where p.login = ?1")
     Optional<Person> findByLogin(@Nullable String login);
 
-    @Query(nativeQuery = true,value = "select p from Person p where p.role != 0")
+    @Query(nativeQuery = true, value = "select * from Person p where p.role != 0")
     List<Person> getAllUsers();
 }

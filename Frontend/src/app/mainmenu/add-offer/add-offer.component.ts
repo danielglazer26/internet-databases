@@ -4,7 +4,7 @@ import {AnnouncementFormGroup} from "./announcement-form";
 import {RequestManagerService} from "../connection/http/request-manager.service";
 import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
 import {Router} from "@angular/router";
-import {DataStorageService} from "../../shared/data-storage.service";
+import {DataStorageService} from "../connection/shared/data-storage.service";
 import {Subscription} from "rxjs";
 
 @Component({
