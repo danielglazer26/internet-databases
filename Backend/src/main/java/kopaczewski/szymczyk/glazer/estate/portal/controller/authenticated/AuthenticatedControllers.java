@@ -5,6 +5,7 @@ import kopaczewski.szymczyk.glazer.estate.portal.controller.ResponseJsonBody;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Person;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.Roles;
 import kopaczewski.szymczyk.glazer.estate.portal.database.model.announcement.Announcement;
+import kopaczewski.szymczyk.glazer.estate.portal.database.services.AllModelsService;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.AnnouncementService;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.PersonService;
 import kopaczewski.szymczyk.glazer.estate.portal.database.services.PhotoService;
@@ -26,14 +27,16 @@ public class AuthenticatedControllers {
 
     private final AnnouncementService announcementService;
     private final PhotoService photoService;
-
     private final PersonService personService;
 
+    private final AllModelsService allModelsService;
+
     @Autowired
-    public AuthenticatedControllers(AnnouncementService announcementService, PhotoService photoService, PersonService personService) {
+    public AuthenticatedControllers(AnnouncementService announcementService, PhotoService photoService, PersonService personService, AllModelsService allModelsService) {
         this.announcementService = announcementService;
         this.photoService = photoService;
         this.personService = personService;
+        this.allModelsService = allModelsService;
     }
 
     @PostMapping("/addAnnouncement")
@@ -99,7 +102,7 @@ public class AuthenticatedControllers {
             if(personById.get().getRole().equals(Roles.ADMIN)){
                 return ResponseEntity.badRequest().body("You cant delete admin account!");
             }
-            personService.removePerson(personById.get());
+            allModelsService.cascadeDelete(personById.get());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().body("There is no such user with given Id");
