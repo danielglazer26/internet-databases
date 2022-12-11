@@ -4,7 +4,6 @@ import {AnnouncementFormGroup} from "./announcement-form";
 import {RequestManagerService} from "../connection/http/request-manager.service";
 import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
 import {Router} from "@angular/router";
-import {DataStorageService} from "../connection/shared/data-storage.service";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -18,17 +17,14 @@ export class AddOfferComponent {
 
   type: boolean = true
   showSuccess: boolean = true
-  isAddEnable: boolean = true
   announcementSubmitted: boolean = false
   announcementId: number = -1
   gallery: Array<number> = new Array<number>()
   subscription!: Subscription;
-  imagesId: number[] = [];
   selectedPhoto?: number = undefined;
 
   constructor(fb: FormBuilder, private requestManager: RequestManagerService,
-              private cookieStorage: CookieSessionStorageService, private router: Router,
-              private dataStorageService: DataStorageService) {
+              private cookieStorage: CookieSessionStorageService, private router: Router) {
     this.profileForm = new AnnouncementFormGroup(fb)
   }
 
@@ -102,23 +98,16 @@ export class AddOfferComponent {
       },
       error: err => console.log("Add photo activity fail: " + err)
     })
-    console.log(fileInputEvent.target.files[0]);
-  }
-
-  getIsAddEnable() {
-    return this.isAddEnable
   }
 
   onSubmit() {
     this.announcementSubmitted = true
-    console.log(this.gallery.length)
     if (this.gallery.length === 0) {
       return;
     }
     if (this.profileForm.invalid) {
       return;
     }
-
 
     const jsonObject = JSON.parse(JSON.stringify(this.profileForm.value, null, 4))
     jsonObject.announcementId = this.announcementId
@@ -133,23 +122,6 @@ export class AddOfferComponent {
         }, 1500)
       }
     })
-    /* let json = JSON.stringify(this.profileForm?.value, undefined, 4);
-     console.log(json)*/
 
-    /* const myHeaders = new Headers();
-     myHeaders.append("Content-Type", "application/json");
-
-
-     const requestOptions = {
-       method: 'POST',
-       headers: myHeaders,
-       body: raw,
-     };
-
-     fetch("http://localhost:8080/authenticated/addAnnouncement", requestOptions)
-       .then(response => response.text())
-       .then(result => console.log(result))
-       .catch(error => console.log('error', error));
-   }*/
   }
 }

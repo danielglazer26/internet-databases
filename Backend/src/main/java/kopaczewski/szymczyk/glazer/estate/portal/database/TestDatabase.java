@@ -25,21 +25,67 @@ public class TestDatabase {
 
     @PostConstruct
     public void start() {
+        addUsers();
+    }
 
-        personRepository.save(
-                new Person(0L, "admin", BCrypt.hashpw("12345678", BCrypt.gensalt()),
-                        "a@a", "stanisław", "pan",
-                        "", "112", Roles.ADMIN));
-        for (int i = 0; i < 10; i -= -1)
-            personRepository.save(
-                    new Person(0L, "users"+i,  BCrypt.hashpw("admin", BCrypt.gensalt()), "a@a",
-                            "stanisław", "pan",
-                            "", "112", Roles.USER));
+    public void addUsers() {
+        personRepository.save(new Person(0L, "robejcik", BCrypt.hashpw("12345678", BCrypt.gensalt()), "robercik@wp" +
+                ".pl", "Robert", "Lewandowski", "1234563218", "680543260", Roles.USER));
+        personRepository.save(new Person(
+                0L,
+                "admin",
+                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                "admin@wp.pl",
+                null,
+                null,
+                null,
+                null,
+                Roles.ADMIN
+        ));
 
-//        for (long i = 1L; i < 4000; i++) {
-//            announcementRepository.save(new Announcement(
-//                    i, "Apartament B z tarasem w budynku z 2022 r", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in erat nibh. Curabitur vel tincidunt libero. Curabitur scelerisque fermentum justo nec auctor. Proin lacus ipsum, imperdiet nec purus scelerisque, fermentum auctor lacus. ", AnnouncementType.RENTAL, "login",
-//                    String.valueOf(i), "ul. Węgliniecka", "Wrocław", ProvinceNameEnum.KUYAVIAN_POMERANIAN, (int) i * 100, (int) i, (int) i, (int) i, (double) i));
-//        }
+        personRepository.save(new Person(
+                0L,
+                "wojteczek",
+                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                "wojteczek@gmail.com",
+                "Wojtek",
+                "Glazer",
+                "5234564218",
+                "280543260",
+                Roles.USER
+        ));
+        personRepository.save(new Person(
+                0L,
+                "kamilBezUcha",
+                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                "kamilBezUcha@gmail.com",
+                "Kamil",
+                "Kowalski",
+                "5234523218",
+                "7805432260",
+                Roles.USER
+        ));
+        personRepository.save(new Person(
+                0L,
+                "wojak",
+                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                "wojak@gmail.com",
+                "Weronika",
+                "Tytka",
+                "1524234218",
+                "232805430",
+                Roles.USER
+        ));
+        personRepository.save(new Person(
+                0L,
+                "nieMamPomysluNaLogin",
+                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                "nieMamPomysluNaLogin@gmail.com",
+                "Marta",
+                "Niezapominalska",
+                "5234532618",
+                "2180543260",
+                Roles.USER
+        ));
     }
 }

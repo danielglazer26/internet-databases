@@ -26,7 +26,6 @@ export class UserProfileComponent implements OnInit {
         }
       );
     this.offers = this.dataStorageService.getUserOffers()
-    console.log(this.offers.length)
   }
 
 }
