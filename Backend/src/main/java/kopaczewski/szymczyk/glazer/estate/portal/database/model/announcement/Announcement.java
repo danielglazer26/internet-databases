@@ -17,7 +17,9 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long announcementId;
     @Column(nullable = false)
-    private String title, additionalDescription;
+    private String title;
+    @Column(nullable = false,length = 1000)
+    private String additionalDescription;
     private AnnouncementType announcementType;
     private String ownerLogin;
     private Long coverPhotoId;

@@ -1,11 +1,8 @@
 package kopaczewski.szymczyk.glazer.estate.portal.database;
 
-import kopaczewski.szymczyk.glazer.estate.portal.database.model.Person;
-import kopaczewski.szymczyk.glazer.estate.portal.database.model.Roles;
 import kopaczewski.szymczyk.glazer.estate.portal.database.repositories.AnnouncementRepository;
 import kopaczewski.szymczyk.glazer.estate.portal.database.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -26,15 +23,15 @@ public class TestDatabase {
     @PostConstruct
     public void start() {
 
-        personRepository.save(
-                new Person(0L, "admin", BCrypt.hashpw("12345678", BCrypt.gensalt()),
-                        "a@a", "stanisław", "pan",
-                        "", "112", Roles.ADMIN));
-        for (int i = 0; i < 10; i -= -1)
-            personRepository.save(
-                    new Person(0L, "users"+i,  BCrypt.hashpw("admin", BCrypt.gensalt()), "a@a",
-                            "stanisław", "pan",
-                            "", "112", Roles.USER));
+//        personRepository.save(
+//                new Person(0L, "admin", BCrypt.hashpw("12345678", BCrypt.gensalt()),
+//                        "a@a", "stanisław", "pan",
+//                        "", "112", Roles.ADMIN));
+//        for (int i = 0; i < 10; i -= -1)
+//            personRepository.save(
+//                    new Person(0L, "users"+i,  BCrypt.hashpw("admin", BCrypt.gensalt()), "a@a",
+//                            "stanisław", "pan",
+//                            "", "112", Roles.USER));
 
 //        for (long i = 1L; i < 4000; i++) {
 //            announcementRepository.save(new Announcement(

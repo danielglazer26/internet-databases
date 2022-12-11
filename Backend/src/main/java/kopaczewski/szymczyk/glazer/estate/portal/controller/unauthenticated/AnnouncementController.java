@@ -22,12 +22,12 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("/public/")
 public class AnnouncementController {
-    private final AnnouncementService service;
+    private final AnnouncementService announcementService;
     private final PhotoService photoService;
 
     @Autowired
-    public AnnouncementController(AnnouncementService service, PhotoService photoService) {
-        this.service = service;
+    public AnnouncementController(AnnouncementService announcementService, PhotoService photoService) {
+        this.announcementService = announcementService;
         this.photoService = photoService;
     }
 
@@ -39,7 +39,7 @@ public class AnnouncementController {
             @RequestParam(required = false) String street, @RequestParam(required = false) String apartmentNumber,
             @RequestParam(required = false) Integer announcementType,
             @RequestParam Integer limit, @RequestParam Integer offset) {
-        var list = service.getFiltered(
+        var list = announcementService.getFiltered(
                         minCost, maxCost,
                         minArea, maxArea,
                         roomNumber, city, street,
@@ -51,7 +51,7 @@ public class AnnouncementController {
 
     @GetMapping("/announcementCoverPhotoId")
     public ResponseEntity<?> getAnnouncementCoverPhotoId(@RequestParam("announcementId") Long announcementId) {
-        Optional<Long> announcementCoverPhotoId = service.getAnnouncementCoverPhotoId(announcementId);
+        Optional<Long> announcementCoverPhotoId = announcementService.getAnnouncementCoverPhotoId(announcementId);
         if (announcementCoverPhotoId.isPresent()) {
             return ResponseEntity.ok(announcementCoverPhotoId.get());
         } else {

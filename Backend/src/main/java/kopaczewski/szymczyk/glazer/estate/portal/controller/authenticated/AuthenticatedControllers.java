@@ -44,8 +44,10 @@ public class AuthenticatedControllers {
         try {
             Optional<Announcement> announcement = announcementService.createNewAnnouncement(announcementRequest);
             return announcement
-                    .<ResponseEntity<?>>map(value -> ResponseEntity.ok(new ResponseJsonBody("Create announcement number: " + value.getAnnouncementId())))
-                    .orElseGet(() -> ResponseEntity.badRequest().body(new ResponseJsonBody("No announcement created")));
+                    .<ResponseEntity<?>>map(value -> ResponseEntity.ok(
+                            new ResponseJsonBody("Create announcement number: " + value.getAnnouncementId())))
+                    .orElseGet(() -> ResponseEntity.badRequest().body(
+                            new ResponseJsonBody("No announcement created")));
         } catch (Exception e) {
             return ResponseEntity.accepted().body(new ResponseJsonBody(e.getMessage()));
         }
