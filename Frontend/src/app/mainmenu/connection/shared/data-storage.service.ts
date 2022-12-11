@@ -65,7 +65,7 @@ export class DataStorageService {
           this.currentPhotos = ids
           this.photosChanged.next(ids.slice());
         })
-      ).subscribe(e => {
+      ).subscribe(() => {
       console.log("OWIP2")
     })
   }
