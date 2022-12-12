@@ -24,7 +24,6 @@
     "@ng-bootstrap/ng-bootstrap": "^13.1.0",
     "@popperjs/core": "^2.10.2",
     "@types/bcrypt": "^5.0.0",
-    "angular-image-viewer": "github:deepakgonda/angular-image-viewer",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.2",
     "ngx-drag-scroll": "^14.0.1",

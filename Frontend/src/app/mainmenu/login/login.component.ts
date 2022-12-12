@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   accountForm!: FormGroup
   errorMessage: boolean = false;
   private isLogged!: boolean;
-  private role!: string;
 
   constructor(private fb: FormBuilder, private router: Router,
               private requestManager: RequestManagerService,
@@ -30,7 +29,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.cookieStorage.isLoggedIn()) {
       this.isLogged = true
-      this.role = this.cookieStorage.getUser().role
     }
   }
 
@@ -46,7 +44,6 @@ export class LoginComponent implements OnInit {
       next: value => {
         this.cookieStorage.saveUser(value)
         this.isLogged = true
-        this.role = this.role = this.cookieStorage.getUser().role
         this.router.navigateByUrl('')
 
       },

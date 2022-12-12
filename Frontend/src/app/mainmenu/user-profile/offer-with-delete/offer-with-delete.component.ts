@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Offer} from "../../offers/offer.model";
-import {DataStorageService} from "../../../shared/data-storage.service";
+import {DataStorageService} from "../../connection/shared/data-storage.service";
 import {CookieSessionStorageService} from "../../connection/session/cookie-session-storage.service";
 
 @Component({
@@ -8,21 +8,16 @@ import {CookieSessionStorageService} from "../../connection/session/cookie-sessi
   templateUrl: './offer-with-delete.component.html',
   styleUrls: ['./offer-with-delete.component.css']
 })
-export class OfferWithDeleteComponent implements OnInit {
+export class OfferWithDeleteComponent  {
   @Input() offer!: Offer;
   @Input() index!: number;
   source = 1
-  coverId = 1
-
   constructor(private dataStorageService: DataStorageService,
               private cookieSessionStorageService: CookieSessionStorageService) {
   }
 
   deleteOffer(){
     this.dataStorageService.destroyOffer(this.offer.announcementId, this.cookieSessionStorageService.getUser().login)
-  }
-
-  ngOnInit() {
   }
 
   fetchPhotos(){

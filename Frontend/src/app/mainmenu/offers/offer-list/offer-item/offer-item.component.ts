@@ -1,10 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
-import { Offer } from '../../offer.model';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {map, tap} from "rxjs/operators";
-import {DataStorageService} from "../../../../shared/data-storage.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Offer} from '../../offer.model';
+import {DataStorageService} from "../../../connection/shared/data-storage.service";
 
 @Component({
   selector: 'app-recipe-item',
@@ -15,7 +12,6 @@ export class OfferItemComponent implements OnInit {
   @Input() offer!: Offer;
   @Input() index!: number;
   source = 0
-  coverId = 1
 
   constructor(private dataStorageService: DataStorageService) {
   }
@@ -23,30 +19,30 @@ export class OfferItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  fetchPhotos(){
+  fetchPhotos() {
     this.dataStorageService.fetchPhotos(this.offer.announcementId)
   }
 
-  getCostText(){
+  getCostText() {
     return this.offer.costPerMonth + " zł"
   }
 
-  getAddress(){
+  getAddress() {
     return this.offer.city + ", " + this.offer.street
   }
 
-  getRoomNumber(){
+  getRoomNumber() {
     let nr = this.offer.roomNumber
-    if(nr == 1){
+    if (nr == 1) {
       return nr + " pokój"
-    }else if(nr%10 >= 2 && nr%10 <= 4 && nr > 20){
+    } else if (nr % 10 >= 2 && nr % 10 <= 4 && nr > 20) {
       return nr + " pokoje"
-    }else{
+    } else {
       return nr + " pokoi"
     }
   }
 
-  getArea(){
+  getArea() {
     return this.offer.area + " m2"
   }
 }

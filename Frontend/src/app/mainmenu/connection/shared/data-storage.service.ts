@@ -1,8 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {map, tap} from 'rxjs/operators';
-import {Offer} from "../mainmenu/offers/offer.model";
+import {Offer} from "../../offers/offer.model";
 import {Subject} from "rxjs";
+import {User} from "../../administrator-panel/user.model";
+
+const httpAddress = 'http://localhost:8080';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +16,11 @@ export class DataStorageService {
 
   offersChanged = new Subject<Offer[]>();
   userOffersChanged = new Subject<Offer[]>();
+  userInfoChanged = new Subject<User[]>();
   photosChanged = new Subject<number[]>();
   offers: Offer[] = [];
   userOffers: Offer[] = [];
+  users: User[] = []
   currentPhotos: number[] = []
 
   getOffers() {
@@ -38,12 +43,16 @@ export class DataStorageService {
     return this.currentPhotos
   }
 
+  getUsers() {
+    return this.users;
+  }
+
   fetchPhotos(announcementId: number) {
 
     let params = new HttpParams().append('announcementId', announcementId);
     this.http
       .get<number[]>(
-        'http://localhost:8080/public/announcementPhotos/',
+        httpAddress + '/public/announcementPhotos/',
         {
           params: params
         }
@@ -52,12 +61,10 @@ export class DataStorageService {
           return ids
         }),
         tap(ids => {
-          console.log(ids.length)
           this.currentPhotos = ids
           this.photosChanged.next(ids.slice());
         })
-      ).subscribe(e => {
-      console.log("OWIP2")
+      ).subscribe(() => {
     })
   }
 
@@ -65,13 +72,25 @@ export class DataStorageService {
     let params = new HttpParams().append('announcementId', announcementId)
     this.http
       .delete<Offer[]>(
-        'http://localhost:8080/authenticated/destroyAnnouncement/',
+        httpAddress + '/authenticated/destroyAnnouncement/',
         {
           params: params
         }
-      ).subscribe(e => {
-      console.log("333")
+      ).subscribe(() => {
       this.fetchUserOffers(ownerLogin)
+    })
+  }
+
+  destroyUser(userId: number) {
+    let params = new HttpParams().append('personToDelete', userId)
+    this.http
+      .delete<Offer[]>(
+        httpAddress + '/authenticated/removeUser/',
+        {
+          params: params
+        }
+      ).subscribe(() => {
+      this.fetchUsers()
     })
   }
 
@@ -79,7 +98,7 @@ export class DataStorageService {
     let params = new HttpParams().append('ownerLogin', ownerLogin)
     this.http
       .get<Offer[]>(
-        'http://localhost:8080/authenticated/getPersonalAnnouncement/',
+        httpAddress + '/authenticated/getPersonalAnnouncement/',
         {
           params: params
         }
@@ -93,12 +112,10 @@ export class DataStorageService {
           });
         }),
         tap(offers => {
-          console.log(offers.length)
           this.userOffers = offers
           this.userOffersChanged.next(offers.slice());
         })
-      ).subscribe(e => {
-      console.log("OWIP222")
+      ).subscribe(() => {
     })
   }
 
@@ -133,7 +150,6 @@ export class DataStorageService {
     }
 
     params = params.append('announcementType', typeAn)
-    console.log(typeAn)
 
     this.http
       .get<Offer[]>(
@@ -151,12 +167,29 @@ export class DataStorageService {
           });
         }),
         tap(recipes => {
-          console.log(recipes.length)
           this.offers = recipes
           this.offersChanged.next(recipes.slice());
         })
-      ).subscribe(e => {
-      console.log("OWIP")
+      ).subscribe(() => {
     })
   }
+
+  fetchUsers() {
+    this.http.get<User[]>(
+      httpAddress + '/authenticated/listUsers'
+    )
+      .pipe(
+        map(users => {
+            return users.map(user => {
+              return {...user,};
+            })
+          }
+        ),
+        tap(users => {
+          this.users = users
+          this.userInfoChanged.next(users.slice())
+        })
+      ).subscribe()
+  }
+
 }

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 
 import {Offer} from '../offer.model';
-import {DataStorageService} from "../../../shared/data-storage.service";
+import {DataStorageService} from "../../connection/shared/data-storage.service";
 import {Subscription} from "rxjs";
 import {CdkTableDataSourceInput} from "@angular/cdk/table";
 import {MatTableDataSource} from "@angular/material/table";
@@ -53,7 +53,6 @@ export class OfferDetailComponent implements OnInit {
     this.subscription = this.dataStorageService.photosChanged
       .subscribe(
         (ids: number[]) => {
-          console.log("recieve")
           this.imagesId = ids;
         }
       );

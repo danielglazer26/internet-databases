@@ -1,0 +1,51 @@
+<a style="border-radius: 200px">
+  <div
+    style="cursor: pointer; background: #212529; width: 700px; height: 280px; border-radius: 50px ">
+
+    <mat-grid-list [cols]=2 rowHeight=280px>
+
+      <mat-grid-tile>
+        <div style="background: #212529;  width: 300px; height: 270px">
+
+          <div style="margin-top: 40px; margin-left: 0%">
+            <div class="text-white text-title" style="margin: 5px">
+              <label style="font-size: 18px; font-weight: bold">Imię: </label>
+              <label [textContent]="user.name" style="margin-left: 10px; font-size: 18px;"></label>
+            </div>
+
+            <div class="text-white text-title" style="margin: 5px">
+              <label style="font-size: 18px; font-weight: bold">Nazwisko: </label>
+              <label [textContent]="user.surname"
+                     style="margin-left: 10px; font-size: 18px;"></label>
+            </div>
+
+            <div class="text-white text-title" style="margin: 5px">
+              <label style="font-size: 18px; font-weight: bold">Login: </label>
+              <label [textContent]="user.login" style="margin-left: 10px; font-size: 18px;"></label>
+            </div>
+
+            <div class="text-white text-title" style="margin: 5px">
+              <label style="font-size: 18px; font-weight: bold">Email: </label>
+              <label [textContent]="user.email" style="margin-left: 10px; font-size: 18px;"></label>
+            </div>
+
+            <div class="text-white text-title" style="margin: 5px">
+              <label style="font-size: 18px; font-weight: bold">NIP: </label>
+              <label [textContent]="user.nip" style="margin-left: 10px; font-size: 18px;"></label>
+            </div>
+
+            <div class="text-white text-title" style="margin: 5px">
+              <label style="font-size: 18px; font-weight: bold">Numer telefonu: </label>
+              <label [textContent]="user.phoneNumber" style="margin-left: 10px; font-size: 18px;"></label>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+          <mat-icon class="text-white icon-display" (click)="deleteUser()" mat-list-icon>delete</mat-icon>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</a>
+

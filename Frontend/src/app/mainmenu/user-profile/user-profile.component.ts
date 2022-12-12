@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Offer} from "../offers/offer.model";
-import {DataStorageService} from "../../shared/data-storage.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {DataStorageService} from "../connection/shared/data-storage.service";
 import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
 import {Subscription} from "rxjs";
 
@@ -15,9 +14,7 @@ export class UserProfileComponent implements OnInit {
   subscription!: Subscription;
 
   constructor(private dataStorageService: DataStorageService,
-              private cookieSessionStorageService: CookieSessionStorageService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private cookieSessionStorageService: CookieSessionStorageService) {
     this.dataStorageService.fetchUserOffers(cookieSessionStorageService.getUser().login)
   }
 
@@ -29,7 +26,6 @@ export class UserProfileComponent implements OnInit {
         }
       );
     this.offers = this.dataStorageService.getUserOffers()
-    console.log(this.offers.length)
   }
 
 }

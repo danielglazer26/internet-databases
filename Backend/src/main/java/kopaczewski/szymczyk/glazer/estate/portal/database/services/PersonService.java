@@ -65,6 +65,10 @@ public class PersonService {
         return personRepository.findAll();
     }
 
+    public List<Person> getAllUsers(){
+        return personRepository.getAllUsers();
+    }
+
     public void removePerson(Person person) {
         personRepository.delete(person);
     }
