@@ -4,6 +4,7 @@ import bednarz.glazer.iwaniak.estate.portal.database.repositories.AnnouncementRe
 import bednarz.glazer.iwaniak.estate.portal.database.repositories.PersonRepository;
 import bednarz.glazer.iwaniak.estate.portal.database.model.Person;
 import bednarz.glazer.iwaniak.estate.portal.database.model.Roles;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -21,18 +22,19 @@ public class TestDatabase {
         this.personRepository = personRepository;
     }
 
-//    @PostConstruct
-//    public void start() {
+    @PostConstruct
+    public void start() {
 //        addUsers();
-//    }
+    }
 
+    //Password -> Admin123!
     public void addUsers() {
         personRepository.save(new Person(0L, "robejcik", BCrypt.hashpw("12345678", BCrypt.gensalt()), "robercik@wp" +
                 ".pl", "Robert", "Lewandowski", "1234563218", "680543260", Roles.USER));
         personRepository.save(new Person(
                 0L,
                 "admin",
-                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                BCrypt.hashpw("$2a$10$t9jBzUFVes4Zkx3Ngp2kAeMzxtgNYEAGPVZkcjmjHA5J2Go5FLhu.", BCrypt.gensalt()),
                 "admin@wp.pl",
                 null,
                 null,
@@ -44,7 +46,7 @@ public class TestDatabase {
         personRepository.save(new Person(
                 0L,
                 "wojteczek",
-                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                BCrypt.hashpw("$2a$10$t9jBzUFVes4Zkx3Ngp2kAeMzxtgNYEAGPVZkcjmjHA5J2Go5FLhu.", BCrypt.gensalt()),
                 "wojteczek@gmail.com",
                 "Wojtek",
                 "Glazer",
@@ -55,7 +57,7 @@ public class TestDatabase {
         personRepository.save(new Person(
                 0L,
                 "kamilBezUcha",
-                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                BCrypt.hashpw("$2a$10$t9jBzUFVes4Zkx3Ngp2kAeMzxtgNYEAGPVZkcjmjHA5J2Go5FLhu.", BCrypt.gensalt()),
                 "kamilBezUcha@gmail.com",
                 "Kamil",
                 "Kowalski",
@@ -66,7 +68,7 @@ public class TestDatabase {
         personRepository.save(new Person(
                 0L,
                 "wojak",
-                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                BCrypt.hashpw("$2a$10$t9jBzUFVes4Zkx3Ngp2kAeMzxtgNYEAGPVZkcjmjHA5J2Go5FLhu.", BCrypt.gensalt()),
                 "wojak@gmail.com",
                 "Weronika",
                 "Tytka",
@@ -77,7 +79,7 @@ public class TestDatabase {
         personRepository.save(new Person(
                 0L,
                 "nieMamPomysluNaLogin",
-                BCrypt.hashpw("$2a$10$T37ajL7I4YSOrs.2h6Vvi.fLQefjuAHmOxbf2NKlc1afev/g/AYi2", BCrypt.gensalt()),
+                BCrypt.hashpw("$2a$10$t9jBzUFVes4Zkx3Ngp2kAeMzxtgNYEAGPVZkcjmjHA5J2Go5FLhu.", BCrypt.gensalt()),
                 "nieMamPomysluNaLogin@gmail.com",
                 "Marta",
                 "Niezapominalska",

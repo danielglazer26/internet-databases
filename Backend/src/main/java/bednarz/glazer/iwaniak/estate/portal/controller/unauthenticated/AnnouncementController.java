@@ -4,15 +4,17 @@ import bednarz.glazer.iwaniak.estate.portal.controller.ResponseJsonBody;
 import bednarz.glazer.iwaniak.estate.portal.database.services.AnnouncementService;
 import bednarz.glazer.iwaniak.estate.portal.database.services.PhotoService;
 import bednarz.glazer.iwaniak.estate.portal.database.model.Photo;
-import org.hibernate.engine.jdbc.StreamUtils;
+
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

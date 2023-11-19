@@ -2,13 +2,13 @@ package bednarz.glazer.iwaniak.estate.portal.controller.authenticated;
 
 
 import bednarz.glazer.iwaniak.estate.portal.controller.ResponseJsonBody;
-import bednarz.glazer.iwaniak.estate.portal.database.services.AnnouncementService;
-import bednarz.glazer.iwaniak.estate.portal.database.services.PhotoService;
 import bednarz.glazer.iwaniak.estate.portal.database.model.Person;
 import bednarz.glazer.iwaniak.estate.portal.database.model.Roles;
 import bednarz.glazer.iwaniak.estate.portal.database.model.announcement.Announcement;
 import bednarz.glazer.iwaniak.estate.portal.database.services.AllModelsService;
+import bednarz.glazer.iwaniak.estate.portal.database.services.AnnouncementService;
 import bednarz.glazer.iwaniak.estate.portal.database.services.PersonService;
+import bednarz.glazer.iwaniak.estate.portal.database.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import static bednarz.glazer.iwaniak.estate.portal.ConstStorage.AUTHENTICATED_ENDPOINT;
@@ -54,7 +55,7 @@ public class AuthenticatedControllers {
     }
 
     @GetMapping("/getPersonalAnnouncement")
-    public ResponseEntity<?> getPersonalAnnouncements(@RequestParam String ownerLogin) {
+    public ResponseEntity<List<Announcement>> getPersonalAnnouncements(@RequestParam String ownerLogin) {
         var personalAnnouncements = announcementService.getAnnouncementsByOwnerLogin(ownerLogin);
         return ResponseEntity.ok(personalAnnouncements);
     }

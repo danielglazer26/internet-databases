@@ -2,10 +2,11 @@ package bednarz.glazer.iwaniak.estate.portal.database.services;
 
 import bednarz.glazer.iwaniak.estate.portal.database.model.Photo;
 import bednarz.glazer.iwaniak.estate.portal.database.repositories.PhotoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
