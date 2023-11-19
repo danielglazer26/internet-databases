@@ -52,7 +52,7 @@ export class DataStorageService {
     let params = new HttpParams().append('announcementId', announcementId);
     this.http
       .get<number[]>(
-        httpAddress + '/public/announcementPhotos/',
+        httpAddress + '/public/announcementPhotos',
         {
           params: params
         }
@@ -72,7 +72,7 @@ export class DataStorageService {
     let params = new HttpParams().append('announcementId', announcementId)
     this.http
       .delete<Offer[]>(
-        httpAddress + '/authenticated/destroyAnnouncement/',
+        httpAddress + '/authenticated/destroyAnnouncement',
         {
           params: params
         }
@@ -85,7 +85,7 @@ export class DataStorageService {
     let params = new HttpParams().append('personToDelete', userId)
     this.http
       .delete<Offer[]>(
-        httpAddress + '/authenticated/removeUser/',
+        httpAddress + '/authenticated/removeUser',
         {
           params: params
         }
@@ -98,7 +98,7 @@ export class DataStorageService {
     let params = new HttpParams().append('ownerLogin', ownerLogin)
     this.http
       .get<Offer[]>(
-        httpAddress + '/authenticated/getPersonalAnnouncement/',
+        httpAddress + '/authenticated/getPersonalAnnouncement',
         {
           params: params
         }
