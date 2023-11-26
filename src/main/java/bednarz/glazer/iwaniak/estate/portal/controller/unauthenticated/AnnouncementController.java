@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/public/")
+@RequestMapping("/public")
 public class AnnouncementController {
     private final AnnouncementService announcementService;
     private final PhotoService photoService;
@@ -33,7 +33,7 @@ public class AnnouncementController {
         this.photoService = photoService;
     }
 
-    @GetMapping("/announcements/")
+    @GetMapping("/announcements")
     public ResponseEntity<?> filerAnnouncements(
             @RequestParam(required = false) Integer minCost, @RequestParam(required = false) Integer maxCost,
             @RequestParam(required = false) Double minArea, @RequestParam(required = false) Double maxArea,
@@ -66,7 +66,7 @@ public class AnnouncementController {
         return ResponseEntity.ok(photoService.getPhotosByAnnouncementId(announcementId).stream().map(Photo::getPhotoId));
     }
 
-    @GetMapping("/photo/")
+    @GetMapping("/photo")
     public HttpEntity<?> fileDownload(HttpServletResponse response, @RequestParam("photoId") Long photoId) {
         try {
             StreamUtils.copy(photoService.getPhoto(photoId), response.getOutputStream());
