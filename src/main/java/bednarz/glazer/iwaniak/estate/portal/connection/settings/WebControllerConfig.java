@@ -39,7 +39,7 @@ public class WebControllerConfig {
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.cors(Customizer.withDefaults())
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf->csrf.ignoringRequestMatchers("/authenticated/**"))
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
                         .requestMatchers("/api/auth/**", "/public/**").permitAll()
                         .anyRequest().authenticated()
