@@ -21,11 +21,8 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Set folder
-        run: cd Backend
-
       - name: Build with Maven
-        run: mvn clean install
+        run: Backend/mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
