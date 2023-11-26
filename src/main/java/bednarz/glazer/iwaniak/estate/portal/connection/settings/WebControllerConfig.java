@@ -18,6 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -39,12 +40,12 @@ public class WebControllerConfig {
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.cors(Customizer.withDefaults())
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(csrf->csrf.ignoringRequestMatchers("/authenticated/**"))
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
                         .requestMatchers("/api/auth/**", "/public/**").permitAll()
                         .anyRequest().authenticated()
                 ).authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtRequestFilter, AnonymousAuthenticationFilter.class)
                 .build();
     }
 
@@ -72,7 +73,7 @@ public class WebControllerConfig {
             @Override
             public void addCorsMappings(@NotNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOriginPatterns("*").allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedOrigins(frontendAddress).allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true);
             }
         };
