@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 
 @Component
@@ -36,14 +35,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.debug("For request: {}", request);
-        Optional<String> jwtFromCookies = cookieManager.getJwtFromCookies(request);
-        jwtFromCookies.ifPresent(
-                s -> {
-                    log.debug("Cookie:{}", s);
-                    log.debug("Validation state: {}", cookieManager.checkJwtValidation(s));
-                }
-        );
         cookieManager.getJwtFromCookies(request).flatMap(cookieManager::checkJwtValidation).ifPresent(login -> {
             try {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(login);
@@ -56,7 +47,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 log.info("This login doesn't exist: {}", e.getMessage());
             }
         });
-        log.debug("For request: {}", response);
         filterChain.doFilter(request, response);
     }
 }
