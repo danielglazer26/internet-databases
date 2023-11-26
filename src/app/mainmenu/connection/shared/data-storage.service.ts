@@ -153,7 +153,7 @@ export class DataStorageService {
 
     this.http
       .get<Offer[]>(
-        'https://estate-portal.azurewebsites.net/public/announcements/',
+        'https://estate-portal.azurewebsites.net/public/announcements',
         {
           params: params
         }
