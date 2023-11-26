@@ -41,7 +41,7 @@ public class WebControllerConfig {
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
-                        .requestMatchers("/api/auth/**", "/public/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/public/**", "/authenticated/**").permitAll()
                         .anyRequest().authenticated()
                 ).authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
@@ -72,7 +72,7 @@ public class WebControllerConfig {
             @Override
             public void addCorsMappings(@NotNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(frontendAddress).allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true);
             }
         };
