@@ -55,7 +55,7 @@ public class CookieManager {
         String jwtToken = createJsonWebToken(login);
         return ResponseCookie
                 .from(cookieName, jwtToken)
-                .path(AUTHENTICATED_ENDPOINT)
+                .path("https://estate-portal.azurewebsites.net/" + AUTHENTICATED_ENDPOINT)
                 .maxAge(expirationTime / 1000)
                 .httpOnly(true)
                 .build();
@@ -64,7 +64,7 @@ public class CookieManager {
     public ResponseCookie generateEmptyCookie() {
         return ResponseCookie
                 .from(cookieName, EMPTY_VALUE)
-                .path(AUTHENTICATED_ENDPOINT)
+                .path("https://estate-portal.azurewebsites.net/" + AUTHENTICATED_ENDPOINT)
                 .build();
     }
 
