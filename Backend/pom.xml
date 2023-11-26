@@ -10,10 +10,10 @@
 	</parent>
 	<groupId>bednarz.glazer.iwaniak</groupId>
 	<artifactId>estate.portal</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Real Estate Portal</name>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

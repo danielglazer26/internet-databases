@@ -21,6 +21,10 @@
         <span *ngIf="isExpanded" class="menu-item">{{account}}</span>
       </mat-list-item>
 
+      <mat-list-item (click)="onMenuChange(3)" [routerLink]="'user-profile'" [style]="menuItemStyleClassResolver(3)" [hidden]="!isUserLogged()" [disabled]="!isUserLogged()">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Moje konto</span>
+      </mat-list-item>
 
       <mat-list-item (click)="onMenuChange(4)" [style]="menuItemStyleClassResolver(4)" [hidden]="!isUserLogged()" [disabled]="!isUserLogged()">
         <mat-icon mat-list-icon style="color: #087275">logout</mat-icon>
