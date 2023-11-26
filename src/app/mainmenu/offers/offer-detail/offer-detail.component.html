@@ -3,14 +3,14 @@
   <mat-grid-list class="mat_list" [cols]=1 rowHeight="4rem" [gutterSize]="'10px'">
 
     <mat-grid-tile [rowspan]="8">
-      <img class="main_image" drag-scroll-item src="https://estate-portal.azurewebsites.net/public/photo/?photoId={{selectedPhoto}}"  alt=""/>
+      <img class="main_image" drag-scroll-item src="https://estate-portal.azurewebsites.net/public/photo?photoId={{selectedPhoto}}"  alt=""/>
     </mat-grid-tile>
 
     <mat-grid-tile  [rowspan]="3">
       <mat-icon class="text-white " mat-list-icon style="margin-right: -170px" (click)="previousPhoto()">arrow_back_ios</mat-icon>
       <drag-scroll class="scroller">
         <span *ngFor="let i of imagesId;">
-          <img class="img_item"  drag-scroll-item src="https://estate-portal.azurewebsites.net/public/photo/?photoId={{i}}"  alt="" (click)="changePhoto(i)"/>
+          <img class="img_item"  drag-scroll-item src="https://estate-portal.azurewebsites.net/public/photo?photoId={{i}}"  alt="" (click)="changePhoto(i)"/>
         </span>
       </drag-scroll>
       <mat-icon class="text-white" mat-list-icon style="margin-left: -170px" (click)="nextPhoto()">arrow_forward_ios style</mat-icon>

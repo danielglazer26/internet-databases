@@ -11,7 +11,7 @@
 
     <div class="carousel-inner">
       <div *ngFor="let data of gallery; let i=index" [class]="(i === 0) ? 'inactive' : 'active'">
-        <img src="https://estate-portal.azurewebsites.net/public/photo/?photoId={{ data }}" alt="nameOfPictureId{{data}}">
+        <img src="https://estate-portal.azurewebsites.net/public/photo?photoId={{ data }}" alt="nameOfPictureId{{data}}">
         <div class="container">
           <div class="carousel-caption">
 
