@@ -28,7 +28,7 @@ export class AppComponent  implements OnInit{
           " strony.",
         dismiss: "OK",
         link: "Więcej informacji",
-        href: "http://localhost:8080/public/getPrivacyPolicy"
+        href: "https://estate-portal.azurewebsites.net/public/getPrivacyPolicy"
       }
     });
   }
