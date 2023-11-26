@@ -5,9 +5,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,12 +17,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 @Component
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtRequestFilter.class);
     private final CookieManager cookieManager;
     private final MyUserDetailsService userDetailsService;
 
@@ -36,6 +36,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.debug("For request: {}", request);
+        Optional<String> jwtFromCookies = cookieManager.getJwtFromCookies(request);
+        jwtFromCookies.ifPresent(
+                s -> {
+                    log.debug("Cookie:{}", s);
+                    log.debug("Validation state: {}", cookieManager.checkJwtValidation(s));
+                }
+        );
         cookieManager.getJwtFromCookies(request).flatMap(cookieManager::checkJwtValidation).ifPresent(login -> {
             try {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(login);
@@ -45,10 +53,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (UsernameNotFoundException e) {
-                LOGGER.info("This login doesn't exist: {}", e.getMessage());
+                log.info("This login doesn't exist: {}", e.getMessage());
             }
         });
-
+        log.debug("For request: {}", response);
         filterChain.doFilter(request, response);
     }
 }
