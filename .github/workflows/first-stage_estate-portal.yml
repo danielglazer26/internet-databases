@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/Backend/target/*.war'
+          path: '${{ github.workspace }}/Backend/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'estate-portal'
           slot-name: 'Production'
-          package: '*.war'
+          package: '*.jar'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5341C64AF56A40B5AFAC5606BB2A789A }}
