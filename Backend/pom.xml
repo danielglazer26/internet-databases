@@ -12,6 +12,7 @@
 	<artifactId>estate.portal</artifactId>
 	<version>0.0.1</version>
 	<name>Real Estate Portal</name>
+	<packaging>war</packaging>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
