@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
-const ADDRESS = "https://estate-portal.azurewebsites.net";
+const ADDRESS = "https://estate-portal-backend.azurewebsites.net";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})

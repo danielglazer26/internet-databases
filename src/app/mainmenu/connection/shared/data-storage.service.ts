@@ -5,7 +5,7 @@ import {Offer} from "../../offers/offer.model";
 import {Subject} from "rxjs";
 import {User} from "../../administrator-panel/user.model";
 
-const httpAddress = 'https://estate-portal.azurewebsites.net';
+const httpAddress = 'https://estate-portal-backend.azurewebsites.net';
 
 @Injectable({
   providedIn: 'root',
@@ -153,7 +153,7 @@ export class DataStorageService {
 
     this.http
       .get<Offer[]>(
-        'https://estate-portal.azurewebsites.net/public/announcements',
+        'https://estate-portal-backend.azurewebsites.net/public/announcements',
         {
           params: params
         }

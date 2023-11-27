@@ -19,13 +19,13 @@
 
             <mat-grid-tile [rowspan]="8">
               <img class="main_image" drag-scroll-item
-                   src="https://estate-portal.azurewebsites.net/public/photo?photoId={{selectedPhoto}}" alt=""/>
+                   src="https://estate-portal-backend.azurewebsites.net/public/photo?photoId={{selectedPhoto}}" alt=""/>
             </mat-grid-tile>
 
             <mat-grid-tile [rowspan]="3">
               <drag-scroll class="scroller">
                 <span *ngFor="let i of gallery;">
-                  <img class="img_item" drag-scroll-item src="https://estate-portal.azurewebsites.net/public/photo?photoId={{i}}"
+                  <img class="img_item" drag-scroll-item src="https://estate-portal-backend.azurewebsites.net/public/photo?photoId={{i}}"
                        alt="" (click)="changePhoto(i)"/>
                 </span>
               </drag-scroll>
