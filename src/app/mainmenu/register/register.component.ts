@@ -45,8 +45,6 @@ export class RegisterComponent {
     const jsonObject = JSON.parse(JSON.stringify(this.accountForm.value, null, 4))
     delete jsonObject.confirmPassword
 
-    jsonObject.password = this.bcrypt.makeHash(jsonObject.password)
-
     this.requestManager.registerAccount(JSON.stringify(jsonObject, undefined, 4)).subscribe({
       error: err => {
           this.errorMessage = err.error.message
