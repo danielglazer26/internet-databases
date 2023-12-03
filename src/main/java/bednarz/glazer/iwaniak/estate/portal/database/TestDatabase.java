@@ -24,8 +24,7 @@ public class TestDatabase {
 
     @PostConstruct
     public void start() {
-//        addUsers();
-
+        addUsers();
     }
 
     //Password -> Admin123!
