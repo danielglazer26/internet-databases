@@ -35,8 +35,8 @@ public class TestDatabase {
     private static final int MAX_ROOM_NUMBER = 7;
     private static final double MIN_AREA = 50.5;
     private static final double MAX_AREA = 600.0;
-    private static final int MIN_PHOTOS_PER_ANNOUNCEMENT = 1;
-    private static final int MAX_PHOTOS_PER_ANNOUNCEMENT = 2;
+    private static final int MIN_PHOTOS_PER_ANNOUNCEMENT = 2;
+    private static final int MAX_PHOTOS_PER_ANNOUNCEMENT = 3;
 
     private final AnnouncementRepository announcementRepository;
 
