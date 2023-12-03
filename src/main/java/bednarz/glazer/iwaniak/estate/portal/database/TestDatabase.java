@@ -126,7 +126,7 @@ public class TestDatabase {
     public void addAnnouncements() {
         List<byte[]> rawPhotos = Arrays.stream(photoResources).map(resource -> {
             try {
-                return Files.readAllBytes(resource.getFile().toPath());
+                return resource.getInputStream().readAllBytes();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
