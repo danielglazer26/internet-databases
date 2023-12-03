@@ -17,13 +17,12 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class TestDatabase {
-    private static final int ANNOUNCEMENTS_NUMBER = 1000;
+    private static final int ANNOUNCEMENTS_NUMBER = 400;
     private static final int MIN_APARTMENT_NUMBER = 1;
     private static final int MAX_APARTMENT_NUMBER = 100;
     private static final int MIN_COST_PER_MONTH = 1000;
@@ -124,13 +123,7 @@ public class TestDatabase {
     }
 
     public void addAnnouncements() {
-        List<byte[]> rawPhotos = Arrays.stream(photoResources).map(resource -> {
-            try {
-                return resource.getInputStream().readAllBytes();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).collect(Collectors.toCollection(ArrayList::new));
+        List<Resource> rawPhotos = Arrays.stream(photoResources).collect(Collectors.toCollection(ArrayList::new));
 
         for (int i = 0; i < ANNOUNCEMENTS_NUMBER; i++) {
             Announcement announcement = announcementRepository.save(Announcement.builder()
@@ -153,12 +146,20 @@ public class TestDatabase {
             List<Photo> photos = rawPhotos.subList(0, random.nextInt(MIN_PHOTOS_PER_ANNOUNCEMENT, MAX_PHOTOS_PER_ANNOUNCEMENT)).stream()
                     .map(rawPhoto -> photoRepository.save(Photo.builder()
                             .announcementId(announcement.getAnnouncementId())
-                            .pictureBytes(rawPhoto)
+                            .pictureBytes(getPhotoResource(rawPhoto))
                             .build()))
                     .toList();
 
             announcement.setCoverPhotoId(photos.get(0).getPhotoId());
             announcementRepository.save(announcement);
+        }
+    }
+
+    private byte[] getPhotoResource(Resource rawPhoto) {
+        try {
+            return rawPhoto.getInputStream().readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
