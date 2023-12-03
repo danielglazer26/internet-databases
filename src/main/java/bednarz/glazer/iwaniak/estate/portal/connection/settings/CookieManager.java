@@ -58,6 +58,7 @@ public class CookieManager {
                 .path("https://estate-portal.azurewebsites.net/" + AUTHENTICATED_ENDPOINT)
                 .maxAge(expirationTime / 1000)
                 .httpOnly(true)
+                .sameSite("None")
                 .build();
     }
 
