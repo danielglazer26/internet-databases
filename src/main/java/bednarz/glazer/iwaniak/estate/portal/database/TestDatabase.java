@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TestDatabase {
-    private static final int ANNOUNCEMENTS_NUMBER = 400;
+    private static final int ANNOUNCEMENTS_NUMBER = 300;
     private static final int MIN_APARTMENT_NUMBER = 1;
     private static final int MAX_APARTMENT_NUMBER = 100;
     private static final int MIN_COST_PER_MONTH = 1000;
