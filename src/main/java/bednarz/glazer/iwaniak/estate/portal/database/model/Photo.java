@@ -1,9 +1,6 @@
 package bednarz.glazer.iwaniak.estate.portal.database.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import jakarta.persistence.*;
@@ -14,6 +11,7 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
