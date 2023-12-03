@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {RequestManagerService} from "../connection/http/request-manager.service";
-import {HashPasswordService} from "../connection/authorization/hash-password.service";
 
 
 @Component({
@@ -17,8 +16,7 @@ export class RegisterComponent {
   showLoginBusy: boolean = false;
   errorMessage !: string
 
-  constructor(fb: FormBuilder, private router: Router, private requestManager: RequestManagerService,
-              private bcrypt : HashPasswordService) {
+  constructor(fb: FormBuilder, private router: Router, private requestManager: RequestManagerService) {
     this.accountForm = new FormGroup<any>({
         login: fb.control('', Validators.required),
         password: fb.control('', [Validators.minLength(8), Validators.required]),

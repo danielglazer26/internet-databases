@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {RequestManagerService} from "../connection/http/request-manager.service";
 import {CookieSessionStorageService} from "../connection/session/cookie-session-storage.service";
-import {HashPasswordService} from "../connection/authorization/hash-password.service";
 
 @Component({
   selector: 'app-login',
@@ -18,8 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router,
               private requestManager: RequestManagerService,
-              private cookieStorage: CookieSessionStorageService,
-              private bcrypt: HashPasswordService) {
+              private cookieStorage: CookieSessionStorageService) {
     this.accountForm = new FormGroup<any>({
       login: fb.control('', Validators.required),
       password: fb.control('', Validators.required)
@@ -37,8 +35,6 @@ export class LoginComponent implements OnInit {
     myHeaders.append("Content-Type", "application/json");
 
     const jsonObject = JSON.parse(JSON.stringify(this.accountForm.value, null, 4))
-
-    jsonObject.password = this.bcrypt.makeHash(jsonObject.password)
 
     this.requestManager.loginAccount(JSON.stringify(jsonObject, undefined, 4)).subscribe({
       next: value => {
