@@ -9,18 +9,28 @@ import bednarz.glazer.iwaniak.estate.portal.database.model.announcement.Province
 import bednarz.glazer.iwaniak.estate.portal.database.repositories.AnnouncementRepository;
 import bednarz.glazer.iwaniak.estate.portal.database.repositories.PersonRepository;
 import bednarz.glazer.iwaniak.estate.portal.database.repositories.PhotoRepository;
+import com.luciad.imageio.webp.WebPWriteParam;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class TestDatabase {
     private static final int ANNOUNCEMENTS_NUMBER = 100;
     private static final int MIN_APARTMENT_NUMBER = 1;
@@ -36,14 +46,22 @@ public class TestDatabase {
     private static final double MIN_AREA = 50.5;
     private static final double MAX_AREA = 600.0;
     private static final int PHOTOS_PER_ANNOUNCEMENT = 2;
+    private static final boolean IS_WEBP = true;
+    private static final boolean SHOULD_GENERATE_WEBP = false;
+    private static final boolean SHOULD_COMPRESS = false;
+    private static final float COMPRESSION_FACTOR = 0.3f;
 
     private final AnnouncementRepository announcementRepository;
 
     private final PersonRepository personRepository;
     private final PhotoRepository photoRepository;
     private final Random random;
-    @Value("classpath:photos/*")
-    private Resource[] photoResources;
+
+    @Value("classpath:photos/webp/*")
+    private Resource[] webpResources;
+
+    @Value("classpath:photos/default/*")
+    private Resource[] defaultResources;
 
     @Autowired
     public TestDatabase(AnnouncementRepository announcementRepository, PersonRepository personRepository, PhotoRepository photoRepository) {
@@ -122,7 +140,10 @@ public class TestDatabase {
     }
 
     public void addAnnouncements() {
-        List<Resource> rawPhotos = Arrays.stream(photoResources).collect(Collectors.toCollection(ArrayList::new));
+        if (SHOULD_GENERATE_WEBP) {
+            generateWebps();
+        }
+        List<Resource> rawPhotos = Arrays.stream(IS_WEBP ? webpResources : defaultResources).collect(Collectors.toCollection(ArrayList::new));
         Iterator<Resource> iterator = rawPhotos.iterator();
 
         for (int i = 0; i < ANNOUNCEMENTS_NUMBER; i++) {
@@ -160,6 +181,48 @@ public class TestDatabase {
     private byte[] getPhotoResource(Resource rawPhoto) {
         try {
             return rawPhoto.getInputStream().readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void generateWebps() {
+        for (Resource resource: defaultResources) {
+            generateWebp(resource);
+        }
+    }
+
+    private void generateWebp(Resource rawPhoto) {
+        if (SHOULD_COMPRESS) {
+            generateCompressedWebp(rawPhoto);
+        } else {
+            generateUncompressedWebp(rawPhoto);
+        }
+    }
+
+    private void generateCompressedWebp(Resource rawPhoto) {
+        ImageWriter writer = ImageIO.getImageWritersByMIMEType("image/webp").next();
+        WebPWriteParam writeParam = new WebPWriteParam(writer.getLocale());
+        writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        writeParam.setCompressionType(writeParam.getCompressionTypes()[WebPWriteParam.LOSSY_COMPRESSION]);
+        writeParam.setCompressionQuality(COMPRESSION_FACTOR);
+        try {
+            BufferedImage image = ImageIO.read(rawPhoto.getFile());
+            String path = rawPhoto.getFile().getParentFile().getParent() + "\\webp\\"
+                    + Objects.requireNonNull(rawPhoto.getFilename()).split("\\.")[0] + ".webp";
+            writer.setOutput(new FileImageOutputStream(new File(path)));
+            writer.write(null, new IIOImage(image, null, null), writeParam);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void generateUncompressedWebp(Resource rawPhoto) {
+        try {
+            BufferedImage image = ImageIO.read(rawPhoto.getFile());
+            String path = rawPhoto.getFile().getParentFile().getParent() + "\\webp\\"
+                    + Objects.requireNonNull(rawPhoto.getFilename()).split("\\.")[0] + ".webp";
+            ImageIO.write(image, "webp", new File(path));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
