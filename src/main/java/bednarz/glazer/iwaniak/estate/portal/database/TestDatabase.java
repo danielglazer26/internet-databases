@@ -35,8 +35,7 @@ public class TestDatabase {
     private static final int MAX_ROOM_NUMBER = 7;
     private static final double MIN_AREA = 50.5;
     private static final double MAX_AREA = 600.0;
-    private static final int MIN_PHOTOS_PER_ANNOUNCEMENT = 2;
-    private static final int MAX_PHOTOS_PER_ANNOUNCEMENT = 3;
+    private static final int PHOTOS_PER_ANNOUNCEMENT = 2;
 
     private final AnnouncementRepository announcementRepository;
 
@@ -124,12 +123,13 @@ public class TestDatabase {
 
     public void addAnnouncements() {
         List<Resource> rawPhotos = Arrays.stream(photoResources).collect(Collectors.toCollection(ArrayList::new));
+        Iterator<Resource> iterator = rawPhotos.iterator();
 
         for (int i = 0; i < ANNOUNCEMENTS_NUMBER; i++) {
             Announcement announcement = announcementRepository.save(Announcement.builder()
                     .title("Ogłoszenie testowe " + i)
                     .additionalDescription("Testowe ogłoszenie testowe " + i)
-                    .announcementType(random.nextBoolean() ? AnnouncementType.RENTAL : AnnouncementType.SALE)
+                    .announcementType(i < ANNOUNCEMENTS_NUMBER / 2 ? AnnouncementType.RENTAL : AnnouncementType.SALE)
                     .ownerLogin("robejcik")
                     .apartmentNumber(String.valueOf(random.nextInt(MIN_APARTMENT_NUMBER, MAX_APARTMENT_NUMBER)))
                     .street("Testowa ulica " + i)
@@ -142,15 +142,17 @@ public class TestDatabase {
                     .area(random.nextDouble(MIN_AREA, MAX_AREA))
                     .build());
 
-            Collections.shuffle(rawPhotos);
-            List<Photo> photos = rawPhotos.subList(0, random.nextInt(MIN_PHOTOS_PER_ANNOUNCEMENT, MAX_PHOTOS_PER_ANNOUNCEMENT)).stream()
-                    .map(rawPhoto -> photoRepository.save(Photo.builder()
-                            .announcementId(announcement.getAnnouncementId())
-                            .pictureBytes(getPhotoResource(rawPhoto))
-                            .build()))
-                    .toList();
+            for (int j = 0; j < PHOTOS_PER_ANNOUNCEMENT; j++) {
+                if (!iterator.hasNext()) {
+                    iterator = rawPhotos.iterator();
+                }
+                Photo photo = photoRepository.save(Photo.builder()
+                        .announcementId(announcement.getAnnouncementId())
+                        .pictureBytes(getPhotoResource(iterator.next()))
+                        .build());
+                announcement.setCoverPhotoId(photo.getPhotoId());
+            }
 
-            announcement.setCoverPhotoId(photos.get(0).getPhotoId());
             announcementRepository.save(announcement);
         }
     }
