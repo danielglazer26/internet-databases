@@ -1,28 +1,29 @@
 package bednarz.glazer.iwaniak.estate.portal.controller.unauthenticated;
 
 import bednarz.glazer.iwaniak.estate.portal.controller.ResponseJsonBody;
+import bednarz.glazer.iwaniak.estate.portal.database.model.Photo;
 import bednarz.glazer.iwaniak.estate.portal.database.services.AnnouncementService;
 import bednarz.glazer.iwaniak.estate.portal.database.services.PhotoService;
-import bednarz.glazer.iwaniak.estate.portal.database.model.Photo;
-
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/public")
+@Slf4j
 public class AnnouncementController {
     private final AnnouncementService announcementService;
     private final PhotoService photoService;
@@ -48,7 +49,9 @@ public class AnnouncementController {
                         apartmentNumber, announcementType, limit, offset).stream()
                 .map(AnnouncementRespond::new).toList();
 
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES))
+                .body(list);
     }
 
     @GetMapping("/announcementCoverPhotoId")
@@ -63,15 +66,17 @@ public class AnnouncementController {
 
     @GetMapping("/announcementPhotos")
     public ResponseEntity<?> getAnnouncementPhotos(@RequestParam("announcementId") Long announcementId) {
-        return ResponseEntity.ok(photoService.getPhotosByAnnouncementId(announcementId).stream().map(Photo::getPhotoId));
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES))
+                .body(photoService.getPhotosByAnnouncementId(announcementId).stream().map(Photo::getPhotoId));
     }
 
     @GetMapping("/photo")
-    public HttpEntity<?> fileDownload(HttpServletResponse response, @RequestParam("photoId") Long photoId) {
+    public ResponseEntity<?> fileDownload(HttpServletResponse response, @RequestParam("photoId") Long photoId) {
         try {
+            response.setHeader("Cache-Control", "max-age=600");
             StreamUtils.copy(photoService.getPhoto(photoId), response.getOutputStream());
             response.setContentType(MediaType.IMAGE_PNG_VALUE);
-
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseJsonBody(e.getMessage()));
