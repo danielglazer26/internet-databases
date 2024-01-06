@@ -46,7 +46,7 @@ public class TestDatabase {
     private static final double MIN_AREA = 50.5;
     private static final double MAX_AREA = 600.0;
     private static final int PHOTOS_PER_ANNOUNCEMENT = 2;
-    private static final boolean IS_WEBP = false;
+    private static final boolean IS_WEBP = true;
     private static final boolean SHOULD_GENERATE_WEBP = false;
     private static final boolean SHOULD_COMPRESS = false;
     private static final float COMPRESSION_FACTOR = 0.3f;
